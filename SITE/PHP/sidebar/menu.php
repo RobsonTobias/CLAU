@@ -7,108 +7,68 @@
     </div>
     <ul class="nav-links">
       <li>
-        <a href="#">
-          <i class="bx bx-grid-alt" ></i>
-          <span class="link_name">Dashboard</span>
+        <a href="../../PAGES/professor/home.php">
+          <img src="../../ICON/home.svg">
+          <span class="link_name">HOME</span>
         </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Category</a></li>
-        </ul>
       </li>
       <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class="bx bx-collection" ></i>
-            <span class="link_name">Category</span>
-          </a>
-          <i class="bx bxs-chevron-down arrow" ></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Category</a></li>
-          <li><a href="#">HTML & CSS</a></li>
-          <li><a href="#">JavaScript</a></li>
-          <li><a href="#">PHP & MySQL</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class="bx bx-book-alt" ></i>
-            <span class="link_name">Posts</span>
-          </a>
-          <i class="bx bxs-chevron-down arrow" ></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Posts</a></li>
-          <li><a href="#">Web Design</a></li>
-          <li><a href="#">Login Form</a></li>
-          <li><a href="#">Card Design</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class="bx bx-pie-chart-alt-2" ></i>
-          <span class="link_name">Analytics</span>
+        <a href="../../PAGES/professor/chamada.php">
+          <img src="../../ICON/chamada.svg">
+          <span class="link_name">CHAMADAS</span>
         </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Analytics</a></li>
-        </ul>
       </li>
       <li>
-        <a href="#">
-          <i class="bx bx-line-chart" ></i>
-          <span class="link_name">Chart</span>
+        <a href="../../PAGES/professor/notas.php">
+          <img src="../../ICON/nota.svg">
+          <span class="link_name">NOTAS</span>
         </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Chart</a></li>
-        </ul>
       </li>
       <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class="bx bx-plug" ></i>
-            <span class="link_name">Plugins</span>
-          </a>
-          <i class="bx bxs-chevron-down arrow" ></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Plugins</a></li>
-          <li><a href="#">UI Face</a></li>
-          <li><a href="#">Pigments</a></li>
-          <li><a href="#">Box Icons</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class="bx bx-compass" ></i>
-          <span class="link_name">Explore</span>
+        <a href="../../PAGES/professor/aluno.php">
+          <img src="../../ICON/aluno.svg">
+          <span class="link_name">ALUNO</span>
         </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Explore</a></li>
-        </ul>
       </li>
       <li>
-        <a href="#">
-          <i class="bx bx-history"></i>
-          <span class="link_name">History</span>
+        <a href="../../PAGES/professor/turma.php">
+          <img src="../../ICON/turma.svg">
+          <span class="link_name">TURMA</span>
         </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">History</a></li>
-        </ul>
       </li>
       <li>
-        <a href="#">
-          <i class="bx bx-cog" ></i>
-          <span class="link_name">Setting</span>
+        <a href="../../PAGES/professor/planejamento.php">
+          <img src="../../ICON/planejamento.svg">
+          <span class="link_name">PLANEJAMENTO</span>
         </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Setting</a></li>
-        </ul>
       </li>
       <li>
-        <div class="version"><span>v 1.0</span></div>
+        <a href="../../PAGES/professor/relatorio.php">
+          <img src="../../ICON/relatorio.svg">
+          <span class="link_name">RELATÓRIOS</span>
+        </a>
+      </li>
+      <li>
+        <a href="../../PAGES/professor/grade.php">
+          <img src="../../ICON/grade.svg">
+          <span class="link_name">GRADE HORÁRIA</span>
+        </a>
+      </li>
+      <li>
+        <a href="../../PAGES/professor/calendario.php">
+          <img src="../../ICON/calendario.svg">
+          <span class="link_name">CALENDÁRIO</span>
+        </a>
+      </li>
+      <li>
+        <a href="../../PAGES/professor/fale.php">
+          <img src="../../ICON/fale.svg">
+          <span class="link_name">FALE CONOSCO</span>
+        </a>
+      </li>
+      <div class="version">
+        <span>v 1.0</span>
       </div>
-  </li>
-</ul>
+</div>
 ';
   ?>

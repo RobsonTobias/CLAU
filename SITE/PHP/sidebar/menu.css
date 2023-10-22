@@ -26,7 +26,7 @@ body{
   align-items: center;
 }
 .sidebar .logo-details .logo-mini{
-  height: 50px;
+  height: 30px;
   min-width: 78px;
   text-align: center;
   line-height: 50px;
@@ -58,6 +58,9 @@ body{
   position: relative;
   list-style: none;
   transition: all 0.4s ease;
+  height: 50px;
+  min-width: 78px;
+  display: flex;
 }
 .sidebar .nav-links li:hover{
   background: #1d1b31;
@@ -80,6 +83,19 @@ body{
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
+.sidebar .nav-links li img{
+  height: 30px;
+  min-width: 78px;
+  /* text-align: center;
+  line-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease; */
+}
+
+
 .sidebar .nav-links li.showMenu i.arrow{
   transform: rotate(-180deg);
 }
@@ -206,6 +222,7 @@ body{
   font-size: 26px;
   font-weight: 600;
 }
+
 
 @media screen and (max-width: 400px){
   .sidebar{
