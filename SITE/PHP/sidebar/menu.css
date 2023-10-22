@@ -84,15 +84,21 @@ body{
   transition: all 0.3s ease;
 }
 
-.sidebar .nav-links li img{
+.sidebar .nav-links li svg{
   height: 30px;
-  min-width: 78px;
+  width: 78px;
+  width: 78px;
   /* text-align: center;
   line-height: 50px;
   color: #fff;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.3s ease; */
+}
+
+.sidebar .nav-links li img{
+  height: 30px;
+  min-width: 78px;
 }
 
 

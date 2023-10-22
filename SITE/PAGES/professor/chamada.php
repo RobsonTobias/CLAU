@@ -13,8 +13,8 @@
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../STYLE/style_home.css">
     <style>
-        .home path{
-            fill: #4c5a9d;
+        .chamada path{
+            stroke: #4c5a9d;
         }
     </style>
 </head>
