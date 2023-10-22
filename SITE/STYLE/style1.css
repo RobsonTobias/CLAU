@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62,5%;
+}
+
+::selection{
+background-color: #313131;
+color:#f0f8ff;
+}
+body{
+    font-size: 20px;    
+    font-family: 'Roboto', sans-serif;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.conteudo{
+    border-radius: 50px;
+    width: 70%;
+    height: 70%;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    background: rgb(110,199,125);
+    background: linear-gradient(90deg, rgba(110,199,125,1) 0%, rgba(64,185,225,1) 100%);
+    box-shadow: 0px 0px 20px 1px #535353;
+}
+
+.conteudo::before{
+    content: "";
+    background-color: rgba(24, 24, 24,0.5);
+    position: absolute;
+    width: 60%;
+    height: 100%;
+    right: 0;
+    z-index: 1;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    background-image: url('../IMAGE/logoclauu.png');
+    background-size: 380px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.primeiro{
+    display: flex;
+}
+
+.primeira-coluna{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+    padding: 40px;
+    z-index: 11;
+}
+
+.segunda-coluna{
+    display: flex;
+    width: 60%;
+    z-index: 10;
+    justify-content: center;
+}
+
+img{
+    width: 480px;
+}
+
+.titulo{
+    height: 30%;
+    display: flex;
+    align-items: center;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.descricao{
+    text-align: justify;
+
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    width: 100%;
+    justify-content: center;
+}
+.labels{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.labels input{
+    height: 45px;
+    border-radius: 30px;
+    border: none;
+    padding: 15px;
+    font-size: 20px;
+    background-color: #ffffff6c;
+}
+
+a{
+    text-decoration: underline;
+    color: #3D73FF;
+}
+
+.ancora{
+    text-align: end;
+}
+
+.ancora.esquecer{
+    margin-bottom: 15px;
+}
+
+.ancora.cancelar{
+    margin-top: 15px
+}
+
+.home{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.btn{
+    border-radius: 30px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 20px;
+    padding: 10px 35px;
+    cursor: pointer;
+    transition: ease-in-out 0.5s;
+    font-weight: bold;
+    width: 150px;
+    align-self: center;
+    border-width: 0;
+    background-color: blue;
+}
+
+
+.btn:hover{
+    background-color: green;
+}
+
+.segundo-btn{
+    width: 250px;
+}
+
+.segundo{
+    position: absolute;
+    display: flex;
+}
+
+.segundo .primeira-coluna{
+    order: 2;
+    z-index: -1;
+    opacity: 0;
+}
+
+.segundo .segunda-coluna{
+    order: 1;
+    z-index: -1;
+    opacity: 0;
+}
+
+.login-js .primeiro .primeira-coluna,
+.login-js .primeiro .segunda-coluna{
+    z-index: 11;
+}
+
+.login-js .segundo .primeira-coluna,
+.login-js .segundo .segunda-coluna{
+    z-index: -1;
+    opacity: 0;
+}
+
+.login-js .conteudo::before{
+    transition: 0.5s;
+}
+
+.senha-js .primeiro .primeira-coluna,
+.senha-js .primeiro .segunda-coluna{
+    z-index: -1;
+    opacity: 0;
+}
+
+.senha-js .segundo .primeira-coluna,
+.senha-js .segundo .segunda-coluna{
+    z-index: 11;
+    opacity: 1;
+    
+}
+
+.senha-js .conteudo{
+    box-shadow: 5px 5px 20px 1px #535353;
+}
+.senha-js .conteudo::before{
+    right: 40%;
+    transition: 0.5s;
+    border-radius: 0;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
