@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../../STYLE/style_home.css">
     <style>
         .chamada path{
-            stroke: #4c5a9d;
+            stroke: #043140;
         }
     </style>
 </head>
@@ -26,8 +26,8 @@
 
     <header>
         <div class="title">
-            <div style="display: flex; flex-direction: column; margin-left:80px;">
-                <h1>HOME</h1>
+            <div class="nomedata">
+                <h1>LISTA DE CHAMADA E DIÁRIO DE CLASSE</h1>
                 <div class="php">
                     <?php echo $date;?>
                 </div>

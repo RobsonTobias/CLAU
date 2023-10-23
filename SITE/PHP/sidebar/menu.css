@@ -16,9 +16,17 @@ body{
   z-index: 100;
   transition: all 0.5s ease;
 }
+
+.nomedata{
+  display: flex; 
+  flex-direction: column;
+  margin-left: 80px;
+  transition: margin-left 0.5s ease;
+}
 .sidebar.close{
   width: 78px;
 }
+
 .sidebar .logo-details{
   height: 60px;
   width: 100%;
@@ -88,19 +96,12 @@ body{
   height: 30px;
   width: 78px;
   width: 78px;
-  /* text-align: center;
-  line-height: 50px;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease; */
 }
 
 .sidebar .nav-links li img{
   height: 30px;
   min-width: 78px;
 }
-
 
 .sidebar .nav-links li.showMenu i.arrow{
   transform: rotate(-180deg);

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../../STYLE/style_home.css">
     <style>
         .home path{
-            fill: #4c5a9d;
+            fill: #043140;
         }
     </style>
 </head>
@@ -23,10 +23,10 @@
 
 <?php include('../../PHP/data/data.php');?>
 <?php include('../../PHP/sidebar/menu.php');?>
-
+    
     <header>
         <div class="title">
-            <div style="display: flex; flex-direction: column; margin-left:80px;">
+            <div class="nomedata">
                 <h1>HOME</h1>
                 <div class="php">
                     <?php echo $date;?>
@@ -47,11 +47,11 @@
         </div>
         <hr>
     </header>
-    
+
     <div>
         <?php echo $sidebarHTML;?>
     </div>
-
+    
     <main>
         <div class="item"><img src="../../ICON/chamada.svg" alt="Chamada_Diario">
             <p>Chamadas e Diário de Classe</p>
