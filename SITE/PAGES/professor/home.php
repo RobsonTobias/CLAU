@@ -23,13 +23,13 @@
 
 <?php include('../../PHP/data/data.php');?>
 <?php include('../../PHP/sidebar/menu.php');?>
-    
+
     <header>
         <div class="title">
             <div class="nomedata">
                 <h1>HOME</h1>
                 <div class="php">
-                    <?php echo $date;?>
+                    <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
@@ -49,13 +49,13 @@
     </header>
 
     <div>
-        <?php echo $sidebarHTML;?>
+        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
     
     <main>
-        <div class="item"><img src="../../ICON/chamada.svg" alt="Chamada_Diario">
+        <a href="chamada.php" class="item"><img src="../../ICON/chamada.svg" alt="Chamada_Diario">
             <p>Chamadas e Diário de Classe</p>
-        </div>
+        </a>
         <div class="item"><img src="../../ICON/nota.svg" alt="Notas">
             <p>Notas</p>
         </div>

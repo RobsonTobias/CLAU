@@ -29,7 +29,7 @@
             <div class="nomedata">
                 <h1>LISTA DE CHAMADA E DIÁRIO DE CLASSE</h1>
                 <div class="php">
-                    <?php echo $date;?>
+                    <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
     </header>
     
     <div>
-        <?php echo $sidebarHTML;?>
+        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
 
     <main>

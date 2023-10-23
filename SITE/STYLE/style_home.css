@@ -109,6 +109,7 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
 }
 
 /* Deixa o quadrado verde ao passar o mouse */
