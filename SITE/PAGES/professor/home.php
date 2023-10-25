@@ -65,11 +65,11 @@
         <a href="turma.php" class="item"><img src="../../ICON/turma.svg" alt="Turma">
             <p>Turma</p>
         </a>
-        <a href="prova.php" class="item"><img src="../../ICON/planejamento.svg" alt="Planejamento">
-            <p>Provas e Atividades</p>
+        <a href="planejamento.php" class="item"><img src="../../ICON/planejamento.svg" alt="Planejamento">
+            <p>Planejamento</p>
         </a>
-        <a href="relatorios.php" class="item"><img src="../../ICON/relatorio.svg" alt="Relatorios">
-            <p>Relatórios</p>
+        <a href="prova.php" class="item"><img src="../../ICON/relatorio.svg" alt="Relatorios">
+            <p>Provas e Atividades</p>
         </a>
         <a href="grade.php" class="item"><img src="../../ICON/grade.svg" alt="Grade_Horaria">
             <p>Grade Horária</p>
