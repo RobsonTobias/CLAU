@@ -17,12 +17,7 @@ body{
   transition: all 0.5s ease;
   overflow: hidden;
 }
-.nomedata{
-  display: flex; 
-  flex-direction: column;
-  margin-left: 80px;
-  transition: margin-left 0.5s ease;
-}
+
 .sidebar.close{
   width: 78px;
 }
