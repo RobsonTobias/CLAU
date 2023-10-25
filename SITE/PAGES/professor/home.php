@@ -26,7 +26,7 @@
 
     <header>
         <div class="title">
-            <div class="nomedata">
+            <div class="nomedata closed">
                 <h1>HOME</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->

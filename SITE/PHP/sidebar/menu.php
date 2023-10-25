@@ -50,9 +50,9 @@
         </a>
       </li>
       <li>
-        <a href="../../PAGES/professor/relatorio.php">
+        <a href="../../PAGES/professor/prova.php">
           <img src="../../ICON/relatorio.svg">
-          <span class="link_name">RELATÓRIOS</span>
+          <span class="link_name">PROVAS E ATIVIDADES</span>
         </a>
       </li>
       <li>
