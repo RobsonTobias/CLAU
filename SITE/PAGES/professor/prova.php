@@ -27,7 +27,7 @@
     <header>
         <div class="title">
             <div class="nomedata">
-                <h1>PLANEJAMENTO</h1>
+                <h1>PROVAS E ATIVIDADES</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>

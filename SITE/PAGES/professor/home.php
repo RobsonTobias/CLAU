@@ -56,27 +56,27 @@
         <a href="chamada.php" class="item"><img src="../../ICON/chamada.svg" alt="Chamada_Diario">
             <p>Chamadas e Diário de Classe</p>
         </a>
-        <div class="item"><img src="../../ICON/nota.svg" alt="Notas">
+        <a href="notas.php" class="item"><img src="../../ICON/nota.svg" alt="Notas">
             <p>Notas</p>
-        </div>
-        <div class="item"><img src="../../ICON/aluno.svg" alt="Aluno">
+        </a>
+        <a href="aluno.php" class="item"><img src="../../ICON/aluno.svg" alt="Aluno">
             <p>Aluno</p>
-        </div>
-        <div class="item"><img src="../../ICON/turma.svg" alt="Turma">
+        </a>
+        <a href="turma.php" class="item"><img src="../../ICON/turma.svg" alt="Turma">
             <p>Turma</p>
-        </div>
-        <div class="item"><img src="../../ICON/planejamento.svg" alt="Planejamento">
-            <p>Planejamento</p>
-        </div>
-        <div class="item"><img src="../../ICON/relatorio.svg" alt="Relatorios">
+        </a>
+        <a href="prova.php" class="item"><img src="../../ICON/planejamento.svg" alt="Planejamento">
+            <p>Provas e Atividades</p>
+        </a>
+        <a href="relatorios.php" class="item"><img src="../../ICON/relatorio.svg" alt="Relatorios">
             <p>Relatórios</p>
-        </div>
-        <div class="item"><img src="../../ICON/grade.svg" alt="Grade_Horaria">
+        </a>
+        <a href="grade.php" class="item"><img src="../../ICON/grade.svg" alt="Grade_Horaria">
             <p>Grade Horária</p>
-        </div>
-        <div class="item"><img src="../../ICON/calendario.svg" alt="Calendario">
+        </a>
+        <a href="calendario.php" class="item"><img src="../../ICON/calendario.svg" alt="Calendario">
             <p>Calendário</p>
-        </div>
+        </a>
     </main>
 
     <div class="buttons">
