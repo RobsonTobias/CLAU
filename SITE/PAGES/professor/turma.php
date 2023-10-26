@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Home</title>
+    <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../../STYLE/botao.css" />
     <link rel="stylesheet" href="../../STYLE/data.css">
@@ -12,8 +12,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../STYLE/style_home.css">
+    <link rel="icon" href="../../ICON/C.svg" type="image/svg">
     <style>
-        .home path{
+        .turma path{
             fill: #043140;
         }
     </style>
@@ -27,7 +28,7 @@
     <header>
         <div class="title">
             <div class="nomedata">
-                <h1>TURMA</h1>
+                <h1>CONSULTA DE TURMAS</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>

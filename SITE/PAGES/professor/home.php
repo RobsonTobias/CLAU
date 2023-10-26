@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Home</title>
+    <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../../STYLE/botao.css" />
     <link rel="stylesheet" href="../../STYLE/data.css">
@@ -12,6 +12,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../STYLE/style_home.css">
+    <link rel="icon" href="../../ICON/C.svg" type="image/svg">
     <style>
         .home path{
             fill: #043140;
@@ -36,13 +37,13 @@
             <div class="user">
                 <p>Usuário</p>
                 <div class="dropdown">
-                <img src="https://placekitten.com/400/400" alt="Perfil" onclick="myFunction()" class="dropbtn">
-                <div id="myDropdown" class="dropdown-content">
-                    <a href="#home">Perfil</a>
-                    <a href="#about">Notificação</a>
-                    <a href="../../index.html">Sair</a>
-                  </div>
-            </div>
+                    <img src="https://placekitten.com/400/400" alt="Perfil" onclick="myFunction()" class="dropbtn">
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="#home">Perfil</a>
+                        <a href="#about">Notificação</a>
+                        <a href="../../index.html">Sair</a>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>
@@ -68,7 +69,7 @@
         <a href="planejamento.php" class="item"><img src="../../ICON/planejamento.svg" alt="Planejamento">
             <p>Planejamento</p>
         </a>
-        <a href="prova.php" class="item"><img src="../../ICON/relatorio.svg" alt="Relatorios">
+        <a href="prova.php" class="item"><img src="../../ICON/prova.svg" alt="Provas e Atividades">
             <p>Provas e Atividades</p>
         </a>
         <a href="grade.php" class="item"><img src="../../ICON/grade.svg" alt="Grade_Horaria">

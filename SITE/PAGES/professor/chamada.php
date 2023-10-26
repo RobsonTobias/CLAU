@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Home</title>
+    <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../../STYLE/botao.css" />
     <link rel="stylesheet" href="../../STYLE/data.css">
@@ -12,6 +12,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../STYLE/style_home.css">
+    <link rel="icon" href="../../ICON/C.svg" type="image/svg">
     <style>
         .chamada path{
             stroke: #043140;
@@ -53,30 +54,7 @@
     </div>
 
     <main>
-        <div class="item"><img src="../../ICON/chamada.svg" alt="Chamada_Diario">
-            <p>Chamadas e Diário de Classe</p>
-        </div>
-        <div class="item"><img src="../../ICON/nota.svg" alt="Notas">
-            <p>Notas</p>
-        </div>
-        <div class="item"><img src="../../ICON/aluno.svg" alt="Aluno">
-            <p>Aluno</p>
-        </div>
-        <div class="item"><img src="../../ICON/turma.svg" alt="Turma">
-            <p>Turma</p>
-        </div>
-        <div class="item"><img src="../../ICON/planejamento.svg" alt="Planejamento">
-            <p>Planejamento</p>
-        </div>
-        <div class="item"><img src="../../ICON/relatorio.svg" alt="Relatorios">
-            <p>Relatórios</p>
-        </div>
-        <div class="item"><img src="../../ICON/grade.svg" alt="Grade_Horaria">
-            <p>Grade Horária</p>
-        </div>
-        <div class="item"><img src="../../ICON/calendario.svg" alt="Calendario">
-            <p>Calendário</p>
-        </div>
+        
     </main>
 
     <div class="buttons">
