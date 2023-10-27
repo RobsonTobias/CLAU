@@ -3,9 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-body{
-  overflow: hidden;
-}
+
 .sidebar{
   position: fixed;
   top: 0;
@@ -90,12 +88,6 @@ body{
 .sidebar .nav-links li svg{
   height: 30px;
   width: 78px;
-  width: 78px;
-}
-
-.sidebar .nav-links li img{
-  height: 30px;
-  min-width: 78px;
 }
 
 .sidebar .nav-links li.showMenu i.arrow{
@@ -114,6 +106,7 @@ body{
   font-weight: 400;
   color: #fff;
   transition: all 0.4s ease;
+  width: 180px;
 }
 .sidebar.close .nav-links li a .link_name{
   opacity: 0;

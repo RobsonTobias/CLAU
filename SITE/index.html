@@ -18,18 +18,18 @@
         <div class="conteudo primeiro">
             <div class="primeira-coluna">
                 <h2 class="titulo">Login</h2>
-                <form class="form">
-                    <label for="" class="labels">
+                <form action="login.php" class="form" method="post">
+                    <label for="usuario" class="labels">
                         <p style="padding-left: 15px;">Usuário</p>
-                        <input type="text">
+                        <input type="text" id="usuario" name="usuario" required>
                     </label>
-                    <label for="" class="labels">
+                    <label for="password" class="labels">
                         <p style="padding-left: 15px;">Senha</p>
-                        <input type="password">
+                        <input type="password" id="password" name="password" required>
                     </label>
                     
                     <a href="#" class="ancora esquecer" id="senha">Esqueceu sua senha</a>
-                    <a href="PAGES/professor/home.php" class="btn primeiro-btn home">Login</a>
+                    <input type="submit" value="Login" class="btn primeiro-btn home">
                 </form>
             </div>
 
@@ -63,7 +63,6 @@
                 <a class="button" href="https://www.web-leb.com/code" target="_blank"><img src="ICON/Facebook.svg" alt="Facebook"></a>
                 <a class="button" href="https://www.web-leb.com/code" target="_blank"><img src="ICON/Linkedin.svg" alt="Linkedin"></a>
                 <a class="button" href="https://www.web-leb.com/code" target="_blank"><img src="ICON/Instagram.svg" alt="Instagram"></a>
-                
             </div>
         </div>
     </div>

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .fale path{
+        .chamada path{
             stroke: #043140;
         }
     </style>
@@ -30,23 +30,23 @@
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>FALE CONOSCO</h1>
+                <h1>LISTA DE CHAMADA E DIÁRIO DE CLASSE</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?><!-- Mostrar o usuario, foto e menu dropdown -->
+                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
     </header>
-
+    
     <div>
         <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
-    
+
     <main>
         
     </main>

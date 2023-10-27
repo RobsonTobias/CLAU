@@ -17,28 +17,22 @@
 
 <body>
 
-<?php include('../PHP/data/data.php');?>
+<?php include('../PHP/data.php');?>
 <?php include('../PHP/sidebar/menu.php');?>
+<?php include('../PHP/redes.php');?>
+<?php include('../PHP/dropdown.php');?>
 
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>PERFIL</h1>
+                <h1>NOTIFICAÇÕES</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <p>Usuário</p>
-                <div class="dropdown">
-                    <img src="https://placekitten.com/400/400" alt="Perfil" onclick="myFunction()" class="dropbtn">
-                    <div id="myDropdown" class="dropdown-content">
-                        <a href="perfil.php">Perfil</a>
-                        <a href="#notificacoes.php">Notificação</a>
-                        <a href="../index.html">Sair</a>
-                    </div>
-                </div>
+                <?php echo $dropdown;?><!-- Mostrar o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
@@ -53,12 +47,7 @@
     </main>
 
     <div class="buttons">
-        <button class="buttons__toggle"><div class="borda"><img src="../../ICON/fale.svg" alt="Fale_Conosco"></div></button>
-        <div class="allbtns">
-            <a class="button" href="https://www.web-leb.com/code" target="_blank"><img src="../ICON/Facebook.svg" alt="Facebook"></a>
-            <a class="button" href="https://www.web-leb.com/code" target="_blank"><img src="../ICON/Linkedin.svg" alt="Linkedin"></a>
-            <a class="button" href="https://www.web-leb.com/code" target="_blank"><img src="../ICON/Instagram.svg" alt="Instagram"></a>
-        </div>
+        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
     </div>
 
     <script src="../JS/dropdown.js"></script>
