@@ -6,14 +6,15 @@ Create table tb_usuario (
     IdUsuario int auto_increment,
     Usuario varchar(15) not null,
     Senha varchar(15) not null,
+    Nome varchar(30) not null,
     primary Key (IdUsuario)
 );
 
-insert into tb_usuario (IdUsuario,Usuario,Senha) values
-	(default,'professor','professor'),
-    (default,'aluno','aluno'),
-    (default,'admin','admin'),
-    (default,'coordenacao','coordenacao');
+insert into tb_usuario (IdUsuario,Usuario,Senha,Nome) values
+	(default,'professor','professor','Luffy'),
+    (default,'aluno','aluno','Naruto'),
+    (default,'admin','admin','Zoro'),
+    (default,'coordenacao','coordenacao','Tsunade');
     
 select *  from tb_usuario;
 
