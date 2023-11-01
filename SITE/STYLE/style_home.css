@@ -139,19 +139,31 @@ main{
 
 /* -------- FIM DO MAIN - GRID DE BOTÕES --------- */
 
-img{
+.dropdown img{
     background: transparent;
+    position: absolute;
 }
-
+.hover{
+    transition: 0.2s ease-in-out;
+    background:transparent;
+}
+.hover:hover{
+    background-color: rgba(255, 255, 255, 0.34);
+    cursor: pointer;
+    z-index: 99;
+}
 /* -------- DROPDOWN MENU -------- */
 .dropbtn {
     border: none;
     cursor: pointer;
+    position: absolute;
 }
   
 .dropdown {
     position: relative;
     display: inline-block;
+    width: 70px;
+    height: 70px;
 }
   
 .dropdown-content {
@@ -174,5 +186,8 @@ img{
   
 .dropdown a:hover {background-color: #ddd;}
   
-.show {display: block;}
+.show {
+    display: block;
+    top: 75px;
+}
 /* -------- FIM DO DROPDOWN MENU -------- */
