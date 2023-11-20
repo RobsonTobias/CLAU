@@ -23,7 +23,7 @@
 <body>
 
 <?php include('../PHP/data.php');?>
-<?php include('../PHP/sidebar/menu_secretaria.php');?>
+<?php include('../PHP/sidebar/menu.php');?>
 <?php include('../PHP/redes.php');?>
 <?php include('../PHP/dropdown.php');?>
 

@@ -219,3 +219,20 @@ a{
     border-bottom-left-radius: 50px;
 }
 
+.word{
+    display: flex;
+    flex-direction: row;
+}
+
+.input__icon {
+    margin-top: 10px;
+    width: 26px;
+    height: 26px;
+    padding: 2px;
+    cursor: pointer;
+  }
+  
+  .input__icon:hover {
+    border-radius: 50%;
+    background-color: var(--hover);
+  }

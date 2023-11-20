@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Iniciar a sessão e armazenar o nome do usuário na variável de sessão
         session_start();
         $_SESSION['Usuario'] = $nomeUsuario;
+        $_SESSION['IdPermissao'] = $permissao; // Armazena o valor de permissao na sessão
 
         // Redirecionar para a página desejada após o login
         if ($permissao == 1) {

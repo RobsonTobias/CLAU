@@ -1,6 +1,9 @@
 <?php
-session_start();
-include '../conexao.php';
+// Verifica se uma sessão já está ativa
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
 
 if (isset($_SESSION['Usuario']) && !empty($_SESSION['Usuario'])) {
     $Nome = $_SESSION['Usuario'];
