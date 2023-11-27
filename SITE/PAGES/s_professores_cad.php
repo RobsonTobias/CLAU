@@ -34,19 +34,22 @@
             <div class="nomedata closed">
                 <h1>CADASTRO DE PROFESSORES</h1>
                 <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
+                    <?php echo $date;?>
+                    <!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
+                <?php echo $dropdown;?>
+                <!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
     </header>
 
     <div>
-        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
+        <?php echo $sidebarHTML;?>
+        <!--  Mostrar o menu lateral -->
     </div>
 
     <main>
@@ -57,66 +60,67 @@
                     <div class="dados">
                         <div class="linha">
                             <label for="nome" class="nome">
-                                <p>NOME COMPLETO</p>
+                                <p>NOME COMPLETO <span>*</span></p>
                                 <input type="text" id="nome" name="nome" required>
                             </label>
                             <label for="apelido" class="apelido">
-                                <p>PRIMEIRO NOME / APELIDO</p>
+                                <p>PRIMEIRO NOME / APELIDO<span>*</span></p>
                                 <input type="text" name="apelido" id="apelido" required>
                             </label>
                         </div>
                         <div class="linha">
                             <label for="email" class="email">
-                                <p>E-MAIL</p>
+                                <p>E-MAIL<span>*</span></p>
                                 <input type="email" id="email" name="email" required>
                             </label>
                             <label for="sexo" class="sexo">
-                                <p>SEXO</p>
+                                <p>SEXO<span>*</span></p>
                                 <div class="select">
-                                <select name="sexo" id="sexo">
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Feminino">Feminino</option>
-                                </select>
-                            </div>
+                                    <select name="sexo" id="sexo">
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
+                                    </select>
+                                </div>
                             </label>
                         </div>
                         <div class="linha">
                             <label for="cpf" class="cpf">
-                                <p>CPF</p>
-                                <input type="text" id="cpf" name="cpf" required
-                                    pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+                                <p>CPF<span>*</span></p>
+                                <input type="text" id="cpf" name="cpf" required maxlength="13"
+                                    onkeyup="handleCPF(event)" placeholder="Digite somente números">
                             </label>
                             <label for="rg" class="rg">
-                                <p>RG</p>
-                                <input type="text" id="rg" name="rg" required>
+                                <p>RG<span>*</span></p>
+                                <input type="text" id="rg" name="rg" maxlength="12" required
+                                    placeholder="Digite somente números" onkeyup="handleRG(event)">
                             </label>
                             <label for="nascimento" class="nascimento">
-                                <p>DATA NASCIMENTO</p>
+                                <p>DATA NASCIMENTO<span>*</span></p>
                                 <input type="date" id="nascimento" name="nascimento" required>
                             </label>
                         </div>
                         <div class="linha">
                             <label for="civil" class="civil">
-                                <p>ESTADO CIVIL</p>
+                                <p>ESTADO CIVIL<span>*</span></p>
                                 <div class="select2">
-                                <select name="civil" id="civil">
-                                    <option value="solteiro">Solteiro</option>
-                                    <option value="casado">Casado</option>
-                                    <option value="separado">Separado</option>
-                                    <option value="divorciado">Divorciado</option>
-                                    <option value="viuvo">Viúvo</option>
-                                </select>
-                            </div>
+                                    <select name="civil" id="civil">
+                                        <option value="solteiro">Solteiro</option>
+                                        <option value="casado">Casado</option>
+                                        <option value="separado">Separado</option>
+                                        <option value="divorciado">Divorciado</option>
+                                        <option value="viuvo">Viúvo</option>
+                                    </select>
+                                </div>
                             </label>
                             <label for="celular" class="celular">
-                                <p>CELULAR</p>
-                                <input type="tel" id="celular" name="celular" required
-                                    pattern="[0-9]{2} [0-9]{5}-[0-9]{4}" placeholder="11 99999-9999">
+                                <p>CELULAR<span>*</span></p>
+                                <input type="tel" id="celular" name="celular" maxlength="15" required
+                                    placeholder="11 99999-9999" onkeyup="handlePhone(event)">
                             </label>
                             <label for="recado" class="recado">
                                 <p>TELEFONE RECADO</p>
-                                <input type="tel" id="recado" name="recado" required
-                                    pattern="[0-9]{2} [0-9]{5}-[0-9]{4}" placeholder="11 99999-9999">
+                                <input type="tel" id="recado" name="recado" maxlength="15" placeholder="11 99999-9999"
+                                    onkeyup="handlePhone(event)">
                             </label>
                         </div>
                         <div>
@@ -135,16 +139,16 @@
                     <div class="dados">
                         <div class="linha">
                             <label for="cep" class="cep">
-                                <p>CEP</p>
-                                <input type="text" id="cep" name="CEP" required maxlength="9"
-                                    placeholder="Digite o CEP">
+                                <p>CEP<span>*</span></p>
+                                <input type="text" id="cep" name="CEP" required maxlength="9" placeholder="Digite o CEP"
+                                    onkeyup="handleZipCode(event)">
                             </label>
                             <label for="logradouro" class="logradouro">
                                 <p>LOGRADOURO</p>
                                 <input type="text" name="logradouro" id="logradouro" readonly>
                             </label>
                             <label for="numero" class="numero">
-                                <p>Nº</p>
+                                <p>Nº<span>*</span></p>
                                 <input type="text" name="numero" id="numero" required>
                             </label>
                         </div>
@@ -175,7 +179,7 @@
                 </div>
                 <div class="fim">
                     <div class="cursos">
-                        <p>CURSOS A LECIONAR</p>
+                        <p>CURSOS A LECIONAR<span>*</span></p>
                         <div class="check">
                             <label>
                                 <input type="checkbox" name="item" value="administracao"> ADMINISTRAÇÃO
@@ -204,7 +208,8 @@
     </main>
 
     <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes;?>
+        <!--  Mostrar o botão de fale conosco -->
     </div>
 
     <script src="../JS/dropdown.js"></script>
@@ -236,6 +241,63 @@
 
                 leitor.readAsDataURL(input.files[0]);
             }
+        }
+
+        const handleZipCode = (event) => {
+            let input = event.target
+            input.value = zipCodeMask(input.value)
+        }
+
+        const zipCodeMask = (value) => {
+            if (!value) return ""
+            value = value.replace(/\D/g, '')
+            value = value.replace(/(\d{5})(\d)/, '$1-$2')
+            return value
+        }
+
+        const handlePhone = (event) => {
+            let input = event.target
+            input.value = PhoneMask(input.value)
+        }
+
+        const PhoneMask = (value) => {
+            if (!value) return ""
+            value = value.replace(/\D/g, '')
+            value = value.replace(/(\d{2})(\d)/, "($1) $2")
+            value = value.replace(/(\d)(\d{4})$/, "$1-$2")
+            return value
+        }
+
+        const handleCPF = (value) => {
+
+            let input = event.target
+            input.value = CPFMask(input.value)
+        }
+
+        const CPFMask = (value) => {
+            if (!value) return ""
+            value = value.replace(/\D/g, '')
+            value = value.replace(/(\d{3})(\d)/, "$1.$2")
+            value = value.replace(/(\d{3})(\d)/, "$1.$2")
+            value = value.replace(/(\d{3})(\d{2})/, "$1-$2")
+
+            return value
+        }
+
+        const handleRG = (value) => {
+
+            let input = event.target
+            input.value = RGMask(input.value)
+        }
+
+        const RGMask = (value) => {
+            if (!value) return ""
+            value = value.replace(/\D/g, '')
+            value = value.replace(/(\d{2})(\d)/, "$1.$2")
+            value = value.replace(/(\d{3})(\d)/, "$1.$2")
+            value = value.replace(/(\d{3})(\d{1})/, "$1-$2")
+
+            return value
         }
     </script>
 </body>
