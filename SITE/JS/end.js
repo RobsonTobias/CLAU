@@ -1,4 +1,4 @@
-ddocument.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const cepInput = document.getElementById('cep');
     cepInput.addEventListener('input', function () {
         const cepValue = cepInput.value.replace(/\D/g, '');
