@@ -1,16 +1,16 @@
-document.addEventListener('DOMContentLoaded', function () {
+ddocument.addEventListener('DOMContentLoaded', function () {
     const cepInput = document.getElementById('cep');
+    cepInput.addEventListener('input', function () {
+        const cepValue = cepInput.value.replace(/\D/g, '');
+        if (cepValue.length === 8) {
 
-    cepInput.addEventListener('keydown', function (event) {
-        // Se a tecla pressionada for Enter ou Tab
-        if (event.key === 'Enter' || event.key === 'Tab') {
-            event.preventDefault(); // Impede o comportamento padrão (Tab muda de campo)
-
-            // Chama a função para buscar o endereço
             buscarEndereco();
+
         }
     });
 });
+
+
 
 function buscarEndereco() {
     const cep = document.getElementById('cep').value.replace(/\D/g, '');
