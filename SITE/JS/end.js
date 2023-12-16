@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cepInput = document.getElementById('cep');
-
-    cepInput.addEventListener('keydown', function (event) {
-        // Se a tecla pressionada for Enter ou Tab
-        if (event.key === 'Enter' || event.key === 'Tab') {
-            event.preventDefault(); // Impede o comportamento padrão (Tab muda de campo)
-
-            // Chama a função para buscar o endereço
+ 
+    cepInput.addEventListener('input', function() {
+        const cepValue = cepInput.value.replace(/\D/g, '');
+ 
+        if (cepValue.length === 8) {
             buscarEndereco();
         }
     });

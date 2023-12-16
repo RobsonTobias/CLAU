@@ -69,6 +69,7 @@ header{
     border-radius: 50%;
     width: 70px;
     border: solid 3px var(--cor-primaria);
+    height: 70px;
 }
 
 /* Estiliza informações do usuário no cabeçalho */

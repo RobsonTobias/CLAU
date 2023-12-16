@@ -5,13 +5,14 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_SESSION['Usuario']) && !empty($_SESSION['Usuario'])) {
-    $Nome = $_SESSION['Usuario'];
+if (isset($_SESSION['Usuario_Nome']) && !empty($_SESSION['Usuario_Nome'])) {
+    $Nome = htmlspecialchars($_SESSION['Usuario_Nome']);
+    $Foto = htmlspecialchars($_SESSION['Usuario_Foto']);
 
     $dropdown ='
     <p>' . $Nome . '</p>
     <div class="dropdown">
-        <img src="https://placekitten.com/400/400" alt="Perfil" onclick="myFunction()"   class="dropbtn">
+        <img src="' . $Foto . '" alt="Perfil" onclick="myFunction()" class="dropbtn">
         <div style="height:70px;width:70px; position:absolute" onclick="myFunction()" class="dropbtn hover"></div>
         <div id="myDropdown" class="dropdown-content">
             <a href="perfil.php">Perfil</a>

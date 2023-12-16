@@ -30,7 +30,7 @@
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>PROFESSORES</h1>
+                <h1>RELATÓRIO DE PROFESSORES</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
@@ -48,12 +48,7 @@
     </div>
     
     <main>
-        <a href="s_professores_cad.php" class="item"><img src="../ICON/cadastro_professor.svg" alt="Cadastro_Professores">
-            <p>Cadastro de Professores</p>
-        </a>
-        <a href="s_professores_relatorio.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Professores">
-            <p>Relatório de Professores</p>
-        </a>
+        
     </main>
 
     <div class="buttons">

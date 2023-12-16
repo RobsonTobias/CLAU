@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .professores path{
+        .home path{
             fill: #043140;
         }
     </style>
@@ -30,7 +30,7 @@
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>PROFESSORES</h1>
+                <h1>HOME</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
@@ -48,11 +48,11 @@
     </div>
     
     <main>
-        <a href="s_professores_cad.php" class="item"><img src="../ICON/cadastro_professor.svg" alt="Cadastro_Professores">
-            <p>Cadastro de Professores</p>
+        <a href="m_funcionario_cad.php" class="item"><img src="../ICON/cadastro_funcionario.svg" alt="Cad_Funcionario">
+            <p>Cadastrar Funcionário</p>
         </a>
-        <a href="s_professores_relatorio.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Professores">
-            <p>Relatório de Professores</p>
+        <a href="m_funcionario.php" class="item"><img src="../ICON/funcionario.svg" alt="Pesquisar_Funcionario">
+            <p>Pesquisar Funcionário</p>
         </a>
     </main>
 
