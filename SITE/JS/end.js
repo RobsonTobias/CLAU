@@ -6,9 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
  
         if (cepValue.length === 8) {
             buscarEndereco();
+
         }
     });
 });
+
+
 
 function buscarEndereco() {
     const cep = document.getElementById('cep').value.replace(/\D/g, '');
