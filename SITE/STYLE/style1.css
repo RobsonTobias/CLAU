@@ -152,13 +152,14 @@ a{
     width: 150px;
     align-self: center;
     border-width: 0;
-    background-color: blue;
+    background-color: #1212f3;
 }
 
 
 .btn:hover{
-    background-color: green;
+    background-color: #028602;
 }
+
 
 .segundo-btn{
     width: 250px;
