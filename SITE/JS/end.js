@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
  
         if (cepValue.length === 8) {
             buscarEndereco();
-
+            
         }
     });
 });
