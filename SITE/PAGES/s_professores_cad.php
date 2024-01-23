@@ -177,31 +177,9 @@
                         <img src="../ICON/endereco.svg" alt="endereco">
                     </div>
                 </div>
-                <div class="fim">
-                    <div class="cursos">
-                        <p>CURSOS A LECIONAR<span>*</span></p>
-                        <div class="check">
-                            <label>
-                                <input type="checkbox" name="item" value="administracao"> ADMINISTRAÇÃO
-                            </label>
-                            <label>
-                                <input type="checkbox" name="item" value="informatica"> INFORMÁTICA
-                            </label>
-                            <label>
-                                <input type="checkbox" name="item" value="ingles"> INGLÊS
-                            </label>
-                            <label>
-                                <input type="checkbox" name="item" value="robotica"> ROBÓTICA
-                            </label>
-                            <label>
-                                <input type="checkbox" name="item" value="webdesign"> WEB-DESIGN
-                            </label>
-                        </div>
-                    </div>
-                    <div class="botao">
-                        <button class="cadastrar" type="submit" onclick="cadastrar()">CADASTRAR</button>
-                        <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
-                    </div>
+                <div class="botao func">
+                    <button class="cadastrar" type="submit" onclick="cadastrar()">CADASTRAR</button>
+                    <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
                 </div>
             </form>
         </div>
@@ -217,16 +195,37 @@
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/end.js"></script>
     <script>
-        function cadastrar() {
-            // Adicione a lógica de cadastro aqui
-            alert('Cadastro realizado com sucesso!');
-            // Você pode redirecionar o usuário ou realizar outras ações necessárias
-        }
+
+        $(document).ready(function () {
+            $("#form").on("submit", function (e) {
+                e.preventDefault(); // Impede o envio normal do formulário
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '../PHP/cad_professor.php',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        if (response.includes("Cadastro realizado com sucesso!")) {
+                            $('#form').trigger("reset"); // Limpa o formulário
+                            $('#imagemExibida').attr('src', 'https://placekitten.com/400/400');
+                            alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
+                        } else {
+                            alert(response); // Exibe outros alertas retornados pelo servidor
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+        });
 
         function limpar() {
             // Adicione a lógica para limpar os campos do formulário aqui
             document.getElementById('form').reset();
-            // Você pode adicionar mais lógica de limpeza conforme necessário
+            
         }
         function exibirImagem() {
             const input = document.getElementById('imagemInput');

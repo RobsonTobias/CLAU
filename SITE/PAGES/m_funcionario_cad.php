@@ -129,7 +129,7 @@
                         </div>
                     </div>
                     <div class="foto">
-                        <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
+                        <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">                                            
                         <label for="imagemInput">INSERIR FOTO</label>
                         <input type="file" id="imagemInput" name="imagem" accept="image/*" onchange="exibirImagem()">
                     </div>
