@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
 include 'conexao.php';
 
@@ -27,10 +25,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sqlRegistroUsuario = "SELECT * FROM Registro_Usuario WHERE Usuario_Usuario_cd = '$UsuarioId'";
         $resultRegistroUsuario = mysqli_query($conn, $sqlRegistroUsuario);
         
-        if ($resultRegistroUsuario) {
+        if (mysqli_num_rows($resultRegistroUsuario)==1) {
             $rowRegistroUsuario = mysqli_fetch_assoc($resultRegistroUsuario);
             $permissao = $rowRegistroUsuario['Tipo_Tipo_cd'];
-        } else {
+        } elseif (mysqli_num_rows($resultRegistroUsuario)>1){
+            $permissoes = array();
+            while ($rowRegistroUsuario = mysqli_fetch_assoc($resultRegistroUsuario)) {
+                array_push($permissoes, $rowRegistroUsuario['Tipo_Tipo_cd']);
+            }
+            session_start();
+            $_SESSION['Permissoes'] = $permissoes;
+            $_SESSION['Usuario_Nome'] = $nomeUsuario;
+            $_SESSION['Usuario_id'] = $UsuarioId; // Armazena o Id do usuário na sessão
+            $_SESSION['Usuario_Foto'] = $usuariofoto;
+            $_SESSION['Tipo_Tipo_cd'] = '';
+            header("Location: PAGES/login2.php");
+        } else { 
             // Trate qualquer erro ao obter o valor de Tipo_Tipo_cd aqui
             // Por exemplo, você pode definir $permissao como um valor padrão ou redirecionar para uma página de erro
             $permissao = 0; // Defina um valor padrão ou lide com o erro de outra forma

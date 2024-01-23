@@ -1,3 +1,10 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+$_SESSION['Tipo_Tipo_cd'] = 1;
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../STYLE/cadastro.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .funcionariocad path {
+        .funcionario path{
             fill: #043140;
         }
     </style>
@@ -31,7 +31,7 @@
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>CADASTRO DE FUNCIONÁRIOS</h1>
+                <h1>ALTERAR FUNCIONÁRIO</h1>
                 <div class="php">
                     <?php echo $date;?>
                     <!--  Mostrar o data atual -->

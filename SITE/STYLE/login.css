@@ -98,7 +98,7 @@ hr{
 /* -------- MAIN - GRID DE BOTÕES --------- */
 main{
     width: 90%;
-    height: 80%;
+    /* height: 80%; */
     align-items: center;
     display: flex;
     flex-wrap: wrap;

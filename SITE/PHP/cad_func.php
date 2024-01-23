@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Verifique o tamanho do arquivo
-    if ($_FILES["imagem"]["size"] > 500000) { // 500KB
+    if ($_FILES["imagem"]["size"] > 1000000) { // 1MB
         echo "Desculpe, seu arquivo é muito grande.";
         $uploadOk = false;
     }
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Permitir certos formatos de arquivo
     $tipoArquivo = strtolower(pathinfo($caminhoCompleto, PATHINFO_EXTENSION));
     if ($tipoArquivo != "jpg" && $tipoArquivo != "png" && $tipoArquivo != "jpeg") {
-        echo "Desculpe, apenas JPG, JPEG, PNG são permitidos.";
+        echo "Desculpe, apenas JPG, JPEG e PNG são permitidos.";
         $uploadOk = false;
     }
 

@@ -2,7 +2,10 @@
 
   include '../conexao.php';
 
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
 
   if (isset($_SESSION['Usuario_Nome']) && isset($_SESSION['Tipo_Tipo_cd'])) {
     $nomeUsuario = $_SESSION['Usuario_Nome'];
@@ -135,8 +138,8 @@ elseif ($permissao == 2) {
 </div>
 ';}
 
-// -- COORDENAÇÃO --
-elseif($permissao == 5){ 
+// -- ALUNO --
+elseif($permissao == 3){
   $sidebarHTML ='
   <div class="sidebar close">
     <div class="logo-details">
@@ -146,12 +149,12 @@ elseif($permissao == 5){
     <ul class="nav-links">
 
       <li class="home">
-        <a href="../PAGES/p_home.php">
+        <a href="../PAGES/a_home.php">
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M36.6669 21.1111C36.5206 21.1119 36.3757 21.0839 36.2403 21.0286C36.1049 20.9733 35.9818 20.8918 35.878 20.7889L20.0002 4.89997L4.12242 20.7889C3.90986 20.9709 3.63644 21.066 3.3568 21.0552C3.07716 21.0444 2.81189 20.9285 2.61401 20.7306C2.41613 20.5327 2.3002 20.2674 2.2894 19.9878C2.2786 19.7082 2.37372 19.4347 2.55575 19.2222L19.2224 2.55552C19.4306 2.34858 19.7122 2.23242 20.0057 2.23242C20.2993 2.23242 20.5809 2.34858 20.7891 2.55552L37.4557 19.2222C37.6086 19.3782 37.7122 19.5758 37.7534 19.7903C37.7946 20.0047 37.7717 20.2266 37.6875 20.4282C37.6034 20.6297 37.4617 20.802 37.2801 20.9235C37.0986 21.0449 36.8853 21.1102 36.6669 21.1111Z" fill="white"/>
             <path d="M19.9998 8.65564L6.6665 22.0334V35.5556C6.6665 36.145 6.90063 36.7102 7.31738 37.127C7.73413 37.5437 8.29936 37.7779 8.88873 37.7779H16.6665V26.6667H23.3332V37.7779H31.1109C31.7003 37.7779 32.2655 37.5437 32.6823 37.127C33.099 36.7102 33.3332 36.145 33.3332 35.5556V21.9556L19.9998 8.65564Z" fill="white"/>
           </svg>
-          <span class="link_name">HOME-COORDENADOR</span>
+          <span class="link_name">HOME - ALUNO</span>
         </a>
       </li>
 
@@ -246,7 +249,8 @@ elseif($permissao == 5){
     </ul>
 </div>
 ';
-} 
+}
+ 
 // -- PROFESSOR --
 elseif($permissao == 4){
   $sidebarHTML ='
@@ -360,8 +364,8 @@ elseif($permissao == 4){
 ';
 }
 
-// -- ALUNO --
-elseif($permissao == 3){
+// -- COORDENAÇÃO --
+elseif($permissao == 5){ 
   $sidebarHTML ='
   <div class="sidebar close">
     <div class="logo-details">
@@ -371,12 +375,12 @@ elseif($permissao == 3){
     <ul class="nav-links">
 
       <li class="home">
-        <a href="../PAGES/p_home.php">
+        <a href="../PAGES/c_home.php">
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M36.6669 21.1111C36.5206 21.1119 36.3757 21.0839 36.2403 21.0286C36.1049 20.9733 35.9818 20.8918 35.878 20.7889L20.0002 4.89997L4.12242 20.7889C3.90986 20.9709 3.63644 21.066 3.3568 21.0552C3.07716 21.0444 2.81189 20.9285 2.61401 20.7306C2.41613 20.5327 2.3002 20.2674 2.2894 19.9878C2.2786 19.7082 2.37372 19.4347 2.55575 19.2222L19.2224 2.55552C19.4306 2.34858 19.7122 2.23242 20.0057 2.23242C20.2993 2.23242 20.5809 2.34858 20.7891 2.55552L37.4557 19.2222C37.6086 19.3782 37.7122 19.5758 37.7534 19.7903C37.7946 20.0047 37.7717 20.2266 37.6875 20.4282C37.6034 20.6297 37.4617 20.802 37.2801 20.9235C37.0986 21.0449 36.8853 21.1102 36.6669 21.1111Z" fill="white"/>
             <path d="M19.9998 8.65564L6.6665 22.0334V35.5556C6.6665 36.145 6.90063 36.7102 7.31738 37.127C7.73413 37.5437 8.29936 37.7779 8.88873 37.7779H16.6665V26.6667H23.3332V37.7779H31.1109C31.7003 37.7779 32.2655 37.5437 32.6823 37.127C33.099 36.7102 33.3332 36.145 33.3332 35.5556V21.9556L19.9998 8.65564Z" fill="white"/>
           </svg>
-          <span class="link_name">HOME - ALUNO</span>
+          <span class="link_name">HOME-COORDENADOR</span>
         </a>
       </li>
 

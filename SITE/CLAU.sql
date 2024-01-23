@@ -4,7 +4,7 @@ USE CLAU;
 
 CREATE TABLE Enderecos (
   Enderecos_id INT NOT NULL AUTO_INCREMENT,
-  Enderecos_Cep CHAR(8) NOT NULL,
+  Enderecos_Cep CHAR(9) NOT NULL,
   Enderecos_Rua VARCHAR(100) NOT NULL,
   Enderecos_Numero INT(10) NOT NULL,
   Enderecos_Complemento VARCHAR(10) NULL,
@@ -31,12 +31,12 @@ CREATE TABLE Usuario (
   Usuario_Apelido VARCHAR (50) NOT NULL,
   Usuario_Email VARCHAR(100) NOT NULL,
   Usuario_Sexo CHAR(1) NOT NULL,
-  Usuario_Cpf CHAR(11) NOT NULL,
-  Usuario_Rg VARCHAR(10) NOT NULL,
+  Usuario_Cpf CHAR(14) NOT NULL,
+  Usuario_Rg VARCHAR(14) NOT NULL,
   Usuario_Nascimento DATE NOT NULL,
   Usuario_EstadoCivil VARCHAR(20) NOT NULL,
-  Usuario_Fone VARCHAR(13) NOT NULL,
-  Usuario_Fone_Recado VARCHAR(13) NULL,
+  Usuario_Fone VARCHAR(15) NOT NULL,
+  Usuario_Fone_Recado VARCHAR(15) NULL,
   Usuario_Login VARCHAR(100) NOT NULL,
   Usuario_Senha VARCHAR(45) NOT NULL,
   Responsavel_Respon_cd INT NULL,
@@ -194,18 +194,114 @@ VALUES	('Master'),
 		('Aluno'),
         ('Professor'),
         ('Coordenador');
-        
+
+-- ---------------- --
+-- MASTER / DIRETOR --
+-- ---------------- --      
 -- Endereço do usuário MASTER na tabela Endereços
 INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
-VALUES ('12246260','Avenida Salmão','570','Parque Residencial Aquarius','São José dos Campos','São Paulo');
+VALUES ('12246-260','Avenida Salmão','570','Parque Residencial Aquarius','São José dos Campos','São Paulo');
 
 -- Cadastro do usuário MASTER na tabela Usuaário
 INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('Master','Diretor','master@email.com','M','12345678900','123456789','2024-01-01','Solteiro','123456789','master','master',1,1,1,'../IMAGE/PROFILE/master.jpg');
+VALUES ('Master','Diretor','master@email.com','F','123.456.789-00','12.345.678-9','1987-01-01','Solteiro','(12) 3456-789','master','master',1,1,1,'../IMAGE/PROFILE/master.jpg');
 
 -- Cadastro do usuário como tipo MASTER na tabela Registro_Usuario
 INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
 VALUES (1,1);
+-- -------------------- --
+-- FIM MASTER / DIRETOR --
+-- -------------------- --
+
+-- ---------- --
+-- SECRETARIA --
+-- ---------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12240-030','Rua dos Alecrins','538','Jardim das Indústrias','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuaário
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
+VALUES ('Miguel Almeida Ferreira','Miguel','miguel.ferreira@email.com','M','904.276.838-07','11.111.111-1','1996-02-15','Solteiro','(11) 11111-1111','secretaria','escola123',2,1,1,'../IMAGE/PROFILE/02.png');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (2,2);
+-- -------------- --
+-- FIM SECRETARIA --
+-- -------------- --
+
+-- --------- --
+-- PROFESSOR --
+-- --------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12233-597','Rua Andrelândia','103','Bosque dos Eucaliptos','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuaário
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
+VALUES ('Evelyn Azevedo Pinto','Evelyn','evelyn.pinto@email.com','F','439.979.782-71','22.222.222-2','1989-03-26','Casada','(22) 2222-2222','professor','escola123',3,2,1,'../IMAGE/PROFILE/03.png');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (3,4);
+-- ------------- --
+-- FIM PROFESSOR --
+-- ------------- --
+
+-- ----------------------- --
+-- COORDENADOR / PROFESSOR --
+-- ----------------------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12242-530','Rua João Bicudo','258','Jardim Esplanada','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuaário
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
+VALUES ('Kiyumi Otsuka','Kiyumi','kiyumi.otsuka@email.com','F','658.285.418-62','33.333.333-3','1991-04-17','Solteira','(33) 33333-3333','kiyumi','escola123',4,2,1,'../IMAGE/PROFILE/01.png');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (4,4),(4,5);
+-- --------------------------- --
+-- FIM COORDENADOR / PROFESSOR --
+-- --------------------------- --
+
+-- -------- --
+-- ALUNO 01 --
+-- -------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12236-420','Rua Joana Soares Ferreira','1063','Cidade Morumbi','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuaário
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
+VALUES ('Laura Cunha Dias','Laura','laura.dias@email.com','F','135.577.066-13','44.444.444-4','2003-06-18','Solteira','(44) 4444-4444','laura','escola123',5,2,1,'../IMAGE/PROFILE/04.png');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (5,3);
+-- ------------ --
+-- FIM ALUNO 01 --
+-- ------------ --
+
+-- -------- --
+-- ALUNO 02 --
+-- -------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12220-200','Rua Graúna','562','Vila Tatetuba','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuaário
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
+VALUES ('Vitória Pinto Carvalho','Vitória','vitoria.carvalho@email.com','F','142.763.597-83','44.333.555-8','2008-10-05','Solteira','(55) 55555-5555','vitoria','escola123',6,2,1,'../IMAGE/PROFILE/05.png');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (6,3);
+-- ------------ --
+-- FIM ALUNO 02 --
+-- ------------ --
 
 SELECT * FROM Registro_Usuario;
 SELECT * FROM Enderecos;
