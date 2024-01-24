@@ -1,3 +1,25 @@
+<?php
+    include ('../conexao.php');
+
+    if (session_status() == PHP_SESSION_NONE) {
+        // Se não houver sessão ativa, inicia a sessão
+        session_start();
+    }
+    $userId = $_SESSION['UsuarioSelecionado'];
+
+    // Consulta para recuperar informações do usuário
+    $sql = "SELECT * FROM Usuario
+    INNER JOIN Enderecos on Enderecos.Enderecos_id = Usuario.Enderecos_Enderecos_cd
+    WHERE Usuario_id = $userId";
+    $result = $conn->query($sql);
+
+    // Verificar se o usuário existe
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+    } else {
+        echo "Usuário não encontrado";
+    }
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,6 +35,7 @@
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="stylesheet" href="../STYLE/cadastro.css">
+    <link rel="stylesheet" href="../STYLE/alterar.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
         .funcionario path{
@@ -54,28 +77,28 @@
     <main>
         <div class="geral">
             <p>Informações do Funcionário</p>
-            <form action="../PHP/cad_func.php" id="form" class="form" method="post" enctype="multipart/form-data">
+            <form action="../PHP/alt_func.php" id="form" class="form" method="post" enctype="multipart/form-data">
                 <div class="info">
                     <div class="dados">
                         <div class="linha">
                             <label for="nome" class="nome">
                                 <p>NOME COMPLETO <span>*</span></p>
-                                <input type="text" id="nome" name="nome" required>
+                                <input type="text" id="nome" name="nome" value="<?php echo $row['Usuario_Nome']; ?>" required>
                             </label>
                             <label for="apelido" class="apelido">
                                 <p>PRIMEIRO NOME / APELIDO<span>*</span></p>
-                                <input type="text" name="apelido" id="apelido" required>
+                                <input type="text" name="apelido" id="apelido" value="<?php echo $row['Usuario_Apelido']; ?>" required>
                             </label>
                         </div>
                         <div class="linha">
                             <label for="email" class="email">
                                 <p>E-MAIL<span>*</span></p>
-                                <input type="email" id="email" name="email" required>
+                                <input type="email" id="email" name="email" value="<?php echo $row['Usuario_Email']; ?>" required>
                             </label>
                             <label for="sexo" class="sexo">
                                 <p>SEXO<span>*</span></p>
                                 <div class="select">
-                                    <select name="sexo" id="sexo">
+                                    <select name="sexo" id="sexo" value="<?php echo $row['Usuario_Sexo']; ?>">
                                         <option value="Masculino">Masculino</option>
                                         <option value="Feminino">Feminino</option>
                                     </select>
@@ -86,23 +109,23 @@
                             <label for="cpf" class="cpf">
                                 <p>CPF<span>*</span></p>
                                 <input type="text" id="cpf" name="cpf" required maxlength="13"
-                                    onkeyup="handleCPF(event)" placeholder="Digite somente números">
+                                    onkeyup="handleCPF(event)" value="<?php echo $row['Usuario_Cpf']; ?>">
                             </label>
                             <label for="rg" class="rg">
                                 <p>RG<span>*</span></p>
                                 <input type="text" id="rg" name="rg" maxlength="12" required
-                                    placeholder="Digite somente números" onkeyup="handleRG(event)">
+                                value="<?php echo $row['Usuario_Rg']; ?>" onkeyup="handleRG(event)">
                             </label>
                             <label for="nascimento" class="nascimento">
                                 <p>DATA NASCIMENTO<span>*</span></p>
-                                <input type="date" id="nascimento" name="nascimento" required>
+                                <input type="date" id="nascimento" name="nascimento" value="<?php echo $row['Usuario_Nascimento']; ?>" required>
                             </label>
                         </div>
                         <div class="linha">
                             <label for="civil" class="civil">
                                 <p>ESTADO CIVIL<span>*</span></p>
                                 <div class="select2">
-                                    <select name="civil" id="civil">
+                                    <select name="civil" id="civil" value="<?php echo $row['Usuario_EstadoCivil']; ?>">
                                         <option value="solteiro">Solteiro</option>
                                         <option value="casado">Casado</option>
                                         <option value="separado">Separado</option>
@@ -114,23 +137,23 @@
                             <label for="celular" class="celular">
                                 <p>CELULAR<span>*</span></p>
                                 <input type="tel" id="celular" name="celular" maxlength="15" required
-                                    placeholder="11 99999-9999" onkeyup="handlePhone(event)">
+                                    placeholder="11 99999-9999" value="<?php echo $row['Usuario_Fone']; ?>" onkeyup="handlePhone(event)">
                             </label>
                             <label for="recado" class="recado">
                                 <p>TELEFONE RECADO</p>
-                                <input type="tel" id="recado" name="recado" maxlength="15" placeholder="11 99999-9999"
+                                <input type="tel" id="recado" name="recado" maxlength="15" placeholder="11 99999-9999" value="<?php echo $row['Usuario_Fone_Recado']; ?>"
                                     onkeyup="handlePhone(event)">
                             </label>
                         </div>
                         <div>
                             <label for="obs" class="obs">
-                                <textarea name="obs" id="obs" placeholder="Observações sobre o funcionário..."></textarea>
+                                <textarea name="obs" id="obs" placeholder="Observações sobre o funcionário..." value="<?php echo $row['Usuario_Obs']; ?>"></textarea>
                             </label>
                         </div>
                     </div>
                     <div class="foto">
-                        <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
-                        <label for="imagemInput">INSERIR FOTO</label>
+                        <img id="imagemExibida" src="<?php echo $row['Usuario_Foto']; ?>" alt="foto">
+                        <label for="imagemInput">ALTERAR FOTO</label>
                         <input type="file" id="imagemInput" name="imagem" accept="image/*" onchange="exibirImagem()">
                     </div>
                 </div>
@@ -139,36 +162,36 @@
                         <div class="linha">
                             <label for="cep" class="cep">
                                 <p>CEP<span>*</span></p>
-                                <input type="text" id="cep" name="cep" required maxlength="9" placeholder="Digite o CEP"
+                                <input type="text" id="cep" name="cep" required maxlength="9" placeholder="Digite o CEP" value="<?php echo $row['Enderecos_Cep']; ?>"
                                     onkeyup="handleZipCode(event)">
                             </label>
                             <label for="logradouro" class="logradouro">
                                 <p>LOGRADOURO</p>
-                                <input type="text" name="logradouro" id="logradouro" readonly>
+                                <input type="text" name="logradouro" id="logradouro" value="<?php echo $row['Enderecos_Rua']; ?>" readonly>
                             </label>
                             <label for="numero" class="numero">
                                 <p>Nº<span>*</span></p>
-                                <input type="text" name="numero" id="numero" required>
+                                <input type="text" name="numero" id="numero" value="<?php echo $row['Enderecos_Numero']; ?>" required>
                             </label>
                         </div>
                         <div class="linha">
                             <label for="bairro" class="bairro">
                                 <p>BAIRRO</p>
-                                <input type="text" id="bairro" name="bairro" readonly>
+                                <input type="text" id="bairro" name="bairro" value="<?php echo $row['Enderecos_Bairro']; ?>" readonly>
                             </label>
                             <label for="complemento" class="complemento">
                                 <p>COMPLEMENTO</p>
-                                <input type="text" id="complemento" name="complemento">
+                                <input type="text" id="complemento" name="complemento" value="<?php echo $row['Enderecos_Complemento']; ?>">
                             </label>
                         </div>
                         <div class="linha">
                             <label for="cidade" class="cidade">
                                 <p>CIDADE</p>
-                                <input type="text" id="cidade" name="cidade" readonly>
+                                <input type="text" id="cidade" name="cidade" value="<?php echo $row['Enderecos_Cidade']; ?>" readonly>
                             </label>
                             <label for="estado" class="estado">
                                 <p>ESTADO</p>
-                                <input type="text" id="estado" name="estado" readonly>
+                                <input type="text" id="estado" name="estado" value="<?php echo $row['Enderecos_Uf']; ?>" readonly>
                             </label>
                         </div>
                     </div>
@@ -177,8 +200,7 @@
                     </div>
                 </div>
                     <div class="botao func">
-                        <button class="cadastrar" type="submit" onclick="cadastrar()">CADASTRAR</button>
-                        <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
+                        <button class="cadastrar" type="submit" onclick="cadastrar()">SALVAR</button>
                     </div>
             </form>
         </div>
@@ -196,15 +218,10 @@
     <script>
         function cadastrar() {
             // Adicione a lógica de cadastro aqui
-            alert('Cadastro realizado com sucesso!');
+            alert('Cadastro atualizado com sucesso!');
             // Você pode redirecionar o usuário ou realizar outras ações necessárias
         }
 
-        function limpar() {
-            // Adicione a lógica para limpar os campos do formulário aqui
-            document.getElementById('form').reset();
-            // Você pode adicionar mais lógica de limpeza conforme necessário
-        }
         function exibirImagem() {
             const input = document.getElementById('imagemInput');
             const imagemExibida = document.getElementById('imagemExibida');

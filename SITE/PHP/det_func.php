@@ -17,6 +17,9 @@ INNER JOIN Registro_Usuario on Registro_Usuario.Usuario_Usuario_cd = Usuario.Usu
 WHERE Usuario_id = ?";
 $stmt = $conn->prepare($sql);
 
+session_start();
+$_SESSION['UsuarioSelecionado'] = $userId;
+
 // Verificar se a declaração foi preparada corretamente
 if ($stmt === false) {
     die("Erro na preparação: " . $conn->error);

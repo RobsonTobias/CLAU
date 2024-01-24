@@ -1,0 +1,22 @@
+.foto label{
+    cursor: pointer;
+    background-color: #FDE276;
+    width: 110px;
+    height: 30px;
+    border-radius: 15px;
+    color: #A08000;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cadastrar{
+    background-color: #6EC77D;
+    color: #0D4817;
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+    border: none;
+    font-weight: bold;
+}
