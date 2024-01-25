@@ -24,23 +24,23 @@
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php include('../PHP/data.php');?>
-    <?php include('../PHP/sidebar/menu.php');?>
-    <?php include('../PHP/redes.php');?>
-    <?php include('../PHP/dropdown.php');?>
+    <?php include('../PHP/data.php'); ?>
+    <?php include('../PHP/sidebar/menu.php'); ?>
+    <?php include('../PHP/redes.php'); ?>
+    <?php include('../PHP/dropdown.php'); ?>
 
     <header>
         <div class="title">
             <div class="nomedata closed">
                 <h1>CADASTRO DE PROFESSORES</h1>
                 <div class="php">
-                    <?php echo $date;?>
+                    <?php echo $date; ?>
                     <!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?>
+                <?php echo $dropdown; ?>
                 <!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
@@ -48,7 +48,7 @@
     </header>
 
     <div>
-        <?php echo $sidebarHTML;?>
+        <?php echo $sidebarHTML; ?>
         <!--  Mostrar o menu lateral -->
     </div>
 
@@ -140,7 +140,7 @@
                         <div class="linha">
                             <label for="cep" class="cep">
                                 <p>CEP<span>*</span></p>
-                                <input type="text" id="cep" name="CEP" required maxlength="9" placeholder="Digite o CEP"
+                                <input type="text" id="cep" name="cep" required maxlength="9" placeholder="Digite o CEP"
                                     onkeyup="handleZipCode(event)">
                             </label>
                             <label for="logradouro" class="logradouro">
@@ -159,7 +159,7 @@
                             </label>
                             <label for="complemento" class="complemento">
                                 <p>COMPLEMENTO</p>
-                                <input type="text" id="complemento" name="complemento" required>
+                                <input type="text" id="complemento" name="complemento">
                             </label>
                         </div>
                         <div class="linha">
@@ -186,7 +186,7 @@
     </main>
 
     <div class="buttons">
-        <?php echo $redes;?>
+        <?php echo $redes; ?>
         <!--  Mostrar o botão de fale conosco -->
     </div>
 
@@ -225,7 +225,7 @@
         function limpar() {
             // Adicione a lógica para limpar os campos do formulário aqui
             document.getElementById('form').reset();
-            
+
         }
         function exibirImagem() {
             const input = document.getElementById('imagemInput');
@@ -243,16 +243,18 @@
         }
 
         const handleZipCode = (event) => {
-            let input = event.target
-            input.value = zipCodeMask(input.value)
+            let input = event.target;
+            input.value = zipCodeMask(input.value);
         }
 
         const zipCodeMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{5})(\d)/, '$1-$2')
-            return value
+            if (!value) return "";
+            value = value.replace(/\D/g, "");
+            value = value.replace(/(\d{5})(\d)/, "$1-$2");
+            return value;
         }
+
+        document.getElementById("cep").addEventListener("keyup", handleZipCode);
 
         const handlePhone = (event) => {
             let input = event.target
