@@ -31,7 +31,7 @@
 </head>
 
 <body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <?php include('../PHP/data.php');?>
 <?php include('../PHP/sidebar/menu.php');?>
 <?php include('../PHP/redes.php');?>

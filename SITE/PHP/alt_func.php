@@ -66,34 +66,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $estado = $conn->real_escape_string($_POST['estado']);
             // Adicione aqui mais campos conforme necessário
 
-            // Inserir dados no banco de dados
-            $end = "INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Complemento, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf) VALUES ('$cep', '$logradouro','$numero', '$complemento', '$bairro', '$cidade', '$estado')";
+            $enderecoId = $_SESSION['EnderecoId'];
+            
+            $end = "UPDATE Enderecos SET 
+            Enderecos_Cep = '$cep', 
+            Enderecos_Rua = '$logradouro', 
+            Enderecos_Numero = '$numero', 
+            Enderecos_Complemento = '$complemento', 
+            Enderecos_Bairro = '$bairro', 
+            Enderecos_Cidade = '$cidade', 
+            Enderecos_Uf = '$estado'
+            WHERE Enderecos_id = $enderecoId";
 
-            if ($conn->query($end) === TRUE) {
-                $enderecosCd = $conn->insert_id;
-                echo "Endereço inserido com sucesso. ID: " . $enderecosCd;
-            } else {
-                echo "Erro ao inserir endereço: " . $conn->error;
-            }
+            // Execute a consulta no banco de dados
+            // if ($conn->query($end) === TRUE) {
+            //     echo "Endereço atualizado com sucesso";
+            // } else {
+            //     echo "Erro ao atualizar o endereço: " . $conn->error;
+            // }
 
             $usuariocd = $_SESSION['Usuario_id'];
+            $userId = $_SESSION['UsuarioSelecionado'];
 
-            $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf','$rg','$nascimento','$estadocivil','$celular','$telrecado','$apelido', 'escola123','$obs','$enderecosCd','$usuariocd','$caminhoCompleto')";
+            $sql = "UPDATE Usuario SET 
+            Usuario_Nome = '$nome', 
+            Usuario_Apelido = '$apelido', 
+            Usuario_Email = '$email', 
+            Usuario_Sexo = '$sexo', 
+            Usuario_Cpf = '$cpf', 
+            Usuario_Rg = '$rg', 
+            Usuario_Nascimento = '$nascimento', 
+            Usuario_EstadoCivil = '$estadocivil', 
+            Usuario_Fone = '$celular', 
+            Usuario_Fone_Recado = '$telrecado', 
+            Usuario_Login = '$apelido',
+            Usuario_Obs = '$obs',
+            Usuario_Usuario_cd = '$usuariocd', 
+            Usuario_Foto = '$caminhoCompleto'
+            WHERE Usuario_id = $userId";
 
+            // Execute a consulta no banco de dados
             if ($conn->query($sql) === TRUE) {
-                $ultimoUsuario = $conn->insert_id;
-                echo "Usuario inserido com sucesso. ID: " . $ultimoUsuario;
-            } else {
-                echo "Erro ao inserir usuario: " . $conn->error;
-            }
-
-            $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario',2)";
-
-            if ($conn->query($registro) === TRUE) {
-                header("Location: ../PAGES/m_funcionario_cad.php");
+                echo "Dados do usuário atualizados com sucesso";
+                header("Location: ../PAGES/m_funcionario.php");
                 exit;
             } else {
-                echo "Erro: " . $registro . "<br>" . $conn->error;
+                echo "Erro ao atualizar os dados do usuário: " . $conn->error;
             }
             
         } else {

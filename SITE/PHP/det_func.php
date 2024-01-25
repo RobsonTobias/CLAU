@@ -17,8 +17,13 @@ INNER JOIN Registro_Usuario on Registro_Usuario.Usuario_Usuario_cd = Usuario.Usu
 WHERE Usuario_id = ?";
 $stmt = $conn->prepare($sql);
 
+$endId = "SELECT Enderecos_Enderecos_cd FROM Usuario
+INNER JOIN Enderecos on Enderecos.Enderecos_id = Usuario.Enderecos_Enderecos_cd
+WHERE Usuario_id = ?";
+
 session_start();
 $_SESSION['UsuarioSelecionado'] = $userId;
+$_SESSION['EnderecoId'] = $endId;
 
 // Verificar se a declaração foi preparada corretamente
 if ($stmt === false) {

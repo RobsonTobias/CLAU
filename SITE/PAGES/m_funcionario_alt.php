@@ -16,6 +16,7 @@
     // Verificar se o usuário existe
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
+        $estadocivil = $row['Usuario_EstadoCivil'];
     } else {
         echo "Usuário não encontrado";
     }
@@ -45,7 +46,7 @@
 </head>
 
 <body>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <?php include('../PHP/data.php');?>
     <?php include('../PHP/sidebar/menu.php');?>
     <?php include('../PHP/redes.php');?>
@@ -125,12 +126,12 @@
                             <label for="civil" class="civil">
                                 <p>ESTADO CIVIL<span>*</span></p>
                                 <div class="select2">
-                                    <select name="civil" id="civil" value="<?php echo $row['Usuario_EstadoCivil']; ?>">
-                                        <option value="solteiro">Solteiro</option>
-                                        <option value="casado">Casado</option>
-                                        <option value="separado">Separado</option>
-                                        <option value="divorciado">Divorciado</option>
-                                        <option value="viuvo">Viúvo</option>
+                                    <select name="civil" id="civil">
+                                        <option value="solteiro" <?php if ($estadocivil == 'solteiro') echo 'selected'; ?> >Solteiro</option>
+                                        <option value="casado" <?php if ($estadocivil == 'casado') echo 'selected'; ?>>Casado</option>
+                                        <option value="separado" <?php if ($estadocivil == 'separado') echo 'selected'; ?>>Separado</option>
+                                        <option value="divorciado" <?php if ($estadocivil == 'divorciado') echo 'selected'; ?>>Divorciado</option>
+                                        <option value="viuvo" <?php if ($estadocivil == 'viuvo') echo 'selected'; ?>>Viúvo</option>
                                     </select>
                                 </div>
                             </label>
@@ -147,7 +148,7 @@
                         </div>
                         <div>
                             <label for="obs" class="obs">
-                                <textarea name="obs" id="obs" placeholder="Observações sobre o funcionário..." value="<?php echo $row['Usuario_Obs']; ?>"></textarea>
+                                <textarea name="obs" id="obs"><?php echo $row['Usuario_Obs']; ?></textarea>
                             </label>
                         </div>
                     </div>
