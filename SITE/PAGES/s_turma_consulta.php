@@ -14,8 +14,28 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .turma path{
-            fill: #043140;
+        .tabela-turmas {
+            margin: 20px;
+        }
+
+        .turmas-table {
+            width: 100%;
+            border-collapse: separate; /* Alterado para 'separate' */
+            border-spacing: 0; /* Espaçamento entre células */
+        }
+
+        .turmas-table th, .turmas-table td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd; /* Adiciona bordas a todas as células */
+        }
+
+        .turmas-table th {
+            background-color:#009155;
+        }
+
+        .turmas-table tbody tr:hover {
+            background-color: #f5f5f5;
         }
     </style>
 </head>
@@ -26,6 +46,18 @@
 <?php include('../PHP/sidebar/menu.php');?>
 <?php include('../PHP/redes.php');?>
 <?php include('../PHP/dropdown.php');?>
+
+<?php 
+    // Inclua aqui os arquivos PHP necessários
+    // Aqui você pode incluir sua conexão com o banco de dados, por exemplo:
+    include '../conexao.php';
+
+    // Verifica se uma sessão já está ativa
+    if (session_status() == PHP_SESSION_NONE) {
+        // Se não houver sessão ativa, inicia a sessão
+        session_start();
+    }
+?>
 
     <header>
         <div class="title">
@@ -47,9 +79,52 @@
         <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
     
+ 
     <main>
-        
-    </main>
+    <div class="tabela-turmas">
+        <table class="turmas-table">
+            <thead>
+                <tr>
+                    <th>Código da Turma</th>
+                    <th>Horário</th>
+                    <th>Vagas</th>
+                    <th>Dias</th>
+                    <th>Início</th>
+                    <th>Ações</th> <!-- Nova coluna para os botões -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    // Consulta SQL para obter todas as turmas
+                    $query = "SELECT * FROM Turma";
+
+                    // Executar a consulta
+                    $result = mysqli_query($conn, $query);
+
+                    // Verificar se a consulta retornou algum resultado
+                    if (mysqli_num_rows($result) > 0) {
+                        // Loop através de todas as linhas da tabela
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $row['Turma_Cod'] . "</td>";
+                            echo "<td>" . $row['Turma_Horario'] . "</td>";
+                            echo "<td>" . $row['Turma_Vagas'] . "</td>";
+                            echo "<td>" . $row['Turma_Dias'] . "</td>";
+                            echo "<td>" . date('d/m/Y', strtotime($row['Turma_Inicio'])) . "</td>"; // Data no formato brasileiro
+                            echo "<td><a href='s_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='button-link'>Detalhes</a></td>"; // Link para detalhes da turma
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6'>Nenhuma turma encontrada</td></tr>";
+                    }
+
+                    // Fechar a conexão com o banco de dados
+                    mysqli_close($conn);
+                ?>
+            </tbody>
+        </table>
+    </div>
+</main>
 
     <div class="buttons">
         <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->

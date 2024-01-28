@@ -69,8 +69,8 @@ if (session_status() == PHP_SESSION_NONE) {
                 </tr>
                 <?php
                 $sql = "SELECT * FROM Usuario
-                INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
-                Where Registro_Usuario.Tipo_Tipo_cd = 4;";
+                    INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
+                    Where Registro_Usuario.Tipo_Tipo_cd = 4;";
 
                 $contador = 0;
                 $resultado = $conn->query($sql);
@@ -160,40 +160,16 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="informacao" style="margin-top:5px">
                 <div class="titulo">
                     <p>Turmas que leciona</p>
-
                 </div>
                 <div class="pesquisa">
-
-                    <table class="table table-hover">
-                        <tr>
+                    <table class="table table-hover" >
+                        <thead><tr>
                             <th>Código</th>
                             <th>Curso</th>
                             <th>Alunos</th>
-                        </tr>
-                        <?php
-                        $contador = 0;
-                        $sql = "SELECT Turma.Turma_cod, Curso.Curso_Nome, COUNT(Aluno_Turma.Usuario_Usuario_cd) AS Total_Alunos 
-                        FROM Turma 
-                        INNER JOIN Curso ON Turma.Curso_id = Curso.Curso_id
-                        LEFT JOIN Aluno_Turma ON Turma.Turma_cod = Aluno_Turma.Turma_Turma_Cod
-                        GROUP BY Turma.Turma_cod, Curso.Curso_Nome";
-
-
-                        $resultado = $conn->query($sql);
-                        if ($resultado && $resultado->num_rows > 0) {
-                            while ($row = $resultado->fetch_assoc()) {
-                                $classeLinha = ($contador % 2 == 0) ? 'linha-par' : 'linha-impar';
-                                echo "<tr class='" . $classeLinha . "'>";
-                                echo "<td>" . $row["Turma_cod"] . "</td>";
-                                echo "<td>" . $row["Curso_Nome"] . "</td>";
-                                echo "<td>" . $row["Total_Alunos"] . "</td>";
-                                echo "</tr>";
-                                $contador++;
-                            }
-                        } else {
-                            echo "<tr><td colspan='2'>Nenhuma Turma encontrada.</td></tr>";
-                        }
-                        ?>
+                        </tr></thead>
+                        
+                        <tbody id="tabela-turma"></tbody>
                     </table>
                 </div>
             </div>
@@ -227,6 +203,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 }
             }); // Fecha o 'tableRows'
         }); // Encerra o 'addEventListener'
+
     </script>
 
     <script>
@@ -247,6 +224,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     alert("Erro ao obter dados do usuário.");
                 }
             });
+            buscarTurmas(selectedUserId);
         }
 
         function editar() {
@@ -256,6 +234,28 @@ if (session_status() == PHP_SESSION_NONE) {
                 alert("Por favor, selecione um professor antes de editar.");
             }
         }
+
+        function buscarTurmas(selectedUserId) {
+    $.ajax({
+        url: '../PHP/turma_professor.php',
+        type: 'GET',
+        data: { userId: selectedUserId },
+        success: function (response) {
+    console.log("Resposta recebida:", response); // Já é um objeto JavaScript
+    var tabelaTurmas = document.getElementById('tabela-turma');
+    tabelaTurmas.innerHTML = ""; // Limpa a tabela atual
+
+    response.forEach(function(turma) {
+        var row = tabelaTurmas.insertRow();
+        row.innerHTML = "<td>" + turma.Turma_cod + "</td><td>" + turma.Curso_Nome + "</td><td>" + turma.Total_Alunos + "</td>";
+    });
+},
+        error: function (xhr, status, error) {
+    console.error("Erro AJAX:", xhr.responseText);
+    alert("Erro ao obter dados das turmas: " + xhr.responseText);
+}
+    });
+}
 
     </script>
 
