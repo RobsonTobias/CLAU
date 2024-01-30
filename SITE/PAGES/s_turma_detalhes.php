@@ -57,24 +57,7 @@
             
         }
     }
-    if (isset($id_turma)) {
-        // Consulta SQL para obter os detalhes do professor associado à turma
-        $query_professor = "SELECT U.Usuario_Nome FROM Turma_Professor TP
-                            INNER JOIN Usuario U ON TP.Usuario_Usuario_cd = U.Usuario_id
-                            WHERE TP.Turma_Turma_Cod = '$id_turma'";
     
-        // Executar a consulta
-        $result_professor = mysqli_query($conn, $query_professor);
-    
-        // Verificar se a consulta retornou algum resultado
-        if (mysqli_num_rows($result_professor) > 0) {
-            // Extrair os dados do professor
-            $professor = mysqli_fetch_assoc($result_professor);
-            $nome_professor = $professor['Usuario_Nome'];
-        } else {
-            $nome_professor = "Professor não encontrado";
-        }
-    }
     ?>
 ?>
 
@@ -163,7 +146,8 @@
     <li><strong>Início:</strong> <?php echo $data_inicio; ?></li>
     <li><strong>Término:</strong> <?php echo $data_termino; ?></li>
     <li><strong>Observações: </strong><?php echo $turma['Turma_Obs']; ?>
-    <li><strong>Professor:</strong> <?php echo $nome_professor; ?></li>
+    <li><strong>Professor:</strong> <?php echo $turma['Usuario_Usuario_cd']; ?></li>
+    <li><strong>Curso:</strong> <?php echo $turma['curso_cd']; ?></li>
     </ul>
 
     <p class="back-link" onclick="voltar()">Voltar para a lista de cursos</p>

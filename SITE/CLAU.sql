@@ -76,7 +76,11 @@ CREATE TABLE Turma (
   Turma_Inicio DATE NOT NULL,
   Turma_Status CHAR(1) DEFAULT 1,
   Turma_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (Turma_Cod)
+  PRIMARY KEY (Turma_Cod),
+  Usuario_Usuario_cd int not null, -- chave estrageira dps
+  curso_cd int not null, -- chave estrageira dps
+  foreign key (Usuario_Usuario_cd) references Usuario(Usuario_id),
+  foreign key (curso_cd) references Curso(curso_id)
 )ENGINE = InnoDB;
 
 CREATE TABLE Modulo (
@@ -168,6 +172,17 @@ CREATE TABLE Aula (
   CONSTRAINT fk_Aula_Chamada1 FOREIGN KEY (Chamada_Chamada_cd) REFERENCES Chamada (Chamada_id)
 ) ENGINE=InnoDB;
 
+create table Ocorrencia(
+	ocorrencia_id int not null,
+	Aluno_Turma_cd INT NOT NULL,
+	mensagem TEXT not null,
+    Usuario_Usuario_cd int not null,
+    Ocorrencia_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (ocorrencia_id),
+    FOREIGN KEY (Aluno_Turma_cd) REFERENCES Aluno_Turma (Aluno_Turma_id),
+    FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
+);
+
 CREATE TABLE Nota (
   Usuario_Usuario_cd INT NOT NULL COMMENT 'Aluno',
   Avaliacoes_Avaliacoes_cd INT NOT NULL,
@@ -177,25 +192,6 @@ CREATE TABLE Nota (
   CONSTRAINT fk_Nota_Usuario1 FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id),
   CONSTRAINT fk_Nota_Avaliacoes1 FOREIGN KEY (Avaliacoes_Avaliacoes_cd) REFERENCES Avaliacoes (Avaliacoes_id)
 )ENGINE = InnoDB;
-
-CREATE TABLE Modulo_Curso_Turma (
-	Modulo_Curso_Modulo_Curso_cd INT NOT NULL,
-    Turma_Turma_Cod CHAR(12) NOT NULL,
-    Usuario_Usuario_cd INT NOT NULL,
-    Modulo_Curso_Turma_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (Modulo_Curso_Modulo_Curso_cd, Turma_Turma_Cod),
-    CONSTRAINT fk_Modulo_Curso_Turma_Modulo1 FOREIGN KEY (Modulo_Curso_Modulo_Curso_cd) REFERENCES Modulo_Curso (Modulo_Curso_id),
-    CONSTRAINT fk_Modulo_Curso_Turma_Turma1 FOREIGN KEY (Turma_Turma_Cod) REFERENCES Turma (Turma_Cod)
-)ENGINE = InnoDB;
-
-
-create table Turma_Professor(
-	Turma_Turma_Cod CHAR(12) NOT NULL,
-    Usuario_Usuario_cd INT NOT NULL,
-	FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id),
-    FOREIGN KEY (Turma_Turma_Cod) REFERENCES Turma (Turma_Cod)
-)ENGINE = InnoDB;
-
 
 
 ALTER TABLE turma ADD Turma_Termino DATE;
@@ -269,10 +265,10 @@ VALUES
 (2, 3);
 
 -- Insira as turmas associadas aos cursos
-INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Status)
+INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Status, curso_cd, Usuario_Usuario_cd)
 VALUES
-('TURMA202402', '08:00:00', 30, 5, 'Turma de Inglês Básico', '2024-02-01', '1'), 
-('TURMA202403', '19:00:00', 25, 3, 'Turma noturna de Ciência de Dados', '2024-03-01', '1'); 
+('TURMA202402', '08:00:00', 30, 5, 'Turma de Inglês Básico', '2024-02-01', '1',1 ,3), 
+('TURMA202403', '19:00:00', 25, 3, 'Turma noturna de Ciência de Dados', '2024-03-01', '1', 2, 3); 
 
 
 
@@ -284,10 +280,8 @@ VALUES
 -- Agora associe os alunos às turmas
 INSERT INTO Aluno_Turma (Usuario_Usuario_cd, Turma_Turma_Cod)
 VALUES
-(4, 'TURMA202403'), 
-(5, 'TURMA202403'); 
+(4, 'TURMA202403');
 
-insert into Turma_Professor values ('TURMA202403',3);
 
 -- Insercoes necessarias para funcionar a de professor
 INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
@@ -295,37 +289,27 @@ VALUES
 ('João Almeida', 'Prof. João', 'joaoalmeida@email.com', 'M', '33322211100', 'MG8765432', '1980-03-10', 'Casado', '21987654321', 'joaoa', 'senha123', 1, 1, '1', '../IMAGE/PROFILE/joao.jpg');
 
 INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (LAST_INSERT_ID(), 4);
+VALUES (4, 2);
 
-INSERT INTO Turma_Professor (Turma_Turma_Cod, Usuario_Usuario_cd)
-VALUES ('TURMA202402', 3),  -- Maria Pereira a TURMA202402
-       ('TURMA202403', LAST_INSERT_ID()),
-       ('TURMA202404', 3); -- João Almeida a TURMA202403
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (7, 4);
 
-INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Status)
-VALUES ('TURMA202404', '10:00:00', 20, 3, 'Turma de teste', '2024-04-01', '1');
 
--- Supondo que o ID do curso seja 1 (Introdução à Programação)
-INSERT INTO Modulo_Curso_Turma (Modulo_Curso_Modulo_Curso_cd, Turma_Turma_Cod, Usuario_Usuario_cd)
-VALUES (1, 'TURMA202404', 3);  -- Associando Maria Pereira a esta turma
+INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Status, curso_cd, Usuario_Usuario_cd)
+VALUES ('TURMA202404', '10:00:00', 20, 3, 'Turma de teste', '2024-04-01', '1',3, 7);
+
 
 
 select * from enderecos;
 use clau;
+
+select * from aluno_turma;
+select * from modulo_curso;
+select * from curso;
 select * from turma;
 select * from usuario;
 select * from Registro_Usuario;
-select * from Turma_Professor;
-select * from Modulo_Curso_Turma;
 
 
-	SELECT Turma.Turma_cod, Curso.Curso_Nome, COUNT(Aluno_Turma.Usuario_Usuario_cd) AS Total_Alunos 
-	FROM Turma_Professor
-	INNER JOIN Turma ON Turma_Professor.Turma_Turma_Cod = Turma.Turma_Cod
-	INNER JOIN Modulo_Curso_Turma ON Turma.Turma_Cod = Modulo_Curso_Turma.Turma_Turma_Cod
-	INNER JOIN Modulo_Curso ON Modulo_Curso_Turma.Modulo_Curso_Modulo_Curso_cd = Modulo_Curso.Modulo_Curso_id
-	INNER JOIN Curso ON Modulo_Curso.Curso_Curso_cd = Curso.Curso_id
-	LEFT JOIN Aluno_Turma ON Turma.Turma_Cod = Aluno_Turma.Turma_Turma_Cod
-	WHERE Turma_Professor.Usuario_Usuario_cd = 7
-	AND Turma.Turma_Status = '1';
+
 	

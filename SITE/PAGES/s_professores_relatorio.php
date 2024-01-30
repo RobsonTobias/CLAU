@@ -235,27 +235,7 @@ if (session_status() == PHP_SESSION_NONE) {
             }
         }
 
-        function buscarTurmas(selectedUserId) {
-    $.ajax({
-        url: '../PHP/turma_professor.php',
-        type: 'GET',
-        data: { userId: selectedUserId },
-        success: function (response) {
-    console.log("Resposta recebida:", response); // Já é um objeto JavaScript
-    var tabelaTurmas = document.getElementById('tabela-turma');
-    tabelaTurmas.innerHTML = ""; // Limpa a tabela atual
-
-    response.forEach(function(turma) {
-        var row = tabelaTurmas.insertRow();
-        row.innerHTML = "<td>" + turma.Turma_cod + "</td><td>" + turma.Curso_Nome + "</td><td>" + turma.Total_Alunos + "</td>";
-    });
-},
-        error: function (xhr, status, error) {
-    console.error("Erro AJAX:", xhr.responseText);
-    alert("Erro ao obter dados das turmas: " + xhr.responseText);
-}
-    });
-}
+        
 
     </script>
 

@@ -37,9 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->begin_transaction();
         try {
             // Prepara e executa a declaração SQL para inserir os dados na tabela Turma
-            $sql = "INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Termino, Turma_status) VALUES (?, ?, ?, ?, ?, ?, ?, '1')";
+            $sql = "INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Termino, Turma_status, curso_cd, Usuario_Usuario_cd) VALUES (?, ?, ?, ?, ?, ?, ?, '1', ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssiisss", $Turma_Cod, $Turma_Horario, $Turma_Vagas, $Turma_Dias, $Turma_Obs, $Turma_Inicio, $Turma_Termino);
+            $stmt->bind_param("ssiisssii", $Turma_Cod, $Turma_Horario, $Turma_Vagas, $Turma_Dias, $Turma_Obs, $Turma_Inicio, $Turma_Termino, $Curso_id, $Professor_id);
 
             if (!$stmt->execute()) {
                 throw new Exception("Erro ao inserir a turma: " . $stmt->error);
@@ -47,18 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $stmt->close(); // Fechando a primeira declaração
 
-            // Prepara e executa a declaração SQL para associar o professor à turma
-            $sql_professor = "INSERT INTO Turma_Professor (Turma_Turma_Cod, Usuario_Usuario_cd) VALUES (?, ?)";
-            $stmt_professor = $conn->prepare($sql_professor);
-            $stmt_professor->bind_param("si", $Turma_Cod, $Professor_id);
-
-            if (!$stmt_professor->execute()) {
-                throw new Exception("Erro ao associar professor à turma: " . $stmt_professor->error);
-            }
-
-            $stmt_professor->close(); // Fechando a segunda declaração
-
-            // Se tudo estiver ok, commit a transação
             $conn->commit();
             echo "Turma inserida com sucesso e professor associado!";
         } catch (Exception $e) {
