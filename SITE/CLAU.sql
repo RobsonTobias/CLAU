@@ -309,7 +309,24 @@ select * from curso;
 select * from turma;
 select * from usuario;
 select * from Registro_Usuario;
+show tables;
 
+SHOW COLUMNS FROM TURMA;
 
+CREATE TABLE DiasSemana (
+    id_dia INT PRIMARY KEY,
+    nome_dia VARCHAR(20)
+);
 
-	
+select * from diasSemana;
+
+INSERT INTO DiasSemana (id_dia, nome_dia) VALUES
+(1, 'Segunda-feira'),
+(2, 'Terça-feira'),
+(3, 'Quarta-feira'),
+(4, 'Quinta-feira'),
+(5, 'Sexta-feira'),
+(6, 'Sábado');
+
+SELECT * FROM DIASSEMANA;
+select * from turma;

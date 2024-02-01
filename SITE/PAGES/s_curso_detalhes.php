@@ -111,7 +111,16 @@
             // Consulta para obter os detalhes do curso
             $sql = "SELECT Curso_id, Curso_Nome, Curso_Sigla, Curso_Carga_horaria, Curso_Desc, Curso_Duracao, Curso_PreRequisito, Curso_Status FROM curso WHERE Curso_id = $curso_id";
 
-          
+            $sql_num_turmas = "SELECT COUNT(*) AS num_turmas FROM Turma WHERE curso_cd = $curso_id";
+    
+            $result_num_turmas = mysqli_query($conn, $sql_num_turmas);
+            
+            if (!$result_num_turmas) {
+                die("Erro na consulta do número de turmas: " . mysqli_error($conn));
+            }
+            
+            $row_num_turmas = mysqli_fetch_assoc($result_num_turmas);
+            $num_turmas = $row_num_turmas['num_turmas'];
 
             $result = mysqli_query($conn, $sql);
 
@@ -161,6 +170,7 @@
                     <li><strong>Status:</strong>
                         <?php echo ($curso_info['Curso_Status'] == "1") ? "ativo" : "inativo"; ?>
                     </li>
+                    <li><strong>Quantidade de Turmas:</strong> <?php echo $num_turmas; ?></li>
                 </ul>
 
                 <h2>Módulos do Curso</h2>

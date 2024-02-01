@@ -41,7 +41,20 @@
         $id_turma = $_GET['id'];
 
         // Consulta SQL para obter os detalhes da turma com o ID fornecido
-        $query = "SELECT * FROM Turma WHERE Turma_Cod = '$id_turma'";
+        $query = "SELECT Turma.*, DiasSemana.nome_dia AS Dia_Semana
+                  FROM Turma
+                  INNER JOIN DiasSemana ON Turma.turma_dias = DiasSemana.id_dia
+                  WHERE Turma.Turma_Cod = '$id_turma'";
+
+        $querynomecurso = "SELECT curso_nome
+                            FROM curso
+                            INNER JOIN turma ON curso_cd = turma.curso_cd
+                            WHERE turma.Turma_Cod = '$id_turma'";
+
+        $querynomeprofessor = "SELECT Usuario_Nome AS Nome_Professor
+                                FROM Usuario
+                                INNER JOIN Turma ON Usuario.Usuario_ID = Turma.Usuario_Usuario_cd
+                                WHERE Turma.Turma_Cod = '$id_turma'";
 
         // Executar a consulta
         $result = mysqli_query($conn, $query);
@@ -51,120 +64,122 @@
             // Extrair os dados da turma
             $turma = mysqli_fetch_assoc($result);
 
+            $nome_curso_result = mysqli_query($conn, $querynomecurso);
+            if ($nome_curso_result) {
+                $row = mysqli_fetch_assoc($nome_curso_result);
+                $nome_curso = $row['curso_nome'];
+            } else {
+                // Trate qualquer erro ao obter o nome do curso
+                $nome_curso = "Curso não encontrado";
+            }
+
+            $nome_professor_result = mysqli_query($conn, $querynomeprofessor);
+            if ($nome_professor_result) {
+                $row = mysqli_fetch_assoc($nome_professor_result);
+                $nome_professor = $row['Nome_Professor'];
+            } else {
+                // Trate qualquer erro ao obter o nome do professor
+                $nome_professor = "Professor não encontrado";
+            }
+
             // Formatando as datas para o padrão brasileiro (DD/MM/AAAA)
             $data_inicio = date('d/m/Y', strtotime($turma['Turma_Inicio']));
             $data_termino = date('d/m/Y', strtotime($turma['Turma_Termino']));
             
         }
     }
-    
-    ?>
 ?>
 
-<?php 
-    // Executar a consulta
-    $result = mysqli_query($conn, $query);
-
-    // Verifica se a consulta foi executada com sucesso
-    if ($result && mysqli_num_rows($result) > 0) {
-        // Extrair os dados da turma
-        $turma = mysqli_fetch_assoc($result);
-    }
-?>
-
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>DETALHES DA TURMA</h1>
-                <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
+<header>
+    <div class="title">
+        <div class="nomedata closed">
+            <h1>DETALHES DA TURMA</h1>
+            <div class="php">
+                <?php echo $date;?><!--  Mostrar o data atual -->
             </div>
         </div>
-        <hr>
-        <style>
-            .course-details {
-                max-width: 800px;
-                margin: 20px auto;
-                padding: 20px;
-                background: #fff;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
-            }
 
-            .course-details h1,
-            .course-details h2 {
-                color: #043140;
-                margin-bottom: 10px;
-            }
-
-            .course-details ul {
-                list-style-type: none;
-                padding: 0;
-            }
-
-            .course-details ul li {
-                margin-bottom: 10px;
-                font-size: 16px;
-            }
-
-            .course-details .back-link {
-                display: inline-block;
-                margin-top: 20px;
-                padding: 10px 15px;
-                background-color: #043140;
-                color: #fff;
-                border-radius: 5px;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-            .course-details .back-link:hover {
-                background-color: #035A70;
-            }
-        </style>
-    </header>
-
-    <div>
-        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
+        <div class="user">
+            <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
+        </div>
     </div>
+    <hr>
+    <style>
+        .course-details {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .course-details h1,
+        .course-details h2 {
+            color: #043140;
+            margin-bottom: 10px;
+        }
+
+        .course-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .course-details ul li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .course-details .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #043140;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .course-details .back-link:hover {
+            background-color: #035A70;
+        }
+    </style>
+</header>
+
+<div>
+    <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
+</div>
     
-    <main>
+<main>
     <div class="course-details">
     <?php if(isset($turma)) : ?>
         <ul>
-    <li><strong>Código da Turma:</strong>
-     <?php echo $turma['Turma_Cod']; ?>
-    </li>
-    <li><strong>Horário:</strong> <?php echo $turma['Turma_Horario']; ?>h</li>
-    <li><strong>Vagas: </strong><?php echo $turma['Turma_Vagas']; ?></li>
-    <li><strong>Dias: </strong><?php echo $turma['Turma_Dias']; ?></li>
-    <li><strong>Início:</strong> <?php echo $data_inicio; ?></li>
-    <li><strong>Término:</strong> <?php echo $data_termino; ?></li>
-    <li><strong>Observações: </strong><?php echo $turma['Turma_Obs']; ?>
-    <li><strong>Professor:</strong> <?php echo $turma['Usuario_Usuario_cd']; ?></li>
-    <li><strong>Curso:</strong> <?php echo $turma['curso_cd']; ?></li>
-    </ul>
+            <li><strong>Código da Turma:</strong> <?php echo $turma['Turma_Cod']; ?></li>
+            <li><strong>Horário:</strong> <?php echo $turma['Turma_Horario']; ?>h</li>
+            <li><strong>Vagas:</strong> <?php echo $turma['Turma_Vagas']; ?></li>
+            <li><strong>Dia da Semana:</strong> <?php echo $turma['Dia_Semana']; ?></li>
+            <li><strong>Início:</strong> <?php echo $data_inicio; ?></li>
+            <li><strong>Término:</strong> <?php echo $data_termino; ?></li>
+            <li><strong>Observações:</strong> <?php echo $turma['Turma_Obs']; ?></li>
+            <li><strong>Professor:</strong> <?php echo $nome_professor; ?></li>
+            <li><strong>Curso:</strong> <?php echo $nome_curso; ?></li>
+        </ul>
 
-    <p class="back-link" onclick="voltar()">Voltar para a lista de cursos</p>
-<?php else : ?>
-    <p>Nenhum detalhe da turma encontrado.</p>
-<?php endif; ?>
-</div>
-    </main>
-
-    <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <p class="back-link" onclick="voltar()">Voltar para a lista de cursos</p>
+    <?php else : ?>
+        <p>Nenhum detalhe da turma encontrado.</p>
+    <?php endif; ?>
     </div>
+</main>
 
-    <script src="../JS/Utils.js"></script>
-    <script src="../JS/dropdown.js"></script>
-    <script src="../JS/botao.js"></script>
-    <script src="../PHP/sidebar/menu.js"></script>
+<div class="buttons">
+    <!-- Aqui pode ser incluído o código PHP para exibir o botão de fale conosco -->
+</div>
+
+<script src="../JS/Utils.js"></script>
+<script src="../JS/dropdown.js"></script>
+<script src="../JS/botao.js"></script>
+<script src="../PHP/sidebar/menu.js"></script>
 </body>
-
 </html>
