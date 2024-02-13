@@ -20,13 +20,10 @@ function validaCPF($cpf)
     return true;
 }
 
-// Verifica se uma sessão já está ativa
 if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
     session_start();
 }
 
-// Verificar se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $erroMsg = '';
     $cadastroSucesso = false;
@@ -55,25 +52,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (!$erroMsg) {
-        // Processar o upload da imagem
         $nomeArquivo = basename($_FILES["imagem"]["name"]);
         $caminhoCompleto = $nomeArquivo ? "../IMAGE/PROFILE/" . $nomeArquivo : "../IMAGE/PROFILE/default.png";
         $uploadOk = $nomeArquivo ? true : false;
         $erroImagem = "Por favor, adicione uma imagem.";
 
         if ($nomeArquivo) {
-            // Verifique se o arquivo é uma imagem
+            // Verifica se o arquivo é uma imagem
             if (getimagesize($_FILES["imagem"]["tmp_name"]) === false) {
                 $uploadOk = false;
                 $erroImagem .= "Não é uma imagem.";
             }
-
-            // Verifique o tamanho do arquivo
+            // Verifica o tamanho do arquivo
             if ($_FILES["imagem"]["size"] > 1000000) { // 1MB
                 $uploadOk = false;
                 $erroImagem .= "Arquivo muito grande.";
             }
-
             // Permitir certos formatos de arquivo
             $tipoArquivo = strtolower(pathinfo($caminhoCompleto, PATHINFO_EXTENSION));
             if ($tipoArquivo != "jpg" && $tipoArquivo != "png" && $tipoArquivo != "jpeg") {
@@ -84,10 +78,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $uploadOk = false;
             $erroImagem = "Por favor, adicione uma imagem.";
         }
-        // Verifique se $uploadOk está definido como false por um erro
+
         if (!$uploadOk) {
             $erroMsg .= $erroImagem;
         }
+
 
         $cep = preg_replace('/[^0-9]/', '', $_POST['cep']);
 
@@ -121,6 +116,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+        $cpf_responsavel = preg_replace('/[^0-9]/', '', $_POST['cpf_responsavel']);
+        $queryCpfResp = "SELECT * FROM Responsavel WHERE Respon_Cpf = '$cpf_responsavel'";
+        $resultCpfResp = $conn->query($queryCpfResp);
+        if ($resultCpfResp && $resultCpfResp->num_rows > 0) {
+            // O responsável já existe, pega o ID existente
+            $row = $resultCpfResp->fetch_assoc();
+            $responCd = $row['Respon_id'];
+        } else {
+            // O responsável não existe, insere um novo
+            $nome_responsavel = $conn->real_escape_string($_POST['nome_responsavel']);
+            $celular_responsavel = preg_replace('/[^0-9]/', '', $_POST['celular_responsavel']);
+            $rg_responsavel = preg_replace('/[^0-9]/', '', $_POST['rg_responsavel']);
+            $parentesco = $conn->real_escape_string($_POST['parentesco']);
+
+            $resp = "INSERT INTO Responsavel (Respon_Nome, Respon_Fone, Respon_Cpf, Respon_Rg, Respon_Parentesco)
+            VALUES ('$nome_responsavel','$celular_responsavel', '$cpf_responsavel', '$rg_responsavel', '$parentesco')";
+
+            if ($conn->query($resp) === TRUE) {
+                $responCd = $conn->insert_id;
+            } else {
+                $erroMsg .= "Erro ao inserir responsável: " . $conn->error;
+            }
+        }
+
+
+
         if (!$erroMsg && $uploadOk) {
             $nome = $conn->real_escape_string($_POST['nome']);
             $sexo = $conn->real_escape_string($_POST['sexo']);
@@ -138,12 +159,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Responsavel_Respon_cd, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf', '$rg', '$nascimento', '$estadocivil', '$celular', '$telrecado', '$apelido', 'escola123', '$responCd', '$obs', '$enderecosCd', '$usuariocd', '$caminhoCompleto')";
                 if ($conn->query($sql) === TRUE) {
                     $ultimoUsuario = $conn->insert_id;
-                    $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 2)";
+                    $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 3)";
                     if ($conn->query($registro) === TRUE) {
                         echo "Cadastro realizado com sucesso!";
                         $cadastroSucesso = true;
-                        header("Location: ../PAGES/m_funcionario_cad.php");
-                        exit;
                     } else {
                         $erroMsg .= "Erro ao inserir no registro de usuário: " . $conn->error;
                     }
@@ -161,6 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
+
 
     if (!empty($erroMsg)) {
         echo "Erro no cadastro: ";

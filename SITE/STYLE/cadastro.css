@@ -86,6 +86,18 @@ input::placeholder{
     padding: 10px;
 }
 
+.obs_aluno textarea{
+    width: 820px;
+    height: 70px;
+    resize: none;
+    background-color: #949494;
+    border-radius: 15px;
+    border-width: 0;
+    padding-left: 5px;
+    color: #fff;
+    padding: 10px;
+}
+
 textarea::placeholder{
     color: #ffffff80;
 }
@@ -125,7 +137,7 @@ input[type='file'] {
     width: 570px;
 }
 
-.apelido input, .nascimento input, .recado input{
+.apelido input, .nascimento input, .recado input, .parentesco input{
     width: 230px;
 }
 
