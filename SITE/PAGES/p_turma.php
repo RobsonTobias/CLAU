@@ -49,13 +49,13 @@ if (!$resultado) {
         }
 
         th, td {
-            border: 1px solid #dddddd;
+            border: 2px solid #999999;
             text-align: left;
             padding: 8px;
         }
 
         th {
-            background-color: #176204;
+            background-color: #069E6F;
         }
 
         tr:nth-child(even) {
@@ -64,6 +64,11 @@ if (!$resultado) {
 
         tr:hover {
             background-color: #f2f2f2;
+        }
+
+        a{
+            text-decoration: none;
+            color: black;
         }
     </style>
 </head>
@@ -100,18 +105,21 @@ if (!$resultado) {
             <tr>
                 <th>Código da Turma</th>
                 <th>Professor Responsável</th>
+                <th>Relatório</th>
             </tr>
         </thead>
         <tbody>
             <?php
             while ($linha = mysqli_fetch_assoc($resultado)) {
                 echo "<tr>";
-                echo "<td><a href='p_turma_detalhes.php?turma_cod=" . $linha['turma_cod'] . "'>" . $linha['turma_cod'] . "</a></td>";
+                echo "<td>" . $linha['turma_cod'] . "</td>";
                 echo "<td>" . $linha['professor_responsavel'] . "</td>";
+                echo "<td><a class='detalhes-link' href='p_turma_detalhes.php?turma_cod=" . $linha['turma_cod'] . "'>Detalhes</a></td>";
                 echo "</tr>";
             }
             ?>
         </tbody>
+
     </table>
 </main>
 
