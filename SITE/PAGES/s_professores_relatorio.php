@@ -162,13 +162,15 @@ if (session_status() == PHP_SESSION_NONE) {
                     <p>Turmas que leciona</p>
                 </div>
                 <div class="pesquisa">
-                    <table class="table table-hover" >
-                        <thead><tr>
-                            <th>Código</th>
-                            <th>Curso</th>
-                            <th>Alunos</th>
-                        </tr></thead>
-                        
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Curso</th>
+                                <th>Alunos</th>
+                            </tr>
+                        </thead>
+
                         <tbody id="tabela-turma"></tbody>
                     </table>
                 </div>
@@ -235,7 +237,44 @@ if (session_status() == PHP_SESSION_NONE) {
             }
         }
 
-        
+        function buscarTurmas(userId) {
+            $.ajax({
+                url: '../PHP/turma_professor.php', // URL do endpoint no servidor
+                type: 'GET',
+                data: { userId: userId }, // Passa o userId como parâmetro para a consulta
+                dataType: 'json', // Espera-se que a resposta seja JSON
+                success: function (response) {
+                    // Limpa a tabela antes de adicionar novos dados
+                    var tabelaTurmas = document.getElementById('tabela-turma');
+                    tabelaTurmas.innerHTML = '';
+
+                    // Verifica se a resposta contém turmas
+                    if (response && response.length > 0) {
+                        response.forEach(function (turma) {
+                            // Cria uma nova linha na tabela para cada turma
+                            var linha = document.createElement('tr');
+                            linha.innerHTML = `
+                        <td>${turma.Turma_Cod}</td>
+                        <td>${turma.Curso_Nome}</td>
+                        <td>${turma.Total_Alunos}</td>
+                    `;
+                            // Adiciona a nova linha na tabela
+                            tabelaTurmas.appendChild(linha);
+                            linha.addEventListener('click', function () {
+                                window.location.href = `s_turma_detalhes.php?id=${turma.Turma_Cod}`;
+                            });
+                        });
+
+                    } else {
+                        // Caso não haja turmas, mostra uma mensagem na tabela
+                        tabelaTurmas.innerHTML = '<tr><td colspan="3">Nenhuma turma encontrada para este professor.</td></tr>';
+                    }
+                },
+                error: function () {
+                    alert('Erro ao buscar turmas do professor.');
+                }
+            });
+        }
 
     </script>
 

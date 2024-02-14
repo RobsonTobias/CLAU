@@ -48,7 +48,7 @@
 
         $querynomecurso = "SELECT curso_nome
                             FROM curso
-                            INNER JOIN turma ON curso_cd = turma.curso_cd
+                            INNER JOIN turma ON curso_id = turma.curso_cd
                             WHERE turma.Turma_Cod = '$id_turma'";
 
         $querynomeprofessor = "SELECT Usuario_Nome AS Nome_Professor
@@ -166,7 +166,7 @@
             <li><strong>Curso:</strong> <?php echo $nome_curso; ?></li>
         </ul>
 
-        <p class="back-link" onclick="voltar()">Voltar para a lista de cursos</p>
+        <p class="back-link" onclick="voltar()">Voltar</p>
     <?php else : ?>
         <p>Nenhum detalhe da turma encontrado.</p>
     <?php endif; ?>
