@@ -25,7 +25,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .funcionario path {
+        .aluno path{
             fill: #043140;
         }
     </style>
@@ -33,31 +33,31 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php include('../PHP/data.php'); ?>
-    <?php include('../PHP/sidebar/menu.php'); ?>
-    <?php include('../PHP/redes.php'); ?>
-    <?php include('../PHP/dropdown.php'); ?>
+    <?php include('../PHP/data.php');?>
+    <?php include('../PHP/sidebar/menu.php');?>
+    <?php include('../PHP/redes.php');?>
+    <?php include('../PHP/dropdown.php');?>
 
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>RELATÓRIO DE PROFESSORES</h1>
+                <h1>RELATÓRIO DE ALUNOS</h1>
                 <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
+                    <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
+                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
     </header>
 
     <div>
-        <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
+        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
-
+    
     <main>
         <div class="pesquisa">
             <p>Pesquisar:</p>
@@ -65,12 +65,12 @@ if (session_status() == PHP_SESSION_NONE) {
             <table class="table table-hover">
                 <tr>
                     <th>NOME</th>
-                    <th>E-MAIL</th>
+                    <th>MATRÍCULA</th>
                 </tr>
                 <?php
                 $sql = "SELECT * FROM Usuario
                     INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
-                    Where Registro_Usuario.Tipo_Tipo_cd = 4;";
+                    Where Registro_Usuario.Tipo_Tipo_cd = 3;";
 
                 $contador = 0;
                 $resultado = $conn->query($sql);
@@ -79,7 +79,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         $classeLinha = ($contador % 2 == 0) ? 'linha-par' : 'linha-impar';
                         echo "<tr data-id='" . $row["Usuario_id"] . "' class='" . $classeLinha . "' onclick='mostrarDetalhes(this)'>";
                         echo "<td class='nomeusuario'>" . $row["Usuario_Nome"] . "</td>";
-                        echo "<td class='emailusuario'>" . $row["Usuario_Email"] . "</td>";
+                        echo "<td class='matricula'>" . $row["Usuario_Matricula"] . "</td>";
                         echo "</tr>";
                         $contador++;
                     }
@@ -93,7 +93,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="informacao">
                 <div class="titulo">
                     <p>Informações Pessoais</p>
-                    <button class="editar" type="button" onclick="editar()">EDITAR INFORMAÇÕES</button>
+                    <button class="editar" type="button" onclick="informacao()">INFORMAÇÃO DO ALUNO</button>
                 </div>
                 <div class="infofuncionario">
                     <div class="func">
@@ -157,30 +157,11 @@ if (session_status() == PHP_SESSION_NONE) {
                     </div>
                 </div>
             </div>
-            <div class="informacao" style="margin-top:20px">
-                <div class="titulo">
-                    <p>Turmas que leciona</p>
-                </div>
-                <div class="pesquisa">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Curso</th>
-                                <th>Alunos</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="tabela-turma"></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
-
     </main>
 
     <div class="buttons">
-        <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
     </div>
 
     <script src="../JS/dropdown.js"></script>
@@ -205,10 +186,9 @@ if (session_status() == PHP_SESSION_NONE) {
                 }
             }); // Fecha o 'tableRows'
         }); // Encerra o 'addEventListener'
-
     </script>
 
-    <script>
+<script>
         var selectedUserId; // Variável global para armazenar o ID do usuário selecionado
 
         function mostrarDetalhes(elemento) {
@@ -229,53 +209,13 @@ if (session_status() == PHP_SESSION_NONE) {
             buscarTurmas(selectedUserId);
         }
 
-        function editar() {
+        function informacao() {
             if (selectedUserId) {
-                window.location.href = "s_professores_editar.php?userId=" + selectedUserId;
+                window.location.href = "s_alunos_info.php?userId=" + selectedUserId;
             } else {
-                alert("Por favor, selecione um professor antes de editar.");
+                alert("Por favor, selecione um aluno.");
             }
         }
-
-        function buscarTurmas(userId) {
-            $.ajax({
-                url: '../PHP/turma_professor.php', // URL do endpoint no servidor
-                type: 'GET',
-                data: { userId: userId }, // Passa o userId como parâmetro para a consulta
-                dataType: 'json', // Espera-se que a resposta seja JSON
-                success: function (response) {
-                    // Limpa a tabela antes de adicionar novos dados
-                    var tabelaTurmas = document.getElementById('tabela-turma');
-                    tabelaTurmas.innerHTML = '';
-
-                    // Verifica se a resposta contém turmas
-                    if (response && response.length > 0) {
-                        response.forEach(function (turma) {
-                            // Cria uma nova linha na tabela para cada turma
-                            var linha = document.createElement('tr');
-                            linha.innerHTML = `
-                        <td>${turma.Turma_Cod}</td>
-                        <td>${turma.Curso_Nome}</td>
-                        <td>${turma.Total_Alunos}</td>
-                    `;
-                            // Adiciona a nova linha na tabela
-                            tabelaTurmas.appendChild(linha);
-                            linha.addEventListener('click', function () {
-                                window.location.href = `s_turma_detalhes.php?id=${turma.Turma_Cod}`;
-                            });
-                        });
-
-                    } else {
-                        // Caso não haja turmas, mostra uma mensagem na tabela
-                        tabelaTurmas.innerHTML = '<tr><td colspan="3">Nenhuma turma encontrada para este professor.</td></tr>';
-                    }
-                },
-                error: function () {
-                    alert('Erro ao buscar turmas do professor.');
-                }
-            });
-        }
-
     </script>
 
     <script>
@@ -546,9 +486,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 imagem.src = '../ICON/perfil.svg';
             }
         }
-
     </script>
-
 </body>
 
 </html>

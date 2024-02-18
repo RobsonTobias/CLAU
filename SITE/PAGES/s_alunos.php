@@ -51,7 +51,7 @@
         <a href="s_alunos_cad.php" class="item"><img src="../ICON/cadastro_aluno.svg" alt="Cadastro_Alunos">
             <p>Cadastro de Alunos</p>
         </a>
-        <a href="s_alunos_consulta.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Alunos">
+        <a href="s_alunos_relatorio.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Alunos">
             <p>Relatório de Alunos</p>
         </a>
     </main>

@@ -45,6 +45,7 @@ CREATE TABLE Usuario (
   Usuario_Usuario_cd INT NOT NULL COMMENT 'Funcionario que cadastrou - automatico',
   Usuario_Status CHAR(1) DEFAULT 1,
   Usuario_Foto VARCHAR(255) NULL,
+  Usuario_Matricula INT (6) NULL,
   PRIMARY KEY (Usuario_id),
   UNIQUE INDEX Aluno_Cpf_UNIQUE (Usuario_Cpf ASC),
   UNIQUE INDEX Aluno_Email_UNIQUE (Usuario_Email ASC),
@@ -59,9 +60,9 @@ CREATE TABLE Curso (
   Curso_Nome VARCHAR(100) NOT NULL,
   Curso_Sigla CHAR(3) NOT NULL,
   Curso_Carga_horaria INT(10) NOT NULL,
-  Curso_Desc VARCHAR(50) NOT NULL,
+  Curso_Desc VARCHAR(500) NOT NULL,
   Curso_Duracao INT NOT NULL,
-  Curso_PreRequisito VARCHAR(5000) NOT NULL,
+  Curso_PreRequisito VARCHAR(500) NOT NULL,
   Curso_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   Curso_Status CHAR(1) DEFAULT 1,
   PRIMARY KEY (Curso_id)
@@ -70,17 +71,19 @@ CREATE TABLE Curso (
 CREATE TABLE Turma (
   Turma_Cod CHAR(12) NOT NULL,
   Turma_Horario TIME NOT NULL,
+  Turma_Horario_Termino TIME NOT NULL,
   Turma_Vagas INT NOT NULL,
   Turma_Dias INT(3) NOT NULL,
   Turma_Obs VARCHAR(1000) NULL,
   Turma_Inicio DATE NOT NULL,
+  Turma_Termino DATE NULL,
   Turma_Status CHAR(1) DEFAULT 1,
   Turma_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (Turma_Cod),
   Usuario_Usuario_cd int not null, -- chave estrageira dps
-  curso_cd int not null, -- chave estrageira dps
+  Curso_cd int not null, -- chave estrageira dps
   foreign key (Usuario_Usuario_cd) references Usuario(Usuario_id),
-  foreign key (curso_cd) references Curso(curso_id)
+  foreign key (Curso_cd) references Curso(Curso_id)
 )ENGINE = InnoDB;
 
 CREATE TABLE Modulo (
@@ -91,7 +94,6 @@ CREATE TABLE Modulo (
   Modulo_Status CHAR(1) DEFAULT 1,
   PRIMARY KEY (Modulo_id)
 )ENGINE = InnoDB;
-
 
 CREATE TABLE Modulo_Curso (
   Modulo_Curso_id INT NOT NULL AUTO_INCREMENT,
@@ -173,15 +175,15 @@ CREATE TABLE Aula (
 ) ENGINE=InnoDB;
 
 create table Ocorrencia(
-	ocorrencia_id int not null,
+	Ocorrencia_id int not null,
 	Aluno_Turma_cd INT NOT NULL,
-	mensagem TEXT not null,
+	Mensagem TEXT not null,
     Usuario_Usuario_cd int not null,
     Ocorrencia_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (ocorrencia_id),
+    PRIMARY KEY (Ocorrencia_id),
     FOREIGN KEY (Aluno_Turma_cd) REFERENCES Aluno_Turma (Aluno_Turma_id),
     FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE Nota (
   Usuario_Usuario_cd INT NOT NULL COMMENT 'Aluno',
@@ -193,8 +195,11 @@ CREATE TABLE Nota (
   CONSTRAINT fk_Nota_Avaliacoes1 FOREIGN KEY (Avaliacoes_Avaliacoes_cd) REFERENCES Avaliacoes (Avaliacoes_id)
 )ENGINE = InnoDB;
 
-
-ALTER TABLE turma ADD Turma_Termino DATE;
+CREATE TABLE DiasSemana (
+    Dia_id INT PRIMARY KEY,
+    Dia_Nome VARCHAR(20),
+    Dia_Sigla CHAR(3)
+)ENGINE = InnoDB;
 
 -- Dados da tabela Tipo
 INSERT INTO Tipo (Tipo_Descricao)
@@ -203,130 +208,168 @@ VALUES	('Master'),
 		('Aluno'),
         ('Professor'),
         ('Coordenador');
-        
+
+-- Cadastro dos dias da semana
+INSERT INTO DiasSemana (Dia_id, Dia_Nome, Dia_Sigla) VALUES
+(1, 'Domingo', 'DOM'),
+(2, 'Segunda-feira', 'SEG'),
+(3, 'Terça-feira', 'TER'),
+(4, 'Quarta-feira', 'QUA'),
+(5, 'Quinta-feira', 'QUI'),
+(6, 'Sexta-feira', 'SEX'),
+(7, 'Sábado', 'SAB');
+
+-- ---------------- --
+-- MASTER / DIRETOR --
+-- ---------------- --      
 -- Endereço do usuário MASTER na tabela Endereços
 INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
 VALUES ('12246260','Avenida Salmão','570','Parque Residencial Aquarius','São José dos Campos','São Paulo');
 
--- Cadastro do usuário MASTER na tabela Usuaário
+-- Cadastro do usuário MASTER na tabela Usuario
 INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('Master','Diretor','master@email.com','M','12345678900','123456789','2024-01-01','Solteiro','123456789','master','master',1,1,1,'../IMAGE/PROFILE/master.jpg');
-
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('Maria Pereira', 'Prof. Maria', 'mariapereira@email.com', 'F', '22233344455', 'MG1234567', '1975-04-20', 'Casada', '11987654321', 'mariap', 'senhasegura', 1, 1, 'A', '../IMAGE/PROFILE/mariapereira.jpg');
-
-INSERT INTO Responsavel (Respon_Nome, Respon_Fone, Respon_Cpf, Respon_Rg, Respon_Parentesco)
-VALUES ('João da Silva', '11987654321', '12345678901', 'MG1234567', 'Pai');
-
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Responsavel_Respon_cd, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('Joao Silva', 'Joaozinho', 'joaosilva@email.com', 'M', '98765432100', '987654321', '2000-06-15', 'Solteiro', '11987654321', '1132109876', 'joaosilva', 'senha123', 1, 'Observação sobre o aluno', 1, 1, '1', '../IMAGE/PROFILE/joaosilva.jpg');
-
-
-INSERT INTO Curso (Curso_Nome, Curso_Sigla, Curso_Carga_horaria, Curso_Desc, Curso_Duracao, Curso_PreRequisito, Curso_Status)
-VALUES ('Introdução à Programação', 'INT', 120, 'Curso básico de programação', 6, 'Nenhum pré-requisito', '1');
-
-INSERT INTO Curso (Curso_Nome, Curso_Sigla, Curso_Carga_horaria, Curso_Desc, Curso_Duracao, Curso_PreRequisito, Curso_Status)
-VALUES ('Desenvolvimento Web', 'WEB', 200, 'Curso avançado de desenvolvimento de websites', 12, 'Introdução à Programação', '1');
-
-INSERT INTO Curso (Curso_Nome, Curso_Sigla, Curso_Carga_horaria, Curso_Desc, Curso_Duracao, Curso_PreRequisito, Curso_Status)
-VALUES
-('Ciência de Dados', 'CDD', 300, 'Curso de Ciência de Dados', 12, 'Nenhum pré-requisito', '1');
-
-
+VALUES ('Master','Diretor','master@email.com','F','12345678900','123456789','1987-01-01','Solteiro','123456789','master','master',1,1,1,'../IMAGE/PROFILE/master.jpg');
 
 -- Cadastro do usuário como tipo MASTER na tabela Registro_Usuario
 INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
 VALUES (1,1);
+-- -------------------- --
+-- FIM MASTER / DIRETOR --
+-- -------------------- --
 
+-- ---------- --
+-- SECRETARIA --
+-- ---------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12240030','Rua dos Alecrins','538','Jardim das Indústrias','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuario
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
+VALUES ('Miguel Almeida Ferreira','Miguel','miguel.ferreira@email.com','M','90427683807','111111111','1996-02-15','Solteiro','11111111111','secretaria','escola123',2,1,1,'../IMAGE/PROFILE/02.png');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
 INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (2,3);
+VALUES (2,2);
+-- -------------- --
+-- FIM SECRETARIA --
+-- -------------- --
 
--- Supondo que o ID de Maria Pereira inserido na tabela Usuario seja 3
+-- --------- --
+-- PROFESSOR --
+-- --------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12233597','Rua Andrelândia','103','Bosque dos Eucaliptos','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuario
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
+VALUES ('Evelyn Azevedo Pinto','Evelyn','evelyn.pinto@email.com','F','43997978271','222222222','1989-03-26','Casada','2222222222','professor','professor',3,2,1,'../IMAGE/PROFILE/03.png');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
 INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (3, 4);
+VALUES (3,4);
+-- ------------- --
+-- FIM PROFESSOR --
+-- ------------- --
 
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Responsavel_Respon_cd, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('secretaria', 'Joaozinho', 'joaosilva@mail.com', 'M', '98765432101', '987654321', '2000-06-15', 'Solteiro', '11987654321', '1132109876', 'secretaria', 'secretaria', 1, 'Observação sobre o aluno', 1, 1, '1', '../IMAGE/PROFILE/joaosilva.jpg');
+-- ----------------------- --
+-- COORDENADOR / PROFESSOR --
+-- ----------------------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12242530','Rua João Bicudo','258','Jardim Esplanada','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuario
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
+VALUES ('Kiyumi Otsuka','Kiyumi','kiyumi.otsuka@email.com','F','65828541862','333333333','1991-04-17','Solteira','33333333333','coordenador','coordenador',4,2,1,'../IMAGE/PROFILE/01.png');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (4,4),(4,5);
+-- --------------------------- --
+-- FIM COORDENADOR / PROFESSOR --
+-- --------------------------- --
+
+-- -------- --
+-- ALUNO 01 --
+-- -------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12236420','Rua Joana Soares Ferreira','1063','Cidade Morumbi','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuario
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto, Usuario_Matricula)
+VALUES ('Laura Cunha Dias','Laura','laura.dias@email.com','F','13557706613','444444444','2003-06-18','Solteira','4444444444','aluno','aluno',5,2,1,'../IMAGE/PROFILE/04.png','240001');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (5,3);
+-- ------------ --
+-- FIM ALUNO 01 --
+-- ------------ --
+
+-- -------- --
+-- ALUNO 02 --
+-- -------- --
+-- Endereço do usuário na tabela Endereços
+INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
+VALUES ('12220200','Rua Graúna','562','Vila Tatetuba','São José dos Campos','São Paulo');
+
+-- Cadastro do usuário na tabela Usuario
+INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto, Usuario_Matricula)
+VALUES ('Vitória Pinto Carvalho','Vitória','vitoria.carvalho@email.com','F','14276359783','443335558','2008-10-05','Solteira','55555555555','aluno2','aluno2',6,2,1,'../IMAGE/PROFILE/05.png','240002');
+
+-- Cadastro do usuário como tipo na tabela Registro_Usuario
+INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
+VALUES (6,3);
+-- ------------ --
+-- FIM ALUNO 02 --
+-- ------------ --
 
 
+-- ------ --
+-- CURSOS --
+-- ------ --
+INSERT INTO Curso (Curso_Nome, Curso_Sigla, Curso_Carga_horaria, Curso_Desc, Curso_Duracao, Curso_PreRequisito, Curso_Status)
+VALUES 
+('Informática', 'INF', 150, 'Curso de informática e pacote Office', 18, 'Nenhum pré-requisito', '1'),
+('Administração de Empresas', 'ADM', 200, 'Curso básico de Administração de Empresas', 24, 'Nenhum Pré-requisito', '1'),
+('Inglês', 'ING', 200, 'Curso de Inglês do básico ao avançado', 24, 'Nenhum Pré-requisito', '1'),
+('Web-Design', 'WEB', 200, 'Curso de Web-Design com programação de sites e edição', 24, 'Informática Básica', '1');
 
 
+-- ************* --
+-- ** MÓDULOS ** --
+-- ************* --  
 
--- Insira os módulos
+-- ----------- --
+-- INFORMATICA --
+-- ----------- --
 INSERT INTO Modulo (Modulo_Nome, Modulo_Desc, Modulo_Status)
 VALUES
-('Introdução ao Python', 'Módulo de Python para iniciantes', '1'),
-('Estatística Aplicada', 'Estatística básica para Ciência de Dados', '1');
+('Introdução à Informática', 'Conhecimento básico de informática', '1'),
+('Windows', 'Principais funcionalidades do Windows', '1'),
+('Word', 'Funcionalidades do Word', '1'),
+('Excel', 'Criação de planilhas com fórmulas', '1'),
+('Power Point', 'Criação de apresentações', '1'),
+('Internet', 'Principais funcionalidades da Internet', '1');
 
--- Associar módulos aos cursos
+-- --------------------------- --
+-- Associar módulos aos cursos --
+-- --------------------------- --
 INSERT INTO Modulo_Curso (Modulo_Modulo_cd, Curso_Curso_cd)
 VALUES
-(1, 3), 
-(2, 3);
+(1, 1), 
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1);
 
--- Insira as turmas associadas aos cursos
-INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Status, curso_cd, Usuario_Usuario_cd)
-VALUES
-('TURMA202402', '08:00:00', 30, 5, 'Turma de Inglês Básico', '2024-02-01', '1',1 ,3), 
-('TURMA202403', '19:00:00', 25, 3, 'Turma noturna de Ciência de Dados', '2024-03-01', '1', 2, 3); 
+-- *************************************** --
+-- ************ PAREI AQUI *************** --
+-- *************************************** --
 
-
-
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES
-('Ana Silva', 'Ana', 'anasilva@email.com', 'F', '33344455566', 'SP9876543', '1990-05-20', 'Solteira', '11998765432', 'anasilva', 'senha123', 1, 1, '1', '../IMAGE/PROFILE/anasilva.jpg'),
-('Carlos Pereira', 'Carlos', 'carlospereira@email.com', 'M', '44455566677', 'RJ1234567', '1992-07-15', 'Solteiro', '21987654321', 'carlosp', 'senha123', 1, 1, '1', '../IMAGE/PROFILE/carlos.jpg');
-
--- Agora associe os alunos às turmas
-INSERT INTO Aluno_Turma (Usuario_Usuario_cd, Turma_Turma_Cod)
-VALUES
-(4, 'TURMA202403');
-
-
--- Insercoes necessarias para funcionar a de professor
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES 
-('João Almeida', 'Prof. João', 'joaoalmeida@email.com', 'M', '33322211100', 'MG8765432', '1980-03-10', 'Casado', '21987654321', 'joaoa', 'senha123', 1, 1, '1', '../IMAGE/PROFILE/joao.jpg');
-
-INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (4, 2);
-
-INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (7, 4);
-
-
-INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Status, curso_cd, Usuario_Usuario_cd)
-VALUES ('TURMA202404', '10:00:00', 20, 3, 'Turma de teste', '2024-04-01', '1',3, 7);
-
-
-
-select * from enderecos;
-use clau;
-
-select * from aluno_turma;
-select * from modulo_curso;
-select * from curso;
-select * from turma;
-select * from usuario;
-select * from Registro_Usuario;
-show tables;
-
-SHOW COLUMNS FROM TURMA;
-
-CREATE TABLE DiasSemana (
-    id_dia INT PRIMARY KEY,
-    nome_dia VARCHAR(20)
-);
-
-select * from diasSemana;
-
-INSERT INTO DiasSemana (id_dia, nome_dia) VALUES
-(1, 'Segunda-feira'),
-(2, 'Terça-feira'),
-(3, 'Quarta-feira'),
-(4, 'Quinta-feira'),
-(5, 'Sexta-feira'),
-(6, 'Sábado');
-
-SELECT * FROM DIASSEMANA;
-select * from turma;
+select * from Usuario;
+select * from Curso;

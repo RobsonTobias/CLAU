@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .turma path{
-            fill: #043140;
+        .fale path{
+            stroke: #043140;
         }
     </style>
 </head>
@@ -30,14 +30,14 @@
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>CONSULTA DE TURMAS</h1>
+                <h1>FALE CONOSCO</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
+                <?php echo $dropdown;?><!-- Mostrar o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
@@ -47,7 +47,9 @@
         <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
     
-
+    <main>
+        
+    </main>
 
     <div class="buttons">
         <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->

@@ -58,25 +58,93 @@ $alunoId = $_SESSION['AlunoId'];
             font-size: 16px;
             font-weight: bold;
         }
+        .infoturma{
+            background-color: #E7E7E7;
+            border-radius: 20px;
+            box-shadow: 0 0 5px 1px #00000040;
+            padding: 15px;
+            gap: 15px;
+        }
+        .infoturma p{
+            font-size: 22px;
+            font-weight: bold;
+            color: #233939;
+        }
         .campo{
             display: flex;
             flex-direction: column;
+            margin: 10px;
+        }
+        .campo p{
+            color: #068888;
+            font-size: 16px;
+            font-weight: bold;
         }
         .geral{
             background-color: #D9D9D9;
             border-radius: 15px;
             box-shadow: 0 0 5px 1px #00000040;
+            padding-bottom: 5px;
         }
         .info{
             background-color: #949494;
             border-radius: 15px;
             height: 30px;
         }
-        .infocurso{
-            width: 560px;
-        }
         .infohorario{
+            width: 210px;
+        }
+        .infodia, .infocodigo{
             width: 200px;
+        }
+        .infoprof{
+            width: 430px;
+        }
+        .infomaxaluno{
+            width: 200px;
+        }
+        .tituloturma{
+            margin-left: 10px;
+        }
+        .botao button{
+            cursor: pointer;
+        }
+        .func{
+            margin-top: 15px;
+        }
+        .botao{
+            display: flex;
+            align-items: end;
+            justify-content: end;
+        }
+        .cadastrar{
+            background-color: #6EC77D;
+            color: #0D4817;
+            width: 150px;
+            height: 30px;
+            border-radius: 15px;
+            border: none;
+            font-weight: bold;
+        }
+        .render{
+            margin-left: 15px;
+            margin-top: -25px;
+            color: #ffffff;
+        }
+        .centralizar{
+            text-align: center;
+            padding-left: 0px;
+        }
+        select{
+            background-color: #4D4D4D;
+            color: #F4F4F4;
+            font-size: 15px;
+            padding: 3px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            margin-top: 3px;
+            border-radius: 5px;
+            padding-right: 15px;
         }
     </style>
 </head>
@@ -151,70 +219,111 @@ $alunoId = $_SESSION['AlunoId'];
                     </div>
                 </div>
             </div>
-            <div class="pesquisa" style="margin-top: 20px;">
+            <div class="infoturma" style="margin-top: 20px;">
                 <p>Informações da Turma</p>
                 <div class="geral">
                     <div class="campo">
-                        <p>CURSO</p>
-                        <p class="info infocurso"></p>
+                        <p class="tituloturma" style="margin-top: 10px;">CURSO</p>
+                        <p class="info infocurso" ><div id="modalCurso"></div></p>
                     </div>
                     <div class="linha">
                         <div class="campo">
-                            <p>HORÁRIO</p>
-                            <p class="info infohorario"></p>
+                            <p class="tituloturma">HORÁRIO</p>
+                            <p class="info infohorario"><div id="modalHorario"></div></p>
                         </div>
                         <div class="campo">
-                            <p>DIA</p>
-                            <p class="info infodia"></p>
+                            <p class="tituloturma">DIA</p>
+                            <p class="info infodia"><div id="modalDia"></div></p>
                         </div>
                         <div class="campo">
-                            <p>CÓDIGO TURMA</p>
-                            <p class="info infocodigo"></p>
+                            <p class="tituloturma">CÓDIGO TURMA</p>
+                            <p class="info infocodigo"><div id="modalCodigo"></div></p>
                         </div>
                     </div>
                     <div class="linha">
                         <div class="campo">
-                            <p>PROFESSOR</p>
-                            <p class="info infoprof"></p>
+                            <p class="tituloturma">PROFESSOR</p>
+                            <p class="info infoprof"><div id="modalProfessor"></div></p>
                         </div>
                         <div class="campo">
-                            <p>MÁXIMO ALUNOS</p>
-                            <p class="info infoaluno"></p>
+                            <p class="tituloturma">MÁXIMO ALUNOS</p>
+                            <p class="info infomaxaluno"><div id="modalMax"></div></p>
                         </div>
                     </div>
                     <div class="campo">
-                        <p>OBSERVAÇÕES</p>
-                        <p class="info infoobs"></p>
+                        <p class="tituloturma">OBSERVAÇÕES</p>
+                        <p class="info infoobs"><div id="modalObs"></div></p>
                     </div>
+                </div>
+                <div class="botao func">
+                    <button class="cadastrar" type="submit" onclick="cadastrar()">ADICIONAR ALUNO</button>
                 </div>
             </div>
         </div>
         <div class="pesquisa">
-                <p>Turmas Cadastradas</p>
-                <input type="text" id="searchInput" placeholder="Digite um nome para pesquisar">
+                <p style="font-size: 22px;">Turmas Cadastradas</p>
+                
+                <select id="filtroCurso">
+                    <option value="">CURSO</option>
+                    <?php
+                    // Consulta para buscar cursos
+                    $sqlCursos = "SELECT Curso_id, Curso_Sigla FROM Curso";
+                    $resultCursos = $conn->query($sqlCursos);
+                    if ($resultCursos->num_rows > 0) {
+                        while ($curso = $resultCursos->fetch_assoc()) {
+                            echo "<option value='" . $curso['Curso_Sigla'] . "'>" . $curso['Curso_Sigla'] . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                
+                <select id="filtroProfessor">
+                    <option value="">PROFESSOR</option>
+                    <?php
+                    // Consulta para buscar professores
+                    $sqlProfessores = "SELECT Usuario_id, Usuario_Apelido FROM Usuario
+                    INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
+                    WHERE Registro_Usuario.Tipo_Tipo_cd = 4;";
+                    $resultProfessores = $conn->query($sqlProfessores);
+                    if ($resultProfessores->num_rows > 0) {
+                        while ($professor = $resultProfessores->fetch_assoc()) {
+                            echo "<option value='" . $professor['Usuario_Apelido'] . "'>" . $professor['Usuario_Apelido'] . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+            
                 <table class="table table-hover">
                     <tr>
-                        <th>NOME</th>
-                        <th>E-MAIL</th>
+                        <th>TURMA</th>
+                        <th>CURSO</th>
+                        <th>PROFESSOR</th>
+                        <th>MAX. ALUNOS</th>
+                        <th>MATRICULADOS</th>
                     </tr>
                     <?php
-                    $sql = "SELECT * FROM Usuario
-                        INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
-                        Where Registro_Usuario.Tipo_Tipo_cd = 4;";
+                    $sql = "SELECT Turma.*, Curso.Curso_Sigla AS sigla, COUNT(Aluno_Turma.Usuario_Usuario_cd) AS matriculados, Usuario.Usuario_Apelido AS professor FROM Turma
+                    INNER JOIN Curso ON Turma.curso_cd = Curso.Curso_id
+                    INNER JOIN Usuario ON Turma.Usuario_Usuario_cd = Usuario.Usuario_id 
+                    LEFT JOIN Aluno_Turma ON Turma.Turma_Cod = Aluno_Turma.Turma_Turma_Cod
+                    GROUP BY Curso.Curso_id, Turma.Turma_Cod";
 
                     $contador = 0;
                     $resultado = $conn->query($sql);
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($row = $resultado->fetch_assoc()) {
                             $classeLinha = ($contador % 2 == 0) ? 'linha-par' : 'linha-impar';
-                            echo "<tr data-id='" . $row["Usuario_id"] . "' class='" . $classeLinha . "' onclick='mostrarDetalhes(this)'>";
-                            echo "<td class='nomeusuario'>" . $row["Usuario_Nome"] . "</td>";
-                            echo "<td class='emailusuario'>" . $row["Usuario_Email"] . "</td>";
+                            echo "<tr data-id='" . $row["Turma_Cod"] . "' class='" . $classeLinha . "' onclick='mostrarDetalhes(this)'>";
+                            echo "<td class='turma_cod'>" . $row["Turma_Cod"] . "</td>";
+                            echo "<td class='sigla centralizar'>" . $row["sigla"] . "</td>";
+                            echo "<td class='professor_id'>" . $row["professor"] . "</td>";
+                            echo "<td class='maxalunos centralizar'>" . $row["Turma_Vagas"] . "</td>";
+                            echo "<td class='matriculados centralizar'>" . $row["matriculados"] . "</td>";
                             echo "</tr>";
                             $contador++;
                         }
                     } else {
-                        echo "<tr><td colspan='2'>Nenhum funcionário encontrado.</td></tr>";
+                        echo "<tr><td colspan='5'>Nenhuma tumra encontrada.</td></tr>";
                     }
                     ?>
                 </table>
@@ -248,306 +357,204 @@ $alunoId = $_SESSION['AlunoId'];
                 }
             }); // Fecha o 'tableRows'
         }); // Encerra o 'addEventListener'
+    </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const filtroCurso = document.getElementById('filtroCurso');
+        const filtroProfessor = document.getElementById('filtroProfessor');
+    
+        function filtrarTabela() {
+            const cursoSelecionado = filtroCurso.value;
+            const professorSelecionado = filtroProfessor.value;
+            const linhas = document.querySelectorAll('.table tr:not(:first-child)'); // Ignora o cabeçalho
+            
+            linhas.forEach(linha => {
+                const curso = linha.querySelector('.sigla').textContent;
+                const professor = linha.querySelector('.professor_id').textContent;
+                let mostrarLinha = true;
+                
+                if (cursoSelecionado && curso !== cursoSelecionado) {
+                    mostrarLinha = false;
+                }
+                if (professorSelecionado && professor !== professorSelecionado) {
+                    mostrarLinha = false;
+                }
+                
+                linha.style.display = mostrarLinha ? '' : 'none';
+            });
+        }
+        
+        // Adiciona eventos para filtrar quando as seleções mudarem
+        filtroCurso.addEventListener('change', filtrarTabela);
+        filtroProfessor.addEventListener('change', filtrarTabela);
+        });
+    </script>
+
+    <script> // Utilizado para fazer o cadastro do aluno na turma depois de clicar no botão Adicionar Aluno
+        function cadastrar (){
+
+            // Dados a serem enviados. Aqui, você pode adicionar qualquer outro dado necessário.
+            var dados = {
+                alunoId: "<?php echo $_SESSION['AlunoId']; ?>",
+                turmaId: "<?php echo $_SESSION['TurmaId']; ?>"
+            };
+
+            $.ajax({
+                url: '../PHP/cad_aluno_turma.php',
+                type: 'POST',
+                data: dados,
+                success: function (response) {
+                    if (response.includes("Cadastro realizado com sucesso!")) {
+                        alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
+                        window.location.replace("s_alunos_info.php"); // Redireciona para a nova página
+
+                    } else {
+                        alert(response); // Exibe outros alertas retornados pelo servidor
+                    }
+                },
+            });
+        }
     </script>
 
     <script>
         var selectedUserId; // Variável global para armazenar o ID do usuário selecionado
 
         function mostrarDetalhes(elemento) {
+            // Remover a classe 'render' de todos os elementos que possam tê-la
+            document.querySelectorAll('.render').forEach(function(el) {
+                el.classList.remove('render');
+            });
+
             selectedUserId = elemento.getAttribute('data-id'); // Atualiza a variável global
 
+            // Adiciona a classe 'render' ao elemento clicado
+            elemento.classList.add('render');
+
             $.ajax({
-                url: '../PHP/det_func.php',
+                url: '../PHP/det_turma.php',
                 type: 'GET',
                 data: { userId: selectedUserId }, // Deve ser selectedUserId, não userId
                 success: function (response) {
                     // Aqui você vai lidar com a resposta
-                    exibirDetalhesUsuario(response);
+                    exibirDetalhesTurma(response);
+                    // Após receber a resposta, é adicionado a classe 'render' aos elementos internos onde os detalhes da turma são mostrados.
+                    document.getElementById('modalCurso').classList.add('render');
+                    document.getElementById('modalHorario').classList.add('render');
+                    document.getElementById('modalDia').classList.add('render');
+                    document.getElementById('modalCodigo').classList.add('render');
+                    document.getElementById('modalProfessor').classList.add('render');
+                    document.getElementById('modalMax').classList.add('render');
+                    document.getElementById('modalObs').classList.add('render');
                 },
                 error: function () {
-                    alert("Erro ao obter dados do usuário.");
+                    alert("Erro ao obter dados da turma.");
                 }
             });
-            buscarTurmas(selectedUserId);
         }
 
-        function editar() {
-            if (selectedUserId) {
-                window.location.href = "s_professores_editar.php?userId=" + selectedUserId;
-            } else {
-                alert("Por favor, selecione um professor antes de editar.");
-            }
-        }
     </script>
 
     <script>
-        function exibirDetalhesUsuario(dados) {
-            //Variavel Nome
-            var nome = document.getElementById('modalNome');
-            var contNome = '';
+        function exibirDetalhesTurma(dados) {
+            //Variavel Curso
+            var curso = document.getElementById('modalCurso');
+            var contCurso = '';
 
             if (dados) {
-                contNome += dados.Usuario_Nome;
+                contCurso += dados.Curso;
             } else {
-                contNome = '<p>Não informado</p>';
+                contCurso = '<p>Não informado</p>';
             }
 
-            nome.innerHTML = contNome;
-            nome.style.display = 'block';
+            curso.innerHTML = contCurso;
+            curso.style.display = 'block';
 
-            // Variável Nascimento
-            var nascimento = document.getElementById('modalNascimento');
-            var contNascimento = '';
+            //Variavel Horário
+            var horario = document.getElementById('modalHorario');
+            var contHorario = '';
 
-            if (dados && dados.Usuario_Nascimento) {
-                // Converter a data para um objeto Date
-                var dataObj = new Date(dados.Usuario_Nascimento);
-
-                // Extrair dia, mês e ano
-                var dia = ("0" + dataObj.getDate()).slice(-2); // Adiciona um zero à esquerda se necessário
-                var mes = ("0" + (dataObj.getMonth() + 1)).slice(-2); // Adiciona um zero à esquerda, mês começa em 0
-                var ano = dataObj.getFullYear();
-
-                // Montar a string de data no formato desejado
-                contNascimento = dia + '-' + mes + '-' + ano;
-            } else {
-                contNascimento = '<p>Não informado</p>';
-            }
-
-            nascimento.innerHTML = contNascimento;
-            nascimento.style.display = 'block';
-
-            //Variavel Idade
-            function calcularIdade(dataNascimento) {
-                var hoje = new Date();
-                var nascimento = new Date(dataNascimento);
-                var calcIdade = hoje.getFullYear() - nascimento.getFullYear();
-                var m = hoje.getMonth() - nascimento.getMonth();
-
-                if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
-                    calcIdade--;
+            if (dados && dados.Turma_Horario) {
+                // Assumindo que dados.Turma_Horario esteja no formato "HH:MM:SS" ou "HH:MM"
+                var partesDoHorario = dados.Turma_Horario.split(':'); // Divide a string pelo caractere ':'
+                if (partesDoHorario.length >= 2) {
+                    // Reconstrói a string para ter apenas horas e minutos
+                    contHorario = partesDoHorario[0] + ':' + partesDoHorario[1];
+                } else {
+                    // Se não for possível dividir corretamente, mantém o horário original
+                    contHorario = dados.Turma_Horario;
                 }
-
-                return calcIdade;
+            } else {
+                contHorario = '<p>Não informado</p>';
             }
 
-            var calcIdade = calcularIdade(dados.Usuario_Nascimento);
-
-            var idade = document.getElementById('modalIdade');
-            var contIdade = '';
+            horario.innerHTML = contHorario;
+            horario.style.display = 'block';
+            
+            //Variavel Dia
+            var dia = document.getElementById('modalDia');
+            var contDia = '';
 
             if (dados) {
-                contIdade = calcIdade + ' anos';
+                contDia += dados.Turma_Dias;
             } else {
-                contIdade = '<p>Não informado</p>';
+                contDia = '<p>Não informado</p>';
             }
 
-            idade.innerHTML = contIdade;
-            idade.style.display = 'block';
+            dia.innerHTML = contDia;
+            dia.style.display = 'block';
 
-            //Variavel CPF
-            var Cpf = document.getElementById('modalCpf');
-            var contCpf = '';
+            //Variavel Código Turma
+            var codigo = document.getElementById('modalCodigo');
+            var contCodigo = '';
 
             if (dados) {
-                contCpf += dados.Usuario_Cpf;
+                contCodigo += dados.Turma_Cod;
             } else {
-                contCpf = '<p>Não informado</p>';
+                contCodigo = '<p>Não informado</p>';
             }
 
-            Cpf.innerHTML = contCpf;
-            Cpf.style.display = 'block';
+            codigo.innerHTML = contCodigo;
+            codigo.style.display = 'block';
 
-            //Variavel RG
-            var Rg = document.getElementById('modalRg');
-            var contRg = '';
+            //Variavel Professor
+            var professor = document.getElementById('modalProfessor');
+            var contProfessor = '';
 
             if (dados) {
-                contRg += dados.Usuario_Rg;
+                contProfessor += dados.professor;
             } else {
-                contRg = '<p>Não informado</p>';
+                contProfessor = '<p>Não informado</p>';
             }
 
-            Rg.innerHTML = contRg;
-            Rg.style.display = 'block';
+            professor.innerHTML = contProfessor;
+            professor.style.display = 'block';
 
-            //Variavel Sexo
-            var Sexo = document.getElementById('modalSexo');
-            var contSexo = '';
+            //Variavel Máximo de alunos
+            var maxAluno = document.getElementById('modalMax');
+            var contMaxAluno = '';
 
             if (dados) {
-                contSexo += dados.Usuario_Sexo;
+                contMaxAluno += dados.Turma_Vagas;
             } else {
-                contSexo = '<p>Não informado</p>';
+                contMaxAluno = '<p>Não informado</p>';
             }
 
-            Sexo.innerHTML = contSexo;
-            Sexo.style.display = 'block';
+            maxAluno.innerHTML = contMaxAluno;
+            maxAluno.style.display = 'block';
 
-            //Variavel E-mail
-            var Email = document.getElementById('modalEmail');
-            var contEmail = '';
-
-            if (dados) {
-                contEmail += dados.Usuario_Email;
-            } else {
-                contEmail = '<p>Não informado</p>';
-            }
-
-            Email.innerHTML = contEmail;
-            Email.style.display = 'block';
-
-            //Variavel Celular
-            var Celular = document.getElementById('modalCelular');
-            var contCelular = '';
-
-            if (dados) {
-                contCelular += dados.Usuario_Fone;
-            } else {
-                contCelular = '<p>Não informado</p>';
-            }
-
-            Celular.innerHTML = contCelular;
-            Celular.style.display = 'block';
-
-            //Variavel Data de Ingresso
-            var Ingresso = document.getElementById('modalIngresso');
-            var contIngresso = '';
-
-            if (dados && dados.Registro_Data) {
-                // Converter a data para um objeto Date
-                var dataObj = new Date(dados.Registro_Data);
-
-                // Extrair dia, mês e ano
-                var dia = ("0" + dataObj.getDate()).slice(-2); // Adiciona um zero à esquerda se necessário
-                var mes = ("0" + (dataObj.getMonth() + 1)).slice(-2); // Adiciona um zero à esquerda, mês começa em 0
-                var ano = dataObj.getFullYear();
-
-                // Montar a string de data no formato desejado
-                contIngresso = dia + '-' + mes + '-' + ano;
-            } else {
-                contIngresso = '<p>Não informado</p>';
-            }
-
-            Ingresso.innerHTML = contIngresso;
-            Ingresso.style.display = 'block';
-
-            //Variavel Obs
+            //Variavel Observações
             var obs = document.getElementById('modalObs');
             var contObs = '';
 
             if (dados) {
-                contObs += dados.Usuario_Obs;
+                contObs += dados.Turma_Obs;
             } else {
                 contObs = '<p>Não informado</p>';
             }
 
             obs.innerHTML = contObs;
             obs.style.display = 'block';
-
-            //Variavel Logradouro
-            var Logradouro = document.getElementById('modalLogradouro');
-            var contLogradouro = '';
-
-            if (dados) {
-                contLogradouro += dados.Enderecos_Rua;
-            } else {
-                contLogradouro = '<p>Não informado</p>';
-            }
-
-            Logradouro.innerHTML = contLogradouro;
-            Logradouro.style.display = 'block';
-
-            //Variavel Numero
-            var Numero = document.getElementById('modalNumero');
-            var contNumero = '';
-
-            if (dados) {
-                contNumero += dados.Enderecos_Numero;
-            } else {
-                contNumero = '<p>Não informado</p>';
-            }
-
-            Numero.innerHTML = contNumero;
-            Numero.style.display = 'block';
-
-            //Variavel Complemento
-            var Complemento = document.getElementById('modalComplemento');
-            var contComplemento = '';
-
-            if (dados) {
-                if (dados.Enderecos_Complemento != null) {
-                    contComplemento += dados.Enderecos_Complemento;
-                }
-
-            } else {
-                contComplemento = '<p>Não informado</p>';
-            }
-
-            Complemento.innerHTML = contComplemento;
-            Complemento.style.display = 'block';
-
-            //Variavel Cep
-            var Cep = document.getElementById('modalCep');
-            var contCep = '';
-
-            if (dados) {
-                contCep += dados.Enderecos_Cep;
-            } else {
-                contCep = '<p>Não informado</p>';
-            }
-
-            Cep.innerHTML = contCep;
-            Cep.style.display = 'block';
-
-            //Variavel Bairro
-            var Bairro = document.getElementById('modalBairro');
-            var contBairro = '';
-
-            if (dados) {
-                contBairro += dados.Enderecos_Bairro;
-            } else {
-                contBairro = '<p>Não informado</p>';
-            }
-
-            Bairro.innerHTML = contBairro;
-            Bairro.style.display = 'block';
-
-            //Variavel Cidade
-            var Cidade = document.getElementById('modalCidade');
-            var contCidade = '';
-
-            if (dados) {
-                contCidade += dados.Enderecos_Cidade;
-            } else {
-                contCidade = '<p>Não informado</p>';
-            }
-
-            Cidade.innerHTML = contCidade;
-            Cidade.style.display = 'block';
-
-            //Variavel Uf
-            var Uf = document.getElementById('modalUf');
-            var contUf = '';
-
-            if (dados) {
-                contUf += dados.Enderecos_Uf;
-            } else {
-                contUf = '<p>Não informado</p>';
-            }
-
-            Uf.innerHTML = contUf;
-            Uf.style.display = 'block';
-
-            // Variável para a imagem
-            var imagem = document.getElementById('imagemExibida');
-
-            if (dados && dados.Usuario_Foto) {
-                imagem.src = dados.Usuario_Foto;
-            } else {
-                imagem.src = '../ICON/perfil.svg';
-            }
         }
 
     </script>

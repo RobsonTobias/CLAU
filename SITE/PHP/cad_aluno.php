@@ -152,13 +152,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $telrecado = preg_replace('/[^0-9]/', '', $_POST['recado']);
             $obs = $conn->real_escape_string($_POST['obs']);
 
+            // Preenchimento autmoático da Matrícula
+            $anoAtual = date("y"); // Retorna os dois últimos dígitos do ano atual
+
+            // Prepara a consulta SQL para buscar a última matrícula do ano atual
+            $ultimaMatricula = "SELECT Usuario_Matricula FROM Usuarios
+            WHERE Usuario_Matricula LIKE '{$anoAtual}%'
+            ORDER BY Usuario_Matricula DESC
+            LIMIT 1";
+
+            $resultadoMatricula = $conn->query($ultimaMatricula);
+
+            // Verifica as matrícula existentes do ano
+            if ($resultadoMatricula->num_rows > 0) {
+                // Encontrou pelo menos um registro, então incrementa o último valor
+                $row = $resultadoMatricula->fetch_assoc();
+                $ultimoValor = $row['Usuario_Matricula'];
+                $incremento = substr($ultimoValor, 2) + 1;
+                $matricula = $anoAtual . str_pad($incremento, 4, "0", STR_PAD_LEFT);
+            } else {
+                // Não encontrou registros, então começa a contagem para o ano atual
+                $matricula = $anoAtual . "0001";
+            }
+
             // Verifique se move_uploaded_file foi bem-sucedido
             $uploadResultado = move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminhoCompleto);
             if (!$nomeArquivo || $uploadResultado) {
                 $usuariocd = $_SESSION['Usuario_id'];
-                $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Responsavel_Respon_cd, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf', '$rg', '$nascimento', '$estadocivil', '$celular', '$telrecado', '$apelido', 'escola123', '$responCd', '$obs', '$enderecosCd', '$usuariocd', '$caminhoCompleto')";
+                $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Responsavel_Respon_cd, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto, Usuario_Matricula) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf', '$rg', '$nascimento', '$estadocivil', '$celular', '$telrecado', '$apelido', 'escola123', '$responCd', '$obs', '$enderecosCd', '$usuariocd', '$caminhoCompleto', '$matricula')";
                 if ($conn->query($sql) === TRUE) {
                     $ultimoUsuario = $conn->insert_id;
+                    $_SESSION['AlunoId'] = $ultimoUsuario;
                     $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 3)";
                     if ($conn->query($registro) === TRUE) {
                         echo "Cadastro realizado com sucesso!";

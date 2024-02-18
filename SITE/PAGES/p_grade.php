@@ -1,3 +1,36 @@
+<?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['Usuario_id'])) {
+    header("Location: index.html");
+    exit();
+}
+
+// Resgata o ID do usuário logado
+$usuarioId = $_SESSION['Usuario_id'];
+
+// Consulta SQL para obter as turmas do professor logado
+include '../conexao.php'; // Inclua seu arquivo de conexão com o banco de dados
+$sql = "SELECT turma.turma_cod, turma.turma_horario, turma.turma_horario_termino, diassemana.nome_dia
+        FROM turma
+        INNER JOIN diassemana ON diassemana.id_dia = turma.turma_dias
+        WHERE turma.usuario_usuario_cd = $usuarioId";  // Filtra pelo ID do usuário logado
+
+$resultado = mysqli_query($conn, $sql);
+if (!$resultado) {
+    die("Erro ao executar a consulta: " . mysqli_error($conn));
+}
+
+// Array para armazenar as turmas do professor
+$turmas = array();
+
+// Preenche o array com os dados das turmas
+while ($linha = mysqli_fetch_assoc($resultado)) {
+    $turmas[] = $linha;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -14,18 +47,40 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .grade path{
-            fill: #043140;
+        table {
+            border-collapse: collapse;
+            width: 100%;
         }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color:#61d4a8;
+        }
+        /* Estilo para células com turma do professor */
+        .turma {
+            background-color: #a5d6a7;
+            padding: 5px; /* Espaçamento interno para melhor visualização */
+        }
+
+        .horario {
+        border: 1px solid #ddd; /* Adicione uma borda para melhorar a aparência */
+        background-color: #fff; /* Cor de fundo padrão */
+    }
+
+    .horario .turma {
+        background-color: #a5d6a7; /* Cor de fundo quando há uma turma */
+        padding: 5px; /* Espaçamento interno para melhor visualização */
+    }
     </style>
 </head>
-
 <body>
-
-<?php include('../PHP/data.php');?>
-<?php include('../PHP/sidebar/menu.php');?>
-<?php include('../PHP/redes.php');?>
-<?php include('../PHP/dropdown.php');?>
+    <?php include('../PHP/data.php');?>
+    <?php include('../PHP/sidebar/menu.php');?>
+    <?php include('../PHP/redes.php');?>
+    <?php include('../PHP/dropdown.php');?>
 
     <header>
         <div class="title">
@@ -46,7 +101,40 @@
     <div>
         <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
-    
+
+    <main>
+    <table>
+        <tr>
+            <th></th>
+            <?php
+            $dias_semana = array("Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado");
+            foreach ($dias_semana as $dia) {
+                echo "<th>$dia</th>";
+            }
+            ?>
+        </tr>
+        <?php
+        for ($i = 8; $i <= 20; $i++) {
+            $hora = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00";
+            echo "<tr>";
+            echo "<td>$hora</td>";
+            foreach ($dias_semana as $dia) {
+                echo "<td class='horario'>";
+                // Verifica se há alguma turma do professor nesse horário e dia
+                foreach ($turmas as $turma) {
+                    $turma_inicio = date("H:i", strtotime($turma['turma_horario']));
+                    $turma_termino = date("H:i", strtotime($turma['turma_horario_termino']));
+                    if ($turma['nome_dia'] == $dia && $hora >= $turma_inicio && $hora < $turma_termino) {
+                        echo "<div class='turma'>" . $turma['turma_cod'] . "</div>";
+                    }
+                }
+                echo "</td>";
+            }
+            echo "</tr>";
+        }
+        ?>
+    </table>
+</main>
 
 
     <div class="buttons">
@@ -57,5 +145,5 @@
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
 </body>
-
 </html>
+

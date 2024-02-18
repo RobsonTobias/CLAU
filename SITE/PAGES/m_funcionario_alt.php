@@ -17,9 +17,12 @@
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $estadocivil = $row['Usuario_EstadoCivil'];
+        $foto = $row['Usuario_Foto'];
     } else {
         echo "Usuário não encontrado";
     }
+
+    $_SESSION['ImagemAtual'] = $foto
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
