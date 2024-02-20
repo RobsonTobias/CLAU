@@ -149,9 +149,34 @@
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
     <script>
+        var selectedUserId; // Variável global para armazenar o ID do usuário selecionado
+
+        function mostrarDetalhes(elemento) {
+            selectedUserId = elemento.getAttribute('data-id'); // Atualiza a variável global
+
+            $.ajax({
+                url: '../PHP/det_func.php',
+                type: 'GET',
+                data: { userId: selectedUserId }, // Deve ser selectedUserId, não userId
+                success: function(response) {
+                // Aqui você vai lidar com a resposta
+                exibirDetalhesUsuario(response);
+                },
+                error: function() {
+                alert("Erro ao obter dados do usuário.");
+                }
+            });
+        }
+    </script>
+
+    <script>
         // Utilizado para redirecionar para a página de Editar Funcionário
         function editar() {
-        window.location.href = "m_funcionario_alt.php";
+            if (selectedUserId) {
+                window.location.href = "m_funcionario_alt.php?userId=" + selectedUserId;
+            } else {
+                alert("Por favor, selecione um funcionário.");
+            }
         }
     </script>
     <script>
@@ -172,25 +197,6 @@
         }
     }); // Fecha o 'tableRows'
     }); // Encerra o 'addEventListener'
-    </script>
-
-    <script>
-        function mostrarDetalhes(elemento) {
-        var userId = elemento.getAttribute('data-id');
-
-        $.ajax({
-            url: '../PHP/det_func.php',
-            type: 'GET',
-            data: { userId: userId },
-            success: function(response) {
-            // Aqui você vai lidar com a resposta
-            exibirDetalhesUsuario(response);
-            },
-            error: function() {
-            alert("Erro ao obter dados do usuário.");
-            }
-        });
-        }
     </script>
 
     <script>

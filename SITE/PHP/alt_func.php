@@ -2,9 +2,7 @@
 
 include '../conexao.php';
 
-// Verifica se uma sessão já está ativa
 if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
     session_start();
 }
 
