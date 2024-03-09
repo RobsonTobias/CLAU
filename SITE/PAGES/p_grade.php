@@ -12,9 +12,8 @@ $usuarioId = $_SESSION['Usuario_id'];
 
 // Consulta SQL para obter as turmas do professor logado
 include '../conexao.php'; // Inclua seu arquivo de conexão com o banco de dados
-$sql = "SELECT turma.turma_cod, turma.turma_horario, turma.turma_horario_termino, diassemana.nome_dia
+$sql = "SELECT turma.turma_cod, turma.turma_horario, turma.turma_horario_termino, turma.turma_dias
         FROM turma
-        INNER JOIN diassemana ON diassemana.id_dia = turma.turma_dias
         WHERE turma.usuario_usuario_cd = $usuarioId";  // Filtra pelo ID do usuário logado
 
 $resultado = mysqli_query($conn, $sql);
@@ -66,14 +65,14 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
         }
 
         .horario {
-        border: 1px solid #ddd; /* Adicione uma borda para melhorar a aparência */
-        background-color: #fff; /* Cor de fundo padrão */
-    }
+            border: 1px solid #ddd; /* Adicione uma borda para melhorar a aparência */
+            background-color: #fff; /* Cor de fundo padrão */
+        }
 
-    .horario .turma {
-        background-color: #a5d6a7; /* Cor de fundo quando há uma turma */
-        padding: 5px; /* Espaçamento interno para melhor visualização */
-    }
+        .horario .vago {
+            background-color: #ff2222; /* Cor de fundo vermelha para horários vagos */
+            padding: 5px; /* Espaçamento interno para melhor visualização */
+        }
     </style>
 </head>
 <body>
@@ -103,39 +102,57 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
     </div>
 
     <main>
-    <table>
-        <tr>
-            <th></th>
+        <table>
+            <tr>
+                <th></th>
+                <?php
+                $dias_semana = array(
+                    1 => 'Segunda-feira',
+                    2 => 'Terça-feira',
+                    3 => 'Quarta-feira',
+                    4 => 'Quinta-feira',
+                    5 => 'Sexta-feira',
+                    6 => 'Sábado'
+                );
+
+                foreach ($dias_semana as $dia) {
+                    echo "<th>$dia</th>";
+                }
+                ?>
+            </tr>
             <?php
-            $dias_semana = array("Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado");
-            foreach ($dias_semana as $dia) {
-                echo "<th>$dia</th>";
+            for ($i = 8; $i <= 20; $i++) {
+                $hora = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00";
+                echo "<tr>";
+                echo "<td>$hora</td>";
+                foreach ($dias_semana as $dia_numero => $dia_nome) {
+                    echo "<td class='horario'>";
+                    // Verifica se há alguma turma do professor nesse horário e dia
+                    $aula_encontrada = false;
+                    foreach ($turmas as $turma) {
+                        $diasAulaTurma = $turma['turma_dias'];
+                        $dias_turma = str_split($diasAulaTurma); // Converte a string para um array de caracteres
+
+                        $dia_numero_turma = intval($dia_numero);
+                        $turma_inicio = strtotime($turma['turma_horario']);
+                        $turma_termino = strtotime($turma['turma_horario_termino']);
+
+                        if (in_array($dia_numero_turma, $dias_turma) && $i >= date('H', $turma_inicio) && $i < date('H', $turma_termino)) {
+                            echo "<div class='turma'>" . $turma['turma_cod'] . "</div>";
+                            $aula_encontrada = true;
+                            break;
+                        }
+                    }
+                    if (!$aula_encontrada) {
+                        echo "<div class='vago'>Vago</div>";
+                    }
+                    echo "</td>";
+                }
+                echo "</tr>";
             }
             ?>
-        </tr>
-        <?php
-        for ($i = 8; $i <= 20; $i++) {
-            $hora = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00";
-            echo "<tr>";
-            echo "<td>$hora</td>";
-            foreach ($dias_semana as $dia) {
-                echo "<td class='horario'>";
-                // Verifica se há alguma turma do professor nesse horário e dia
-                foreach ($turmas as $turma) {
-                    $turma_inicio = date("H:i", strtotime($turma['turma_horario']));
-                    $turma_termino = date("H:i", strtotime($turma['turma_horario_termino']));
-                    if ($turma['nome_dia'] == $dia && $hora >= $turma_inicio && $hora < $turma_termino) {
-                        echo "<div class='turma'>" . $turma['turma_cod'] . "</div>";
-                    }
-                }
-                echo "</td>";
-            }
-            echo "</tr>";
-        }
-        ?>
-    </table>
-</main>
-
+        </table>
+    </main>
 
     <div class="buttons">
         <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
@@ -146,4 +163,3 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
     <script src="../PHP/sidebar/menu.js"></script>
 </body>
 </html>
-

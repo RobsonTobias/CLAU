@@ -19,7 +19,6 @@
         }
     </style>
 </head>
-
 <body>
 
 <?php include('../PHP/data.php');?>
@@ -41,20 +40,11 @@
         $id_turma = $_GET['id'];
 
         // Consulta SQL para obter os detalhes da turma com o ID fornecido
-        $query = "SELECT Turma.*, DiasSemana.nome_dia AS Dia_Semana
+        $query = "SELECT Turma.*, curso.curso_nome AS Nome_Curso, Usuario.Usuario_Nome AS Nome_Professor
                   FROM Turma
-                  INNER JOIN DiasSemana ON Turma.turma_dias = DiasSemana.id_dia
+                  INNER JOIN curso ON Turma.curso_cd = curso.curso_id
+                  INNER JOIN Usuario ON Turma.Usuario_Usuario_cd = Usuario.Usuario_ID
                   WHERE Turma.Turma_Cod = '$id_turma'";
-
-        $querynomecurso = "SELECT curso_nome
-                            FROM curso
-                            INNER JOIN turma ON curso_id = turma.curso_cd
-                            WHERE turma.Turma_Cod = '$id_turma'";
-
-        $querynomeprofessor = "SELECT Usuario_Nome AS Nome_Professor
-                                FROM Usuario
-                                INNER JOIN Turma ON Usuario.Usuario_ID = Turma.Usuario_Usuario_cd
-                                WHERE Turma.Turma_Cod = '$id_turma'";
 
         // Executar a consulta
         $result = mysqli_query($conn, $query);
@@ -64,28 +54,37 @@
             // Extrair os dados da turma
             $turma = mysqli_fetch_assoc($result);
 
-            $nome_curso_result = mysqli_query($conn, $querynomecurso);
-            if ($nome_curso_result) {
-                $row = mysqli_fetch_assoc($nome_curso_result);
-                $nome_curso = $row['curso_nome'];
-            } else {
-                // Trate qualquer erro ao obter o nome do curso
-                $nome_curso = "Curso não encontrado";
+            // Array associativo com os nomes dos dias da semana
+            $dias_semana = array(
+                1 => 'Segunda-feira',
+                2 => 'Terça-feira',
+                3 => 'Quarta-feira',
+                4 => 'Quinta-feira',
+                5 => 'Sexta-feira',
+                6 => 'Sábado'
+            );
+
+            // Convertendo os dias da turma para array
+            $turma_dias = $turma['Turma_Dias'];
+            $dias_turma = str_split($turma_dias); // Converte a string para um array de caracteres
+
+            // Array para armazenar os nomes dos dias de aula da turma
+            $dias_aula_turma_nomes = array();
+
+            // Itera sobre cada caractere da string convertida
+            foreach ($dias_turma as $dia) {
+                // Obtém o número do dia da semana atual
+                $dia_numero = intval($dia);
+
+                // Verifica se o número do dia existe no array de dias da semana
+                if (array_key_exists($dia_numero, $dias_semana)) {
+                    // Adiciona o nome do dia ao array de dias de aula da turma
+                    $dias_aula_turma_nomes[] = $dias_semana[$dia_numero];
+                }
             }
 
-            $nome_professor_result = mysqli_query($conn, $querynomeprofessor);
-            if ($nome_professor_result) {
-                $row = mysqli_fetch_assoc($nome_professor_result);
-                $nome_professor = $row['Nome_Professor'];
-            } else {
-                // Trate qualquer erro ao obter o nome do professor
-                $nome_professor = "Professor não encontrado";
-            }
-
-            // Formatando as datas para o padrão brasileiro (DD/MM/AAAA)
-            $data_inicio = date('d/m/Y', strtotime($turma['Turma_Inicio']));
-            $data_termino = date('d/m/Y', strtotime($turma['Turma_Termino']));
-            
+            // Concatena os nomes dos dias de aula da turma separados por vírgula
+            $dias_aula_turma_texto = implode(', ', $dias_aula_turma_nomes);
         }
     }
 ?>
@@ -106,7 +105,7 @@
     <hr>
     <style>
         .course-details {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 20px auto;
             padding: 20px;
             background: #fff;
@@ -156,14 +155,15 @@
     <?php if(isset($turma)) : ?>
         <ul>
             <li><strong>Código da Turma:</strong> <?php echo $turma['Turma_Cod']; ?></li>
-            <li><strong>Horário:</strong> <?php echo $turma['Turma_Horario']; ?>h</li>
+            <li><strong>Horário de inicio:</strong> <?php echo $turma['Turma_Horario']; ?>h</li>
+            <li><strong>Horário de termino:</strong> <?php echo $turma['Turma_Horario_Termino']; ?>h</li>
             <li><strong>Vagas:</strong> <?php echo $turma['Turma_Vagas']; ?></li>
-            <li><strong>Dia da Semana:</strong> <?php echo $turma['Dia_Semana']; ?></li>
-            <li><strong>Início:</strong> <?php echo $data_inicio; ?></li>
-            <li><strong>Término:</strong> <?php echo $data_termino; ?></li>
+            <li><strong>Dias de Aula:</strong> <?php echo $dias_aula_turma_texto; ?></li>
+            <li><strong>Início:</strong> <?php echo date('d/m/Y', strtotime($turma['Turma_Inicio'])); ?></li>
+            <li><strong>Término:</strong> <?php echo date('d/m/Y', strtotime($turma['Turma_Termino'])); ?></li>
             <li><strong>Observações:</strong> <?php echo $turma['Turma_Obs']; ?></li>
-            <li><strong>Professor:</strong> <?php echo $nome_professor; ?></li>
-            <li><strong>Curso:</strong> <?php echo $nome_curso; ?></li>
+            <li><strong>Professor:</strong> <?php echo $turma['Nome_Professor']; ?></li>
+            <li><strong>Curso:</strong> <?php echo $turma['Nome_Curso']; ?></li>
         </ul>
 
         <p class="back-link" onclick="voltar()">Voltar</p>

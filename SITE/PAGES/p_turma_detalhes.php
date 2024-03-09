@@ -16,12 +16,9 @@ if (isset($_GET['turma_cod'])) {
     $idTurma = $_GET['turma_cod'];
 
     // Consulta SQL para obter os detalhes da turma com o ID fornecido
-// Consulta SQL para obter os detalhes da turma com o ID fornecido
-$queryTurma = "SELECT turma.turma_cod, turma.turma_horario, turma.turma_vagas, turma.turma_inicio, turma.turma_termino, turma.turma_obs,diassemana.nome_dia AS dia_semana
+    $queryTurma = "SELECT turma.turma_cod, turma.turma_horario,turma.turma_horario_termino, turma.turma_vagas, turma.turma_inicio, turma.turma_termino, turma.turma_obs, turma.Turma_Dias
                FROM turma
-               INNER JOIN diassemana ON turma.turma_dias =diassemana.id_dia
                WHERE turma.turma_cod = '$idTurma'";
-
 
     $queryNomeCurso = "SELECT curso_nome
                        FROM curso
@@ -47,13 +44,50 @@ $queryTurma = "SELECT turma.turma_cod, turma.turma_horario, turma.turma_vagas, t
         // Verificar se as chaves existem antes de acessá-las
         $codigoTurma = isset($turma['turma_cod']) ? $turma['turma_cod'] : "N/A";
         $horario = isset($turma['turma_horario']) ? $turma['turma_horario'] : "N/A";
+        $horario_termino = isset($turma['turma_horario_termino']) ? $turma['turma_horario_termino'] : "N/A";
         $vagas = isset($turma['turma_vagas']) ? $turma['turma_vagas'] : "N/A";
-        $diaSemana = isset($turma['dia_semana']) ? $turma['dia_semana'] : "N/A";
         $observacoes = isset($turma['turma_obs']) ? $turma['turma_obs'] : "N/A";
 
         // Formatando as datas para o padrão brasileiro (DD/MM/AAAA)
         $dataInicio = isset($turma['turma_inicio']) ? date('d/m/Y', strtotime($turma['turma_inicio'])) : "N/A";
         $dataTermino = isset($turma['turma_termino']) ? date('d/m/Y', strtotime($turma['turma_termino'])) : "N/A";
+
+        // Obtendo os dias de aula da turma
+        $diasAulaTurma = isset($turma['Turma_Dias']) ? $turma['Turma_Dias'] : "";
+        $dias_aula_turma_texto = ""; // Inicializando a variável para armazenar os nomes dos dias de aula da turma
+
+        if (!empty($diasAulaTurma)) {
+            // Array associativo com os nomes dos dias da semana
+            $dias_semana = array(
+                1 => 'Segunda-feira',
+                2 => 'Terça-feira',
+                3 => 'Quarta-feira',
+                4 => 'Quinta-feira',
+                5 => 'Sexta-feira',
+                6 => 'Sábado'
+            );
+
+            // Convertendo os dias da turma para array
+            $dias_turma = str_split($diasAulaTurma); // Converte a string para um array de caracteres
+
+            // Array para armazenar os nomes dos dias de aula da turma
+            $dias_aula_turma_nomes = array();
+
+            // Itera sobre cada caractere da string convertida
+            foreach ($dias_turma as $dia) {
+                // Obtém o número do dia da semana atual
+                $dia_numero = intval($dia);
+
+                // Verifica se o número do dia existe no array de dias da semana
+                if (array_key_exists($dia_numero, $dias_semana)) {
+                    // Adiciona o nome do dia ao array de dias de aula da turma
+                    $dias_aula_turma_nomes[] = $dias_semana[$dia_numero];
+                }
+            }
+
+            // Concatena os nomes dos dias de aula da turma separados por vírgula
+            $dias_aula_turma_texto = implode(', ', $dias_aula_turma_nomes);
+        }
 
         // Executar a consulta para obter o nome do curso
         $resultadoNomeCurso = mysqli_query($conn, $queryNomeCurso);
@@ -167,13 +201,14 @@ $queryTurma = "SELECT turma.turma_cod, turma.turma_horario, turma.turma_vagas, t
         <ul>
             <li><strong>Código da Turma:</strong> <?php echo $codigoTurma; ?></li>
             <li><strong>Horário:</strong> <?php echo $horario; ?>h</li>
+            <li><strong>Horário:</strong> <?php echo $horario_termino; ?>h</li>
             <li><strong>Vagas:</strong> <?php echo $vagas; ?></li>
-            <li><strong>Dia da Semana:</strong> <?php echo $diaSemana; ?></li>
             <li><strong>Início:</strong> <?php echo $dataInicio; ?></li>
             <li><strong>Término:</strong> <?php echo $dataTermino; ?></li>
             <li><strong>Observações:</strong> <?php echo $observacoes; ?></li>
             <li><strong>Professor:</strong> <?php echo $nomeProfessor; ?></li>
             <li><strong>Curso:</strong> <?php echo $nomeCurso; ?></li>
+            <li><strong>Dias de Aula:</strong> <?php echo $dias_aula_turma_texto; ?></li>
         </ul>
     </div>
 </main>
