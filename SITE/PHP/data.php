@@ -14,6 +14,4 @@ $ano = date('Y', strtotime($data)); // Obtém o ano
 $nomeMes = utf8_encode($nomeMes); // Solução alternativa para garantir UTF-8
 
 $date = $numeroDia . ' de ' . $nomeMes . ' de ' . $ano;
-
-echo $date; // Exibe a data formatada
 ?>
