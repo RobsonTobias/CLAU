@@ -1,10 +1,3 @@
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
-    session_start();
-}
-$_SESSION['Tipo_Tipo_cd'] = 5;
-?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -21,7 +14,7 @@ $_SESSION['Tipo_Tipo_cd'] = 5;
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .home path{
+        .turma path{
             fill: #043140;
         }
     </style>
@@ -37,7 +30,7 @@ $_SESSION['Tipo_Tipo_cd'] = 5;
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>HOME</h1>
+                <h1>INFORMAÇÕES DA TURMA</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
@@ -55,30 +48,7 @@ $_SESSION['Tipo_Tipo_cd'] = 5;
     </div>
     
     <main>
-        <a href="p_chamada.php" class="item"><img src="../ICON/chamada.svg" alt="Chamada_Diario">
-            <p>Chamadas e Diário de Classe</p>
-        </a>
-        <a href="p_notas.php" class="item"><img src="../ICON/nota.svg" alt="Notas">
-            <p>Notas</p>
-        </a>
-        <a href="p_aluno.php" class="item"><img src="../ICON/aluno.svg" alt="Aluno">
-            <p>Aluno</p>
-        </a>
-        <a href="c_turma.php" class="item"><img src="../ICON/turma.svg" alt="Turma">
-            <p>Turma</p>
-        </a>
-        <a href="p_planejamento.php" class="item"><img src="../ICON/planejamento.svg" alt="Planejamento">
-            <p>Planejamento</p>
-        </a>
-        <a href="p_prova.php" class="item"><img src="../ICON/prova.svg" alt="Provas e Atividades">
-            <p>Provas e Atividades</p>
-        </a>
-        <a href="c_grade.php" class="item"><img src="../ICON/grade.svg" alt="Grade_Horaria">
-            <p>Grade Horária</p>
-        </a>
-        <a href="p_calendario.php" class="item"><img src="../ICON/calendario.svg" alt="Calendario">
-            <p>Calendário</p>
-        </a>
+        
     </main>
 
     <div class="buttons">

@@ -206,17 +206,3 @@ td{
 .colc{
     margin-right: 10px;
 }
-
-.row{
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-}
-
-.ocorrencia{
-    margin-top: 10px;
-}
-
-.coluna{
-    flex-direction: column;
-}

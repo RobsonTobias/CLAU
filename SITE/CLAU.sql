@@ -210,10 +210,11 @@ VALUES	('Master'),
         ('Coordenador');
 
 -- Cadastro dos dias da semana
-INSERT INTO DiasSemana (Dia_id, Dia_Nome, Dia_Sigla) VALUES
+INSERT INTO DiasSe mana (Dia_id, Dia_Nome, Dia_Sigla) VALUES
 (1, 'Domingo', 'DOM'),
 (2, 'Segunda-feira', 'SEG'),
 (3, 'Terça-feira', 'TER'),
+(4, 'Quarta-feira', 'QUA'),
 (4, 'Quarta-feira', 'QUA'),
 (5, 'Quinta-feira', 'QUI'),
 (6, 'Sexta-feira', 'SEX'),
@@ -370,6 +371,8 @@ VALUES
 -- *********************************************************** --
 -- ************ INSERIR EDIÇÕES A PARTIR DAQUI *************** --
 -- *********************************************************** --
+
+
 
 select * from Usuario;
 select * from Curso;

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
     <link rel="stylesheet" href="../STYLE/data.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -17,6 +18,55 @@
         .fale path{
             stroke: #043140;
         }
+
+          /* Estilos para o modal */
+/* Estilos revisados somente para o modal, para evitar impactos na sidebar */
+
+.modal {
+    display: none; /* Isso garante que o modal está oculto ao carregar a página */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.item{
+  color:white;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Removido, não é necessário com flex */
+    padding: 20px;
+    font-size: 20px;
+    border: 1px solid #888;
+    width: 30%; /* Ajuste conforme necessário, mas mantenha menor que 100% */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
     </style>
 </head>
 
@@ -48,12 +98,58 @@
     </div>
     
     <main>
-        
+        <a href="javascript:void(0);" class="item" data-info="(12) 3906-7762"><p>Telefone</p></a>
+        <a href="javascript:void(0);" class="item" data-info="Av. São José, n° 34 - Santana"><p>Endereço</p></a>
+        <a href="javascript:void(0);" class="item" data-info="nomeescola.com.br"><p>Site</p></a>
+        <a href="javascript:void(0);" class="item" data-info="escolax@gmail.com">
+            <p>E-mail</p>
+        </a>
     </main>
+    
+    <div id="myModal" class="modal">
+  <div class="modal-content">
+  <span class="close">&times;</span>
+
+    <div id="modalContent">
+      <!-- Aqui serão exibidas as informações relativas ao botão -->
+    </div>
+  </div>
+</div>
 
     <div class="buttons">
         <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
     </div>
+    <script>
+ document.addEventListener("DOMContentLoaded", function() {
+    // Garante que o modal esteja oculto ao carregar a página
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+
+    var items = document.getElementsByClassName("item");
+    for (var i = 0; i < items.length; i++) {
+        items[i].addEventListener("click", function() {
+            var info = this.getAttribute("data-info");
+            var modalContent = document.getElementById("modalContent");
+            modalContent.innerHTML = info;
+            modal.style.display = "flex"; // Exibe o modal
+        });
+    }
+
+    var span = document.querySelector(".modal-content .close");
+    span.onclick = function() {
+        modal.style.display = "none"; // Esconde o modal
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none"; // Esconde o modal ao clicar fora
+        }
+    }
+});
+
+
+</script>
+
 
     <script src="../JS/dropdown.js"></script>
     <script src="../JS/botao.js"></script>

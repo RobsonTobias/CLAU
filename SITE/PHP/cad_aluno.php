@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $anoAtual = date("y"); // Retorna os dois últimos dígitos do ano atual
 
             // Prepara a consulta SQL para buscar a última matrícula do ano atual
-            $ultimaMatricula = "SELECT Usuario_Matricula FROM Usuario
+            $ultimaMatricula = "SELECT Usuario_Matricula FROM Usuarios
             WHERE Usuario_Matricula LIKE '{$anoAtual}%'
             ORDER BY Usuario_Matricula DESC
             LIMIT 1";

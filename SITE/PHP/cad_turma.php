@@ -1,27 +1,49 @@
 <?php
-// Verifica se os dados do formulário foram enviados
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verifica se todos os campos obrigatórios foram preenchidos
-    if (isset($_POST["Turma_Cod"]) && isset($_POST["Turma_Horario"]) && isset($_POST["Turma_Vagas"]) && isset($_POST["Turma_Dias"]) && isset($_POST["Turma_Inicio"]) && isset($_POST["Turma_Termino"]) && isset($_POST["Curso_id"]) && isset($_POST["Professor_id"])) {
-
-        // Recupera os dados do formulário
-        $Turma_Cod = $_POST["Turma_Cod"];
-        $Turma_Horario = $_POST["Turma_Horario"];
-        $Turma_Vagas = $_POST["Turma_Vagas"];
-        $Turma_Dias = $_POST["Turma_Dias"];
-        $Turma_Obs = ($_POST["Turma_Obs"] != "") ? $_POST["Turma_Obs"] : NULL;
-        $Turma_Inicio = $_POST["Turma_Inicio"];
-        $Turma_Termino = $_POST["Turma_Termino"];
-        $Curso_id = $_POST["Curso_id"];
-        $Professor_id = $_POST["Professor_id"]; // Recupera o ID do professor selecionado
-
-        // Conexão com o banco de dados
+    if (
+        isset($_POST["Turma_Cod"]) && 
+        isset($_POST["Turma_Horario_inicio"]) && 
+        isset($_POST["Turma_Horario_termino"]) && 
+        isset($_POST["Turma_Vagas"]) && 
+        isset($_POST["codigo_dias"]) &&
+        isset($_POST["Turma_Inicio"]) && 
+        isset($_POST["Turma_Termino"]) && 
+        isset($_POST["Curso_id"]) && 
+        isset($_POST["Professor_id"])
+    ) {
         include '../conexao.php';
 
-        // Verifica se o Professor_id corresponde a um professor
+        // Captura a sigla do curso do formulário
+        $Curso_sigla = $_POST["Curso_id"];
+
+        // Busca o ID do curso usando a sigla
+        $sql_curso = "SELECT Curso_id FROM Curso WHERE Curso_Sigla = ?";
+        $stmt_curso = $conn->prepare($sql_curso);
+        $stmt_curso->bind_param("s", $Curso_sigla);
+        $stmt_curso->execute();
+        $result_curso = $stmt_curso->get_result();
+        if ($result_curso->num_rows > 0) {
+            $row_curso = $result_curso->fetch_assoc();
+            $Curso_id = $row_curso['Curso_id']; // Encontra o ID do curso correspondente
+        } else {
+            echo "<script>alert('Erro: Curso não encontrado.'); window.location.href = document.referrer;</script>";
+            exit;
+        }
+        $stmt_curso->close();
+
+        $Turma_Cod = $_POST["Turma_Cod"];
+        $Turma_Horario_inicio = $_POST["Turma_Horario_inicio"];
+        $Turma_Horario_termino = $_POST["Turma_Horario_termino"];
+        $Turma_Vagas = $_POST["Turma_Vagas"];
+        $Turma_Dias = $_POST["codigo_dias"];
+        $Turma_Obs = !empty($_POST["Turma_Obs"]) ? $_POST["Turma_Obs"] : NULL;
+        $Turma_Inicio = $_POST["Turma_Inicio"];
+        $Turma_Termino = $_POST["Turma_Termino"];
+        $Professor_id = $_POST["Professor_id"];
+
         $sql_professor_check = "SELECT Usuario_id FROM Usuario
                                 INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
-                                WHERE Usuario_id = ? AND Tipo_Tipo_cd = 4"; // 4 é o ID para professores
+                                WHERE Usuario_id = ? AND Tipo_Tipo_cd = 4";
         $stmt_professor_check = $conn->prepare($sql_professor_check);
         $stmt_professor_check->bind_param("i", $Professor_id);
         $stmt_professor_check->execute();
@@ -29,38 +51,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_professor_check->close();
 
         if ($result_professor_check->num_rows == 0) {
-            echo "Erro: O ID fornecido não corresponde a um professor válido.";
+            echo "<script>alert('Erro: O ID fornecido não corresponde a um professor válido.'); window.location.href = document.referrer;</script>";
             exit;
         }
 
-        // Inicia uma transação para garantir a atomicidade da operação
         $conn->begin_transaction();
         try {
-            // Prepara e executa a declaração SQL para inserir os dados na tabela Turma
-            $sql = "INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Termino, Turma_status, curso_cd, Usuario_Usuario_cd) VALUES (?, ?, ?, ?, ?, ?, ?, '1', ?, ?)";
+            $sql = "INSERT INTO Turma (Turma_Cod, Turma_Horario, Turma_Horario_Termino, Turma_Vagas, Turma_Dias, Turma_Obs, Turma_Inicio, Turma_Termino, Turma_Status, Curso_cd, Usuario_Usuario_cd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, '1', ?, ?)";
+            
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssiisssii", $Turma_Cod, $Turma_Horario, $Turma_Vagas, $Turma_Dias, $Turma_Obs, $Turma_Inicio, $Turma_Termino, $Curso_id, $Professor_id);
+            $stmt->bind_param("sssiisssii", $Turma_Cod, $Turma_Horario_inicio, $Turma_Horario_termino, $Turma_Vagas, $Turma_Dias, $Turma_Obs, $Turma_Inicio, $Turma_Termino, $Curso_id, $Professor_id);
 
             if (!$stmt->execute()) {
                 throw new Exception("Erro ao inserir a turma: " . $stmt->error);
             }
 
-            $stmt->close(); // Fechando a primeira declaração
-
+            $stmt->close();
             $conn->commit();
-            echo "Turma inserida com sucesso e professor associado!";
+            echo "<script>alert('Turma inserida com sucesso e professor associado!'); window.location.href = '../PAGES/s_turma_cad.php'</script>";
         } catch (Exception $e) {
-            // Se ocorreu algum erro, reverta a transação
             $conn->rollback();
-            echo $e->getMessage();
+            echo "<script>alert('" . $e->getMessage() . "'); window.location.href = document.referrer;</script>";
         } finally {
-
             $conn->close();
         }
     } else {
-        echo "Todos os campos obrigatórios devem ser preenchidos.";
+        echo "<script>alert('Todos os campos obrigatórios devem ser preenchidos.'); window.location.href = document.referrer;</script>";
     }
 } else {
-    echo "Erro: Requisição inválida.";
+    echo "<script>alert('Erro: Requisição inválida.'); window.location.href = document.referrer;</script>";
 }
 ?>
