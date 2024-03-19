@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -14,7 +15,7 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .aluno path{
+        .notas path{
             fill: #043140;
         }
     </style>
@@ -30,14 +31,14 @@
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>CONSULTA DE ALUNOS</h1>
+                <h1>LANÇAMENTO DE NOTAS</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?><!-- Mostrar o usuario, foto e menu dropdown -->
+                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>

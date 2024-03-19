@@ -185,21 +185,7 @@ create table Ocorrencia(
     FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE Nota (
-  Usuario_Usuario_cd INT NOT NULL COMMENT 'Aluno',
-  Avaliacoes_Avaliacoes_cd INT NOT NULL,
-  Nota_Valor INT(100) NOT NULL,
-  Nota_Data DATETIME NOT NULL,
-  PRIMARY KEY (Usuario_Usuario_cd, Avaliacoes_Avaliacoes_cd),
-  CONSTRAINT fk_Nota_Usuario1 FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id),
-  CONSTRAINT fk_Nota_Avaliacoes1 FOREIGN KEY (Avaliacoes_Avaliacoes_cd) REFERENCES Avaliacoes (Avaliacoes_id)
-)ENGINE = InnoDB;
 
-CREATE TABLE DiasSemana (
-    Dia_id INT PRIMARY KEY,
-    Dia_Nome VARCHAR(20),
-    Dia_Sigla CHAR(3)
-)ENGINE = InnoDB;
 
 -- Dados da tabela Tipo
 INSERT INTO Tipo (Tipo_Descricao)
@@ -373,6 +359,12 @@ VALUES
 -- *********************************************************** --
 
 
+CREATE TABLE notas (
+    id_nota INT AUTO_INCREMENT PRIMARY KEY,
+    id_aluno_turma INT NOT NULL,
+    id_modulo INT NOT NULL,
+    nota DECIMAL(3,1) NOT NULL,
+    CONSTRAINT fk_notas_aluno_turma FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id),
+    CONSTRAINT fk_notas_modulo FOREIGN KEY (id_modulo) REFERENCES modulo(modulo_id)
+) ENGINE=InnoDB;
 
-select * from Usuario;
-select * from Curso;
