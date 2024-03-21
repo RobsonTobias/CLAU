@@ -25,7 +25,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .aluno path{
+        .aluno path {
             fill: #043140;
         }
     </style>
@@ -33,31 +33,31 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php include('../PHP/data.php');?>
-    <?php include('../PHP/sidebar/menu.php');?>
-    <?php include('../PHP/redes.php');?>
-    <?php include('../PHP/dropdown.php');?>
+    <?php include('../PHP/data.php'); ?>
+    <?php include('../PHP/sidebar/menu.php'); ?>
+    <?php include('../PHP/redes.php'); ?>
+    <?php include('../PHP/dropdown.php'); ?>
 
     <header>
         <div class="title">
             <div class="nomedata closed">
                 <h1>RELATÓRIO DE ALUNOS</h1>
                 <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
+                    <?php echo $date; ?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
+                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
     </header>
 
     <div>
-        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
+        <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
     </div>
-    
+
     <main>
         <div class="pesquisa">
             <p>Pesquisar:</p>
@@ -84,7 +84,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         $contador++;
                     }
                 } else {
-                    echo "<tr><td colspan='2'>Nenhum funcionário encontrado.</td></tr>";
+                    echo "<tr><td colspan='2'>Nenhum aluno encontrado.</td></tr>";
                 }
                 ?>
             </table>
@@ -161,7 +161,7 @@ if (session_status() == PHP_SESSION_NONE) {
     </main>
 
     <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
     </div>
 
     <script src="../JS/dropdown.js"></script>
@@ -188,7 +188,7 @@ if (session_status() == PHP_SESSION_NONE) {
         }); // Encerra o 'addEventListener'
     </script>
 
-<script>
+    <script>
         var selectedUserId; // Variável global para armazenar o ID do usuário selecionado
 
         function mostrarDetalhes(elemento) {
@@ -206,7 +206,6 @@ if (session_status() == PHP_SESSION_NONE) {
                     alert("Erro ao obter dados do usuário.");
                 }
             });
-            buscarTurmas(selectedUserId);
         }
 
         function informacao() {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,23 +24,23 @@
 
 <body>
 
-    <?php include('../PHP/data.php');?>
-    <?php include('../PHP/sidebar/menu.php');?>
-    <?php include('../PHP/redes.php');?>
-    <?php include('../PHP/dropdown.php');?>
+    <?php include('../PHP/data.php'); ?>
+    <?php include('../PHP/sidebar/menu.php'); ?>
+    <?php include('../PHP/redes.php'); ?>
+    <?php include('../PHP/dropdown.php'); ?>
 
     <header>
         <div class="title">
             <div class="nomedata closed">
                 <h1>CADASTRO DE FUNCIONÁRIOS</h1>
                 <div class="php">
-                    <?php echo $date;?>
+                    <?php echo $date; ?>
                     <!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?>
+                <?php echo $dropdown; ?>
                 <!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
@@ -47,7 +48,7 @@
     </header>
 
     <div>
-        <?php echo $sidebarHTML;?>
+        <?php echo $sidebarHTML; ?>
         <!--  Mostrar o menu lateral -->
     </div>
 
@@ -124,12 +125,13 @@
                         </div>
                         <div>
                             <label for="obs" class="obs">
-                                <textarea name="obs" id="obs" placeholder="Observações sobre o funcionário..."></textarea>
+                                <textarea name="obs" id="obs"
+                                    placeholder="Observações sobre o funcionário..."></textarea>
                             </label>
                         </div>
                     </div>
                     <div class="foto">
-                        <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">                                            
+                        <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
                         <label for="imagemInput">INSERIR FOTO</label>
                         <input type="file" id="imagemInput" name="imagem" accept="image/*" onchange="exibirImagem()">
                     </div>
@@ -176,16 +178,16 @@
                         <img src="../ICON/endereco.svg" alt="endereco">
                     </div>
                 </div>
-                    <div class="botao func">
-                        <button class="cadastrar" type="submit" onclick="cadastrar()">CADASTRAR</button>
-                        <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
-                    </div>
+                <div class="botao func">
+                    <button class="cadastrar" type="submit">CADASTRAR</button>
+                    <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
+                </div>
             </form>
         </div>
     </main>
 
     <div class="buttons">
-        <?php echo $redes;?>
+        <?php echo $redes; ?>
         <!--  Mostrar o botão de fale conosco -->
     </div>
 
@@ -194,12 +196,6 @@
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/end.js"></script>
     <script>
-        function cadastrar() {
-            // Adicione a lógica de cadastro aqui
-            alert('Cadastro realizado com sucesso!');
-            // Você pode redirecionar o usuário ou realizar outras ações necessárias
-        }
-
         function limpar() {
             // Adicione a lógica para limpar os campos do formulário aqui
             document.getElementById('form').reset();

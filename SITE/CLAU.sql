@@ -175,17 +175,28 @@ CREATE TABLE Aula (
 ) ENGINE=InnoDB;
 
 create table Ocorrencia(
-	Ocorrencia_id int not null,
+	Ocorrencia_id int not null auto_increment,
 	Aluno_Turma_cd INT NOT NULL,
 	Mensagem TEXT not null,
-    Usuario_Usuario_cd int not null,
+    Usuario_Usuario_cd int not null COMMENT 'Usuário que está cadastrando',
     Ocorrencia_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (Ocorrencia_id),
     FOREIGN KEY (Aluno_Turma_cd) REFERENCES Aluno_Turma (Aluno_Turma_id),
     FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
 ) ENGINE=InnoDB;
 
+CREATE TABLE notas (
+    id_nota INT AUTO_INCREMENT PRIMARY KEY,
+    id_aluno_turma INT NOT NULL,
+    id_modulo INT NOT NULL,
+    nota DECIMAL(3,1) NOT NULL,
+    CONSTRAINT fk_notas_aluno_turma FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id),
+    CONSTRAINT fk_notas_modulo FOREIGN KEY (id_modulo) REFERENCES modulo(modulo_id)
+) ENGINE=InnoDB;
 
+-- *************** --
+-- ** INSERÇÕES ** --
+-- *************** -- 
 
 -- Dados da tabela Tipo
 INSERT INTO Tipo (Tipo_Descricao)
@@ -194,17 +205,6 @@ VALUES	('Master'),
 		('Aluno'),
         ('Professor'),
         ('Coordenador');
-
--- Cadastro dos dias da semana
-INSERT INTO DiasSe mana (Dia_id, Dia_Nome, Dia_Sigla) VALUES
-(1, 'Domingo', 'DOM'),
-(2, 'Segunda-feira', 'SEG'),
-(3, 'Terça-feira', 'TER'),
-(4, 'Quarta-feira', 'QUA'),
-(4, 'Quarta-feira', 'QUA'),
-(5, 'Quinta-feira', 'QUI'),
-(6, 'Sexta-feira', 'SEX'),
-(7, 'Sábado', 'SAB');
 
 -- ---------------- --
 -- MASTER / DIRETOR --
@@ -354,17 +354,54 @@ VALUES
 (5, 1),
 (6, 1);
 
+-- -------- --
+-- TURMA 01 --
+-- -------- --
+INSERT INTO Turma 
+VALUES
+('INF09230723','09:00:00','11:00:00','30','23','Curso de Informática - 9h (seg e ter)','2023-07-01','2024-06-30',1,default,4,1);
+
+-- -------------------- --
+-- ALUNO 2  NA TURMA 01 --
+-- -------------------- --
+INSERT INTO Aluno_Turma
+VALUES
+(default,6,'INF09230723',default);
+
+-- -------------------------------------- --
+-- OCORRENCIA PARA O ALUNO 2  NA TURMA 01 --
+-- -------------------------------------- --
+INSERT INTO Ocorrencia
+VALUES
+(default,1,'Aluno bateu no professor.',4,default);
+
 -- *********************************************************** --
 -- ************ INSERIR EDIÇÕES A PARTIR DAQUI *************** --
 -- *********************************************************** --
 
-
-CREATE TABLE notas (
-    id_nota INT AUTO_INCREMENT PRIMARY KEY,
-    id_aluno_turma INT NOT NULL,
-    id_modulo INT NOT NULL,
-    nota DECIMAL(3,1) NOT NULL,
-    CONSTRAINT fk_notas_aluno_turma FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id),
-    CONSTRAINT fk_notas_modulo FOREIGN KEY (id_modulo) REFERENCES modulo(modulo_id)
-) ENGINE=InnoDB;
-
+SELECT 
+    U.*,
+    E.*,
+    RU.*,
+    AT.*,
+    O.*,
+    T.*,
+    C.*,
+    U2.Usuario_Nome AS Professor
+FROM 
+    Usuario U
+JOIN
+    Enderecos E ON U.Enderecos_Enderecos_cd = E.Enderecos_id
+JOIN
+    Registro_Usuario RU ON U.Usuario_id = RU.Usuario_Usuario_cd
+JOIN 
+    Aluno_Turma AT ON U.Usuario_id = AT.Usuario_Usuario_cd
+LEFT JOIN
+    Ocorrencia O ON AT.Aluno_Turma_id = O.Aluno_Turma_cd
+JOIN 
+    Turma T ON AT.Turma_Turma_Cod = T.Turma_Cod
+JOIN
+    Curso C ON T.Curso_cd = C.Curso_id
+JOIN 
+    Usuario U2 ON T.Usuario_Usuario_cd = U2.Usuario_id
+where U.Usuario_id = 6;
