@@ -3,21 +3,28 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php'; // Autoload do Composer
+require '../vendor/autoload.php';
+include '../conexao.php';
 
-include '../conexao.php'; // Seu script de conexão ao banco de dados
+// Carrega as variáveis de ambiente
+try {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__, 'phpdotenv.env');
+    $dotenv->load();
+} catch (Dotenv\Exception\InvalidPathException $e) {
+    die('Não foi possível carregar o arquivo .env: ' . $e->getMessage());
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
     $email = $conn->real_escape_string($_POST['email']); // Sanitiza o email
 
-    // Verificar se o email existe no banco de dados
+    // Verifica se o email existe no banco de dados
     $sql = "SELECT Usuario_id FROM Usuario WHERE Usuario_Email = '$email'";
     $resultado = $conn->query($sql);
 
     if ($resultado->num_rows > 0) {
         // Gerar nova senha
         $novaSenha = bin2hex(random_bytes(8)); // Gera uma senha aleatória
-        
+
         // Criptografar a nova senha antes de salvar no banco
         $senhaCriptografada = password_hash($novaSenha, PASSWORD_DEFAULT);
 
@@ -33,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'tccclau@gmail.com'; // Substitua pelas suas credenciais reais
-                $mail->Password = ''; // e armazene de forma segura
+                $mail->Password = $_ENV['EMAIL_PASSWORD']; // Obtém a senha do arquivo .env
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
@@ -60,4 +67,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
 } else {
     echo "Requisição inválida.";
 }
+
 ?>
