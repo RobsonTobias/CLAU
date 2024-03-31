@@ -115,11 +115,18 @@ CREATE TABLE Avaliacoes (
   CONSTRAINT fk_Avaliacoes_Modulo1 FOREIGN KEY (Modulo_Curso_cd) REFERENCES Modulo_Curso (Modulo_Curso_id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Chamada (
-  Chamada_id INT NOT NULL AUTO_INCREMENT,
-  Chamada_Data DATE NOT NULL,
-  PRIMARY KEY (Chamada_id))
-ENGINE = InnoDB;
+drop table chamada;
+
+CREATE TABLE chamada (
+    id_chamada INT AUTO_INCREMENT PRIMARY KEY,
+    id_aula INT,
+    id_aluno_turma INT,
+    presenca char(1) not null, -- ou TINYINT, dependendo do seu SGBD
+    FOREIGN KEY (id_aula) REFERENCES aula(id_aula),
+    -- Assuma que você tem uma tabela chamada aluno_turma com uma coluna id representando id_aluno_turma
+    FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id) -- Substitua aluno_turma(id) conforme necessário
+);
+
 
 CREATE TABLE Tipo (
   Tipo_id INT NOT NULL AUTO_INCREMENT,
@@ -164,39 +171,34 @@ CREATE TABLE Aluno_Turma (
   CONSTRAINT fk_Aluno_Turma_Turma1 FOREIGN KEY (Turma_Turma_Cod) REFERENCES Turma (Turma_Cod)
 ) ENGINE=InnoDB;
 
-CREATE TABLE Aula (
-  Aula_Aluno_Turma_cd INT NOT NULL,
-  Chamada_Chamada_cd INT NOT NULL,
-  Aula_Presenca CHAR(1) NOT NULL COMMENT '1 - presença ou 0 - falta',
-  Aula_Ocorrencia TEXT NULL,
-  PRIMARY KEY (Aula_Aluno_Turma_cd, Chamada_Chamada_cd),
-  CONSTRAINT fk_Aula_Aluno_Turma1 FOREIGN KEY (Aula_Aluno_Turma_cd) REFERENCES Aluno_Turma (Aluno_Turma_id),
-  CONSTRAINT fk_Aula_Chamada1 FOREIGN KEY (Chamada_Chamada_cd) REFERENCES Chamada (Chamada_id)
-) ENGINE=InnoDB;
+use clau;
+
+select * from aula;
+
+CREATE TABLE aula (
+    id_aula INT AUTO_INCREMENT PRIMARY KEY,
+    cod_turma char(12),
+    id_modulo INT,
+    descricao VARCHAR(255),
+    data_aula DATE,
+    data_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cod_turma) REFERENCES Turma(Turma_cod), -- Substitua Turma(id) pelo nome correto da sua tabela e coluna de turma
+    FOREIGN KEY (id_modulo) REFERENCES Modulo(Modulo_id) -- Substitua Modulo(id) pelo nome correto da sua tabela e coluna de módulo
+);
+
 
 create table Ocorrencia(
-	Ocorrencia_id int not null auto_increment,
+	Ocorrencia_id int not null,
 	Aluno_Turma_cd INT NOT NULL,
 	Mensagem TEXT not null,
-    Usuario_Usuario_cd int not null COMMENT 'Usuário que está cadastrando',
+    Usuario_Usuario_cd int not null,
     Ocorrencia_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (Ocorrencia_id),
     FOREIGN KEY (Aluno_Turma_cd) REFERENCES Aluno_Turma (Aluno_Turma_id),
     FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE notas (
-    id_nota INT AUTO_INCREMENT PRIMARY KEY,
-    id_aluno_turma INT NOT NULL,
-    id_modulo INT NOT NULL,
-    nota DECIMAL(3,1) NOT NULL,
-    CONSTRAINT fk_notas_aluno_turma FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id),
-    CONSTRAINT fk_notas_modulo FOREIGN KEY (id_modulo) REFERENCES modulo(modulo_id)
-) ENGINE=InnoDB;
 
--- *************** --
--- ** INSERÇÕES ** --
--- *************** -- 
 
 -- Dados da tabela Tipo
 INSERT INTO Tipo (Tipo_Descricao)
@@ -205,6 +207,17 @@ VALUES	('Master'),
 		('Aluno'),
         ('Professor'),
         ('Coordenador');
+
+-- Cadastro dos dias da semana
+INSERT INTO DiasSe mana (Dia_id, Dia_Nome, Dia_Sigla) VALUES
+(1, 'Domingo', 'DOM'),
+(2, 'Segunda-feira', 'SEG'),
+(3, 'Terça-feira', 'TER'),
+(4, 'Quarta-feira', 'QUA'),
+(4, 'Quarta-feira', 'QUA'),
+(5, 'Quinta-feira', 'QUI'),
+(6, 'Sexta-feira', 'SEX'),
+(7, 'Sábado', 'SAB');
 
 -- ---------------- --
 -- MASTER / DIRETOR --
@@ -296,6 +309,10 @@ VALUES (5,3);
 -- FIM ALUNO 01 --
 -- ------------ --
 
+select * from aulas;
+
+delete from aulas where aula_id =3;
+
 -- -------- --
 -- ALUNO 02 --
 -- -------- --
@@ -354,54 +371,29 @@ VALUES
 (5, 1),
 (6, 1);
 
--- -------- --
--- TURMA 01 --
--- -------- --
-INSERT INTO Turma 
-VALUES
-('INF09230723','09:00:00','11:00:00','30','23','Curso de Informática - 9h (seg e ter)','2023-07-01','2024-06-30',1,default,4,1);
-
--- -------------------- --
--- ALUNO 2  NA TURMA 01 --
--- -------------------- --
-INSERT INTO Aluno_Turma
-VALUES
-(default,6,'INF09230723',default);
-
--- -------------------------------------- --
--- OCORRENCIA PARA O ALUNO 2  NA TURMA 01 --
--- -------------------------------------- --
-INSERT INTO Ocorrencia
-VALUES
-(default,1,'Aluno bateu no professor.',4,default);
-
 -- *********************************************************** --
 -- ************ INSERIR EDIÇÕES A PARTIR DAQUI *************** --
 -- *********************************************************** --
 
-SELECT 
-    U.*,
-    E.*,
-    RU.*,
-    AT.*,
-    O.*,
-    T.*,
-    C.*,
-    U2.Usuario_Nome AS Professor
-FROM 
-    Usuario U
-JOIN
-    Enderecos E ON U.Enderecos_Enderecos_cd = E.Enderecos_id
-JOIN
-    Registro_Usuario RU ON U.Usuario_id = RU.Usuario_Usuario_cd
-JOIN 
-    Aluno_Turma AT ON U.Usuario_id = AT.Usuario_Usuario_cd
-LEFT JOIN
-    Ocorrencia O ON AT.Aluno_Turma_id = O.Aluno_Turma_cd
-JOIN 
-    Turma T ON AT.Turma_Turma_Cod = T.Turma_Cod
-JOIN
-    Curso C ON T.Curso_cd = C.Curso_id
-JOIN 
-    Usuario U2 ON T.Usuario_Usuario_cd = U2.Usuario_id
-where U.Usuario_id = 6;
+
+CREATE TABLE notas (
+    id_nota INT AUTO_INCREMENT PRIMARY KEY,
+    id_aluno_turma INT NOT NULL,
+    id_modulo INT NOT NULL,
+    nota DECIMAL(3,1) NOT NULL,
+    CONSTRAINT fk_notas_aluno_turma FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id),
+    CONSTRAINT fk_notas_modulo FOREIGN KEY (id_modulo) REFERENCES modulo(modulo_id)
+) ENGINE=InnoDB;
+
+use clau;
+
+CREATE TABLE Aulas (
+  Aula_id INT NOT NULL AUTO_INCREMENT,
+  Modulo_Modulo_id INT NOT NULL,
+  Aula_Assunto VARCHAR(255) NOT NULL,
+  Aula_Descricao TEXT NOT NULL,
+  PRIMARY KEY (Aula_id),
+  CONSTRAINT fk_Aulas_Modulo FOREIGN KEY (Modulo_Modulo_id) REFERENCES Modulo (Modulo_id)
+) ENGINE=InnoDB;
+
+

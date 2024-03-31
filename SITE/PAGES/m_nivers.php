@@ -4,6 +4,17 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $_SESSION['Tipo_Tipo_cd'] = 1;
+
+include '../conexao.php'; // Inclui o script de conexão ao banco de dados
+
+
+
+$query = "SELECT Usuario_Nome, Usuario_Nascimento
+FROM Usuario
+WHERE MONTH(Usuario_Nascimento) = MONTH(CURRENT_DATE())
+ORDER BY DAY(Usuario_Nascimento) ASC;";
+
+$result = $conn->query($query); // Executa a consulta
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -21,9 +32,22 @@ $_SESSION['Tipo_Tipo_cd'] = 1;
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .home path{
-            fill: #043140;
-        }
+        body {
+                font-family: Arial, sans-serif;
+                font-family: 'Roboto', sans-serif;
+            }
+
+        table {
+                width: 100%; 
+                border-collapse: collapse
+            }
+        th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+                font-family: 'Roboto', sans-serif;
+            }
+        th { background-color: #5effc9; }
     </style>
 </head>
 
@@ -37,7 +61,7 @@ $_SESSION['Tipo_Tipo_cd'] = 1;
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>HOME</h1>
+                <h1>ANIVERSARIANTES DO MÊS</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
@@ -55,15 +79,26 @@ $_SESSION['Tipo_Tipo_cd'] = 1;
     </div>
     
     <main>
-        <a href="m_funcionario_cad.php" class="item"><img src="../ICON/cadastro_funcionario.svg" alt="Cad_Funcionario">
-            <p>Cadastrar Funcionário</p>
-        </a>
-        <a href="m_funcionario.php" class="item"><img src="../ICON/funcionario.svg" alt="Pesquisar_Funcionario">
-            <p>Pesquisar Funcionário</p>
-        </a>
-        <a href="m_nivers.php" class="item"><img src="../ICON/funcionario.svg" alt="Pesquisar_Funcionario">
-            <p>Aniversariantes do mês</p>
-        </a>
+    <?php if ($result->num_rows > 0): ?>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data de Aniversário</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?= $row["Usuario_Nome"] ?></td>
+                    <td><?= date('d/m', strtotime($row["Usuario_Nascimento"])) ?></td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>Nenhum aniversariante encontrado.</p>
+<?php endif; ?>
     </main>
 
     <div class="buttons">
