@@ -16,6 +16,7 @@ select * from aula;
 
 select * from usuario;
 
+select usuario_nome, usuario_nascimento from usuario;
 
 
 show tables;
