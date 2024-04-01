@@ -16,6 +16,8 @@ select * from aula;
 
 select * from usuario;
 
+
+
 show tables;
 
 select * from turma;

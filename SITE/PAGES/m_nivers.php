@@ -9,10 +9,14 @@ include '../conexao.php'; // Inclui o script de conexão ao banco de dados
 
 
 
-$query = "SELECT Usuario_Nome, Usuario_Nascimento
+$query = "SELECT DISTINCT Usuario.Usuario_Nome, Usuario.Usuario_Nascimento
 FROM Usuario
-WHERE MONTH(Usuario_Nascimento) = MONTH(CURRENT_DATE())
-ORDER BY DAY(Usuario_Nascimento) ASC;";
+JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
+WHERE MONTH(Usuario.Usuario_Nascimento) = MONTH(CURRENT_DATE())
+AND Registro_Usuario.Tipo_Tipo_cd != 3
+ORDER BY DAY(Usuario.Usuario_Nascimento) ASC;";
+
+
 
 $result = $conn->query($query); // Executa a consulta
 ?>
