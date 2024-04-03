@@ -71,6 +71,8 @@ select * from avaliacoes;
 
 select * from notas;
 
+delete from notas where id_nota>9;
+
 SELECT
     U.Usuario_Nome AS NomeDoAluno,
     M.Modulo_Nome AS NomeDoModulo,

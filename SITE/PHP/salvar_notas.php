@@ -22,13 +22,27 @@ if (isset($_POST['salvarNotas'], $_POST['turma'], $_POST['modulo'], $_POST['nota
         $idAlunoTurma = getIdAlunoTurma($usuarioId, $turmaCod, $conn);
 
         if (!is_null($idAlunoTurma)) {
-            // Prepara a consulta para inserir as notas
-            $sql = "INSERT INTO notas (id_aluno_turma, id_modulo, nota) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE nota = ?";
+            // Verifica se a nota já existe
+            if (notaExiste($idAlunoTurma, $moduloId, $conn)) {
+                // Atualiza a nota
+                $sql = "UPDATE notas SET nota = ? WHERE id_aluno_turma = ? AND id_modulo = ?";
+            } else {
+                // Insere a nova nota
+                $sql = "INSERT INTO notas (id_aluno_turma, id_modulo, nota) VALUES (?, ?, ?)";
+            }
+            
             if ($stmt = $conn->prepare($sql)) {
-                $stmt->bind_param('iidd', $idAlunoTurma, $moduloId, $nota, $nota);
+                if (notaExiste($idAlunoTurma, $moduloId, $conn)) {
+                    // Se a nota existe, passa os parâmetros para atualizar
+                    $stmt->bind_param('dii', $nota, $idAlunoTurma, $moduloId);
+                } else {
+                    // Se a nota não existe, passa os parâmetros para inserir
+                    $stmt->bind_param('iid', $idAlunoTurma, $moduloId, $nota);
+                }
+                
                 if ($stmt->execute()) {
                     $mensagem = "Notas salvas com sucesso!";
-                    $redirecionar = true; // Atualiza a variável para verdadeiro se os dados forem inseridos com sucesso
+                    $redirecionar = true;
                 } else {
                     $mensagem = "Erro ao salvar as notas: " . $conn->error;
                 }
@@ -64,5 +78,17 @@ function getIdAlunoTurma($usuarioId, $turmaCod, $conn) {
         }
     }
     return null;
+}
+
+function notaExiste($idAlunoTurma, $moduloId, $conn) {
+    $sql = "SELECT COUNT(*) FROM notas WHERE id_aluno_turma = ? AND id_modulo = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param('ii', $idAlunoTurma, $moduloId);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        return $count > 0;
+    }
+    return false;
 }
 ?>
