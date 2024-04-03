@@ -71,9 +71,19 @@ select * from avaliacoes;
 
 select * from notas;
 
+SELECT
+    U.Usuario_Nome AS NomeDoAluno,
+    M.Modulo_Nome AS NomeDoModulo,
+    N.nota AS Nota
+FROM
+    notas N
+INNER JOIN aluno_turma AT ON N.id_aluno_turma = AT.Aluno_Turma_id
+INNER JOIN usuario U ON AT.Usuario_Usuario_cd = U.Usuario_id
+INNER JOIN modulo M ON N.id_modulo = M.Modulo_id where id_modulo = 5;
+
+
 select * from aluno_turma;
 select * from modulo;
-drop table notas;
 
 select * from notas;
 
