@@ -115,8 +115,6 @@ CREATE TABLE Avaliacoes (
   CONSTRAINT fk_Avaliacoes_Modulo1 FOREIGN KEY (Modulo_Curso_cd) REFERENCES Modulo_Curso (Modulo_Curso_id)
 )ENGINE = InnoDB;
 
-drop table chamada;
-
 CREATE TABLE chamada (
     id_chamada INT AUTO_INCREMENT PRIMARY KEY,
     id_aula INT,
@@ -126,7 +124,6 @@ CREATE TABLE chamada (
     -- Assuma que você tem uma tabela chamada aluno_turma com uma coluna id representando id_aluno_turma
     FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id) -- Substitua aluno_turma(id) conforme necessário
 );
-
 
 CREATE TABLE Tipo (
   Tipo_id INT NOT NULL AUTO_INCREMENT,
@@ -171,10 +168,6 @@ CREATE TABLE Aluno_Turma (
   CONSTRAINT fk_Aluno_Turma_Turma1 FOREIGN KEY (Turma_Turma_Cod) REFERENCES Turma (Turma_Cod)
 ) ENGINE=InnoDB;
 
-use clau;
-
-select * from aula;
-
 CREATE TABLE aula (
     id_aula INT AUTO_INCREMENT PRIMARY KEY,
     cod_turma char(12),
@@ -186,6 +179,23 @@ CREATE TABLE aula (
     FOREIGN KEY (id_modulo) REFERENCES Modulo(Modulo_id) -- Substitua Modulo(id) pelo nome correto da sua tabela e coluna de módulo
 );
 
+CREATE TABLE notas (
+    id_nota INT AUTO_INCREMENT PRIMARY KEY,
+    id_aluno_turma INT NOT NULL,
+    id_modulo INT NOT NULL,
+    nota DECIMAL(3,1) NOT NULL,
+    CONSTRAINT fk_notas_aluno_turma FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id),
+    CONSTRAINT fk_notas_modulo FOREIGN KEY (id_modulo) REFERENCES modulo(modulo_id)
+) ENGINE=InnoDB;
+
+CREATE TABLE Aulas (
+  Aula_id INT NOT NULL AUTO_INCREMENT,
+  Modulo_Modulo_id INT NOT NULL,
+  Aula_Assunto VARCHAR(255) NOT NULL,
+  Aula_Descricao TEXT NOT NULL,
+  PRIMARY KEY (Aula_id),
+  CONSTRAINT fk_Aulas_Modulo FOREIGN KEY (Modulo_Modulo_id) REFERENCES Modulo (Modulo_id)
+) ENGINE=InnoDB;
 
 create table Ocorrencia(
 	Ocorrencia_id int not null,
@@ -207,17 +217,6 @@ VALUES	('Master'),
 		('Aluno'),
         ('Professor'),
         ('Coordenador');
-
--- Cadastro dos dias da semana
-INSERT INTO DiasSe mana (Dia_id, Dia_Nome, Dia_Sigla) VALUES
-(1, 'Domingo', 'DOM'),
-(2, 'Segunda-feira', 'SEG'),
-(3, 'Terça-feira', 'TER'),
-(4, 'Quarta-feira', 'QUA'),
-(4, 'Quarta-feira', 'QUA'),
-(5, 'Quinta-feira', 'QUI'),
-(6, 'Sexta-feira', 'SEX'),
-(7, 'Sábado', 'SAB');
 
 -- ---------------- --
 -- MASTER / DIRETOR --
@@ -309,10 +308,6 @@ VALUES (5,3);
 -- FIM ALUNO 01 --
 -- ------------ --
 
-select * from aulas;
-
-delete from aulas where aula_id =3;
-
 -- -------- --
 -- ALUNO 02 --
 -- -------- --
@@ -374,26 +369,4 @@ VALUES
 -- *********************************************************** --
 -- ************ INSERIR EDIÇÕES A PARTIR DAQUI *************** --
 -- *********************************************************** --
-
-
-CREATE TABLE notas (
-    id_nota INT AUTO_INCREMENT PRIMARY KEY,
-    id_aluno_turma INT NOT NULL,
-    id_modulo INT NOT NULL,
-    nota DECIMAL(3,1) NOT NULL,
-    CONSTRAINT fk_notas_aluno_turma FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id),
-    CONSTRAINT fk_notas_modulo FOREIGN KEY (id_modulo) REFERENCES modulo(modulo_id)
-) ENGINE=InnoDB;
-
-use clau;
-
-CREATE TABLE Aulas (
-  Aula_id INT NOT NULL AUTO_INCREMENT,
-  Modulo_Modulo_id INT NOT NULL,
-  Aula_Assunto VARCHAR(255) NOT NULL,
-  Aula_Descricao TEXT NOT NULL,
-  PRIMARY KEY (Aula_id),
-  CONSTRAINT fk_Aulas_Modulo FOREIGN KEY (Modulo_Modulo_id) REFERENCES Modulo (Modulo_id)
-) ENGINE=InnoDB;
-
 
