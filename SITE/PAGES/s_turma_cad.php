@@ -15,17 +15,25 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
+        .turma path {
+            fill: #043140;
+        }
+
         /* Estilo para o formulário */
         form {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%; /* Defina a largura desejada */
-            max-width: 800px; /* Defina a largura máxima se necessário */
-            margin: 0 auto; /* Centraliza o formulário na página */
+            width: 90%;
+            /* Defina a largura desejada */
+            max-width: 800px;
+            /* Defina a largura máxima se necessário */
+            margin: 0 auto;
+            /* Centraliza o formulário na página */
             display: flex;
-            flex-direction: column; /* Organiza os campos em uma única coluna */
+            flex-direction: column;
+            /* Organiza os campos em uma única coluna */
         }
 
         form label {
@@ -87,10 +95,10 @@
 
 <body>
 
-    <?php include('../PHP/data.php'); ?>
-    <?php include('../PHP/sidebar/menu.php'); ?>
-    <?php include('../PHP/redes.php'); ?>
-    <?php include('../PHP/dropdown.php'); ?>
+    <?php include ('../PHP/data.php'); ?>
+    <?php include ('../PHP/sidebar/menu.php'); ?>
+    <?php include ('../PHP/redes.php'); ?>
+    <?php include ('../PHP/dropdown.php'); ?>
 
     <header>
         <div class="title">
@@ -114,9 +122,37 @@
 
     <main>
         <h2>Cadastro de Turmas</h2>
-      <form action="../PHP/cad_turma.php" method="post">
+        <form action="../PHP/cad_turma.php" method="post">
             <label for="Turma_Cod">Código da Turma:</label>
             <input type="text" id="Turma_Cod" name="Turma_Cod" readonly required><br><br>
+            <label for="Turma_Inicio">Curso</label>
+            <select id="Curso_id" name="Curso_id" onchange="atualizarCodigoTurma()">
+                <?php
+                // Conexão com o banco de dados
+                include '../conexao.php';
+
+                // Verifica a conexão
+                if ($conn->connect_error) {
+                    die("Conexão falhou: " . $conn->connect_error);
+                }
+
+                // Consulta SQL para obter os nomes e siglas dos cursos
+                $sql = "SELECT Curso_id, Curso_Nome, Curso_Sigla FROM Curso";
+                $result = $conn->query($sql);
+
+                // Loop para exibir os resultados como opções no menu suspenso
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["Curso_Sigla"] . "'>" . $row["Curso_Nome"] . "</option>";
+                    }
+                } else {
+                    echo "<option>Nenhum curso encontrado</option>";
+                }
+
+                // Fecha a conexão com o banco de dados
+                $conn->close();
+                ?>
+            </select>
 
             <label for="Turma_Horario">Horário de inicio:</label>
             <input type="time" id="Turma_Horario_inicio" name="Turma_Horario_inicio" required><br><br>
@@ -153,34 +189,7 @@
 
             <label for="Turma_Inicio">Data de Início:</label>
             <input type="date" id="Turma_Inicio" name="Turma_Inicio" required><br><br>
-            <label for="Turma_Inicio">Curso</label>
-            <select id="Curso_id" name="Curso_id" onchange="atualizarCodigoTurma()">
-    <?php
-    // Conexão com o banco de dados
-    include '../conexao.php';
 
-    // Verifica a conexão
-    if ($conn->connect_error) {
-        die("Conexão falhou: " . $conn->connect_error);
-    }
-
-    // Consulta SQL para obter os nomes e siglas dos cursos
-    $sql = "SELECT Curso_id, Curso_Nome, Curso_Sigla FROM Curso";
-    $result = $conn->query($sql);
-
-    // Loop para exibir os resultados como opções no menu suspenso
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row["Curso_Sigla"] . "'>" . $row["Curso_Nome"] . "</option>";
-        }
-    } else {
-        echo "<option>Nenhum curso encontrado</option>";
-    }
-
-    // Fecha a conexão com o banco de dados
-    $conn->close();
-    ?>
-</select>
 
 
             <label for="Turma_Termino">Data de Término:</label>
@@ -197,7 +206,7 @@
                         INNER JOIN Tipo T ON RU.Tipo_Tipo_cd = T.Tipo_id
                         WHERE T.Tipo_id = 4"; // Assumindo que o ID para professores é 4 na tabela Tipo
                 // Aqui estamos assumindo que o ID do tipo 'Professor' é 4
-
+                
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -221,14 +230,14 @@
 
     <script>
         // Script para atualizar o campo de texto com os dias selecionados
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             const codigoDias = document.getElementById('codigo_dias');
 
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('change', function() {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
                     let codigo = '';
-                    checkboxes.forEach(function(cb) {
+                    checkboxes.forEach(function (cb) {
                         if (cb.checked) {
                             codigo += cb.value;
                         }
@@ -238,39 +247,39 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-    const horarioInicioInput = document.getElementById('Turma_Horario_inicio');
-    const dataInicioInput = document.getElementById('Turma_Inicio');
-    const codigoTurmaInput = document.getElementById('Turma_Cod');
-    
-    // Monitore mudanças nos inputs relevantes e nos checkboxes
-    horarioInicioInput.addEventListener('change', atualizarCodigoTurma);
-    dataInicioInput.addEventListener('change', atualizarCodigoTurma);
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', atualizarCodigoTurma);
-    });
+        document.addEventListener('DOMContentLoaded', function () {
+            const horarioInicioInput = document.getElementById('Turma_Horario_inicio');
+            const dataInicioInput = document.getElementById('Turma_Inicio');
+            const codigoTurmaInput = document.getElementById('Turma_Cod');
 
-    function atualizarCodigoTurma() {
-    const cursoSelect = document.getElementById('Curso_id');
-    const siglaCurso = cursoSelect.value; // Agora pega a sigla diretamente do select
-    const horarioInicio = horarioInicioInput.value;
-    const dataInicio = new Date(dataInicioInput.value);
-    let diasCodigo = '';
-    document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-        diasCodigo += checkbox.value;
-    });
+            // Monitore mudanças nos inputs relevantes e nos checkboxes
+            horarioInicioInput.addEventListener('change', atualizarCodigoTurma);
+            dataInicioInput.addEventListener('change', atualizarCodigoTurma);
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', atualizarCodigoTurma);
+            });
 
-    const horarioCodigo = horarioInicio.replace(':', '').substring(0, 2);
-    const mesInicio = (dataInicio.getMonth() + 1).toString().padStart(2, '0');
-    const anoInicio = dataInicio.getFullYear().toString().substring(2, 4);
+            function atualizarCodigoTurma() {
+                const cursoSelect = document.getElementById('Curso_id');
+                const siglaCurso = cursoSelect.value; // Agora pega a sigla diretamente do select
+                const horarioInicio = horarioInicioInput.value;
+                const dataInicio = new Date(dataInicioInput.value);
+                let diasCodigo = '';
+                document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                    diasCodigo += checkbox.value;
+                });
 
-    const codigoTurma = `${siglaCurso}${horarioCodigo}${diasCodigo}${mesInicio}${anoInicio}`;
-    codigoTurmaInput.value = codigoTurma;
-}
+                const horarioCodigo = horarioInicio.replace(':', '').substring(0, 2);
+                const mesInicio = (dataInicio.getMonth() + 1).toString().padStart(2, '0');
+                const anoInicio = dataInicio.getFullYear().toString().substring(2, 4);
 
-    // Inicializa o código da turma ao carregar a página, caso já existam valores predefinidos
-    atualizarCodigoTurma();
-});
+                const codigoTurma = `${siglaCurso}${horarioCodigo}${diasCodigo}${mesInicio}${anoInicio}`;
+                codigoTurmaInput.value = codigoTurma;
+            }
+
+            // Inicializa o código da turma ao carregar a página, caso já existam valores predefinidos
+            atualizarCodigoTurma();
+        });
 
     </script>
 </body>

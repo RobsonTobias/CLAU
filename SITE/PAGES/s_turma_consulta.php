@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,37 +15,47 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-.turmas-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+        .turma path {
+            fill: #043140;
+        }
 
-.turmas-table th, .turmas-table td {
-    padding: 12px; /* Ajuste o espaçamento interno */
-    text-align: left;
-    border: 1px solid #ddd; /* Adicione bordas às células */
-}
+        .turmas-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-.turmas-table th {
-    background-color: #009155; /* Cor de fundo para os cabeçalhos */
-    color: #fff; /* Cor do texto nos cabeçalhos */
-}
+        .turmas-table th,
+        .turmas-table td {
+            padding: 12px;
+            /* Ajuste o espaçamento interno */
+            text-align: left;
+            border: 1px solid #ddd;
+            /* Adicione bordas às células */
+        }
 
-.turmas-table tbody tr:hover {
-    background-color: #f5f5f5; /* Cor de fundo das linhas ao passar o cursor */
-}
+        .turmas-table th {
+            background-color: #009155;
+            /* Cor de fundo para os cabeçalhos */
+            color: #fff;
+            /* Cor do texto nos cabeçalhos */
+        }
+
+        .turmas-table tbody tr:hover {
+            background-color: #f5f5f5;
+            /* Cor de fundo das linhas ao passar o cursor */
+        }
     </style>
 </head>
 
 <body>
 
-<?php include('../PHP/data.php');?>
-<?php include('../PHP/sidebar/menu.php');?>
-<?php include('../PHP/redes.php');?>
-<?php include('../PHP/dropdown.php');?>
+    <?php include ('../PHP/data.php'); ?>
+    <?php include ('../PHP/sidebar/menu.php'); ?>
+    <?php include ('../PHP/redes.php'); ?>
+    <?php include ('../PHP/dropdown.php'); ?>
 
-<?php 
+    <?php
     // Inclua aqui os arquivos PHP necessários
     // Aqui você pode incluir sua conexão com o banco de dados, por exemplo:
     include '../conexao.php';
@@ -54,44 +65,44 @@
         // Se não houver sessão ativa, inicia a sessão
         session_start();
     }
-?>
+    ?>
 
     <header>
         <div class="title">
             <div class="nomedata closed">
                 <h1>RELATÓRIO DE TURMAS</h1>
                 <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
+                    <?php echo $date; ?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
+                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
     </header>
 
     <div>
-        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
+        <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
     </div>
-    
- 
+
+
     <main>
-    <div class="tabela-turmas">
-        <table class="turmas-table">
-            <thead>
-                <tr>
-                    <th>Código da Turma</th>
-                    <th>Horário</th>
-                    <th>Vagas</th>
-                    <th>Dias</th>
-                    <th>Início</th>
-                    <th>Ações</th> <!-- Nova coluna para os botões -->
-                </tr>
-            </thead>
-            <tbody>
-                <?php
+        <div class="tabela-turmas">
+            <table class="turmas-table">
+                <thead>
+                    <tr>
+                        <th>Código da Turma</th>
+                        <th>Horário</th>
+                        <th>Vagas</th>
+                        <th>Dias</th>
+                        <th>Início</th>
+                        <th>Ações</th> <!-- Nova coluna para os botões -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
                     // Consulta SQL para obter todas as turmas
                     $query = "SELECT * FROM Turma";
 
@@ -117,14 +128,14 @@
 
                     // Fechar a conexão com o banco de dados
                     mysqli_close($conn);
-                ?>
-            </tbody>
-        </table>
-    </div>
-</main>
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
     <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
     </div>
 
     <script src="../JS/dropdown.js"></script>

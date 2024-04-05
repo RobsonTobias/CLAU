@@ -178,7 +178,7 @@
                     </div>
                 </div>
                 <div class="botao func">
-                    <button class="cadastrar" type="submit" onclick="cadastrar()">CADASTRAR</button>
+                    <button class="cadastrar" type="submit">CADASTRAR</button>
                     <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
                 </div>
             </form>

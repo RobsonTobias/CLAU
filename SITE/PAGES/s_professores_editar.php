@@ -1,5 +1,5 @@
 <?php
-include('../conexao.php');
+include ('../conexao.php');
 
 if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
@@ -40,7 +40,7 @@ if ($result->num_rows > 0) {
     <link rel="stylesheet" href="../STYLE/alterar.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .funcionario path {
+        .professores path {
             fill: #043140;
         }
     </style>
@@ -48,10 +48,10 @@ if ($result->num_rows > 0) {
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php include('../PHP/data.php'); ?>
-    <?php include('../PHP/sidebar/menu.php'); ?>
-    <?php include('../PHP/redes.php'); ?>
-    <?php include('../PHP/dropdown.php'); ?>
+    <?php include ('../PHP/data.php'); ?>
+    <?php include ('../PHP/sidebar/menu.php'); ?>
+    <?php include ('../PHP/redes.php'); ?>
+    <?php include ('../PHP/dropdown.php'); ?>
 
     <header>
         <div class="title">
@@ -237,7 +237,31 @@ if ($result->num_rows > 0) {
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/end.js"></script>
     <script>
+        $(document).ready(function () {
+            $("#form").on("submit", function (e) {
+                e.preventDefault(); // Impede o envio normal do formulário
 
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '../PHP/alt_professor.php',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        if (response.includes("Cadastro realizado com sucesso!")) {
+                            $('#form').trigger("reset"); // Limpa o formulário
+                            $('#imagemExibida').attr('src', 'https://placekitten.com/400/400');
+                            alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
+                        } else {
+                            alert(response); // Exibe outros alertas retornados pelo servidor
+                        }
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+        });
 
         function exibirImagem() {
             const input = document.getElementById('imagemInput');

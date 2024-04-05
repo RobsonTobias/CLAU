@@ -25,7 +25,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .funcionario path {
+        .professores path {
             fill: #043140;
         }
     </style>

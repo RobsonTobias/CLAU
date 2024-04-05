@@ -407,7 +407,7 @@ $alunoId = $_SESSION['AlunoId'];
                 success: function (response) {
                     if (response.includes("Cadastro realizado com sucesso!")) {
                         alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
-                        window.location.replace("s_alunos_info.php"); // Redireciona para a nova página
+                        window.location.replace("s_alunos_relatorio.php"); // Redireciona para a nova página
 
                     } else {
                         alert(response); // Exibe outros alertas retornados pelo servidor
