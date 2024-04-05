@@ -118,7 +118,7 @@ if (!empty($turmaCod) && !empty($moduloId)) {
     </form>
 
     <?php if (!empty($alunos) && mysqli_num_rows($alunos) > 0): ?>
-        <form action="../PHP/salvar_chamada.php" method="post">
+        <form id="formChamada" action="../PHP/salvar_chamada.php" method="post">
         <table>
     <tr>
         <th>Nome do Aluno</th>
@@ -152,6 +152,43 @@ if (!empty($turmaCod) && !empty($moduloId)) {
     <script src="../JS/dropdown.js"></script>
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("formChamada").onsubmit = function(e) {
+        e.preventDefault(); // Impede o envio inicial do formulário
+
+        var turma = document.getElementById("turma").value;
+        var modulo = document.getElementById("modulo").value;
+        var dataAula = document.getElementById("dataAula").value;
+
+        var formData = new FormData();
+        formData.append('turma', turma);
+        formData.append('modulo', modulo);
+        formData.append('dataAula', dataAula);
+
+        fetch('../PHP/verifica_aula.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+    if (data === "existente") {
+        alert("Já existe uma aula para esta turma, módulo e data.");
+    } else if (data === "dia_incorreto") {
+        alert("A data selecionada não corresponde aos dias de aula desta turma.");
+    } else {
+        // Se não existir, submete o formulário
+        document.getElementById("formChamada").submit();
+    }
+})
+
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    };
+});
+</script>
+
 </body>
 
 </html>
