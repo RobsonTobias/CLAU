@@ -31,10 +31,11 @@ $resultadoModulos = mysqli_query($conn, $sqlModulos);
 // Consulta para obter os alunos se a turma e o módulo foram selecionados
 $alunos = null;
 if (!empty($turmaCod) && !empty($moduloId)) {
-    $sqlAlunos = "SELECT usuario.usuario_id, usuario.usuario_nome
-                  FROM aluno_turma
-                  INNER JOIN usuario ON aluno_turma.usuario_usuario_cd = usuario.usuario_id
-                  WHERE aluno_turma.turma_turma_cod = '$turmaCod'";
+    $sqlAlunos = "SELECT aluno_turma.Aluno_Turma_id, usuario.usuario_nome
+    FROM aluno_turma
+    INNER JOIN usuario ON aluno_turma.usuario_usuario_cd = usuario.usuario_id
+    WHERE aluno_turma.turma_turma_cod = '$turmaCod'";
+
     $alunos = mysqli_query($conn, $sqlAlunos);
 }
 
@@ -117,19 +118,21 @@ if (!empty($turmaCod) && !empty($moduloId)) {
     </form>
 
     <?php if (!empty($alunos) && mysqli_num_rows($alunos) > 0): ?>
-        <form action="salvar_chamada.php" method="post">
-            <table>
-                <tr>
-                    <th>Nome do Aluno</th>
-                    <th>Presença</th>
-                </tr>
-                <?php while ($aluno = mysqli_fetch_assoc($alunos)) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($aluno['usuario_nome']) . "</td>";
-                    echo "<td><input type='checkbox' name='presenca[" . $aluno['usuario_id'] . "]'></td>";
-                    echo "</tr>";
-                } ?>
-            </table>
+        <form action="../PHP/salvar_chamada.php" method="post">
+        <table>
+    <tr>
+        <th>Nome do Aluno</th>
+        <th>Presença</th>
+    </tr>
+    <?php while ($aluno = mysqli_fetch_assoc($alunos)) {
+    echo "<tr>";
+    echo "<td>" . htmlspecialchars($aluno['usuario_nome']) . "</td>";
+    echo "<td><input type='checkbox' name='presenca[" . $aluno['Aluno_Turma_id'] . "]'></td>";
+    echo "</tr>";
+} ?>
+
+</table>
+
             <input type="hidden" name="turma" value="<?php echo htmlspecialchars($turmaCod); ?>">
             <input type="hidden" name="modulo" value="<?php echo htmlspecialchars($moduloId); ?>">
             <input type="hidden" name="dataAula" value="<?php echo htmlspecialchars($dataAula); ?>">

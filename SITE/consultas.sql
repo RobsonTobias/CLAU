@@ -91,3 +91,15 @@ select * from notas;
 
 select * from Usuario;
 select * from Curso;
+
+USE CLAU;
+
+show tables;
+
+select * from aula;
+
+select * from aluno_turma;
+
+select * from  chamada;
+
+delete from chamada where id_chamada >=4;
