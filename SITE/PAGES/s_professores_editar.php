@@ -104,10 +104,11 @@ if ($result->num_rows > 0) {
                             <label for="sexo" class="sexo">
                                 <p>SEXO<span>*</span></p>
                                 <div class="select">
-                                    <select name="sexo" id="sexo" value="<?php echo $row['Usuario_Sexo']; ?>">
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Feminino">Feminino</option>
+                                    <select name="sexo" id="sexo">
+                                        <option value="Masculino" <?php echo ($row['Usuario_Sexo'] == 'M') ? 'selected' : ''; ?>>Masculino</option>
+                                        <option value="Feminino" <?php echo ($row['Usuario_Sexo'] == 'F') ? 'selected' : ''; ?>>Feminino</option>
                                     </select>
+
                                 </div>
                             </label>
                         </div>
