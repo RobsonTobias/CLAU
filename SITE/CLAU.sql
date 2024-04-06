@@ -115,16 +115,6 @@ CREATE TABLE Avaliacoes (
   CONSTRAINT fk_Avaliacoes_Modulo1 FOREIGN KEY (Modulo_Curso_cd) REFERENCES Modulo_Curso (Modulo_Curso_id)
 )ENGINE = InnoDB;
 
-CREATE TABLE chamada (
-    id_chamada INT AUTO_INCREMENT PRIMARY KEY,
-    id_aula INT,
-    id_aluno_turma INT,
-    presenca char(1) not null, -- ou TINYINT, dependendo do seu SGBD
-    FOREIGN KEY (id_aula) REFERENCES aula(id_aula),
-    -- Assuma que você tem uma tabela chamada aluno_turma com uma coluna id representando id_aluno_turma
-    FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id) -- Substitua aluno_turma(id) conforme necessário
-);
-
 CREATE TABLE Tipo (
   Tipo_id INT NOT NULL AUTO_INCREMENT,
   Tipo_Descricao VARCHAR(100) NOT NULL,
@@ -162,6 +152,7 @@ CREATE TABLE Aluno_Turma (
   Aluno_Turma_id INT NOT NULL AUTO_INCREMENT,
   Usuario_Usuario_cd INT NOT NULL,
   Turma_Turma_Cod CHAR(12) NOT NULL,
+  Aluno_Turma_Status CHAR(1) DEFAULT "1", -- 1 para ativo, 0 para inativo
   Aluno_Turma_Registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (Aluno_Turma_id),
   CONSTRAINT fk_Aluno_Turma_Usuario1 FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id),
@@ -208,7 +199,15 @@ create table Ocorrencia(
     FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
 ) ENGINE=InnoDB;
 
-
+CREATE TABLE chamada (
+    id_chamada INT AUTO_INCREMENT PRIMARY KEY,
+    id_aula INT,
+    id_aluno_turma INT,
+    presenca char(1) not null, -- ou TINYINT, dependendo do seu SGBD
+    FOREIGN KEY (id_aula) REFERENCES aula(id_aula),
+    -- Assuma que você tem uma tabela chamada aluno_turma com uma coluna id representando id_aluno_turma
+    FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id) -- Substitua aluno_turma(id) conforme necessário
+);
 
 -- Dados da tabela Tipo
 INSERT INTO Tipo (Tipo_Descricao)

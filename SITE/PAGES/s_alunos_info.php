@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
     die("Usuário não encontrado.");
 }
 
-$sqlTurma = "SELECT AT.*, T.*, C.*, U.Usuario_Nome AS Professor, (SELECT ROUND((COUNT(CASE WHEN Aula_Presenca = '1' THEN 1 END) / COUNT(*) * 100), 0) FROM Aula A WHERE A.Aula_Aluno_Turma_cd = AT.Aluno_Turma_id) AS Frequencia FROM Aluno_Turma AT JOIN Turma T ON AT.Turma_Turma_Cod = T.Turma_Cod JOIN Curso C ON T.Curso_cd = C.Curso_id JOIN Usuario U ON T.Usuario_Usuario_cd = U.Usuario_id WHERE AT.Usuario_Usuario_cd = ?";
+$sqlTurma = "SELECT AT.*, T.*, C.*, U.Usuario_Nome AS Professor, (SELECT ROUND((COUNT(CASE WHEN presenca = '1' THEN 1 END) / COUNT(*) * 100), 0) FROM chamada WHERE chamada.id_aluno_turma = AT.Aluno_Turma_id) AS Frequencia FROM Aluno_Turma AT JOIN Turma T ON AT.Turma_Turma_Cod = T.Turma_Cod JOIN Curso C ON T.Curso_cd = C.Curso_id JOIN Usuario U ON T.Usuario_Usuario_cd = U.Usuario_id WHERE AT.Usuario_Usuario_cd = ?";
 $stmtTurma = $conn->prepare($sqlTurma);
 $stmtTurma->bind_param("i", $userId);
 $stmtTurma->execute();
