@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .notas path{
+        .aluno path{
             fill: #043140;
         }
     </style>
@@ -31,7 +31,7 @@
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>LANÇAMENTO DE NOTAS</h1>
+                <h1>CONSULTA DE ALUNOS</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
