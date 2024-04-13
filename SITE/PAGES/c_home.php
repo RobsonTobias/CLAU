@@ -67,7 +67,7 @@ $_SESSION['Tipo_Tipo_cd'] = 5;
         <a href="c_turma.php" class="item"><img src="../ICON/turma.svg" alt="Turma">
             <p>Turma</p>
         </a>
-        <a href="p_planejamento.php" class="item"><img src="../ICON/planejamento.svg" alt="Planejamento">
+        <a href="c_planejamento.php" class="item"><img src="../ICON/planejamento.svg" alt="Planejamento">
             <p>Planejamento</p>
         </a>
         <a href="p_prova.php" class="item"><img src="../ICON/prova.svg" alt="Provas e Atividades">
