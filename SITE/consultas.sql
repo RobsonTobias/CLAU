@@ -96,10 +96,30 @@ USE CLAU;
 
 show tables;
 
+select * from turma;
+
 select * from aula;
 
 select * from aluno_turma;
 
 select * from  chamada;
 
-delete from chamada where id_chamada >=4;
+SELECT
+    a.cod_turma,
+    COUNT(c.id_chamada) AS 'Total de Chamadas',
+    SUM(c.presenca = '1') AS 'Total de Presenças',
+    (SUM(c.presenca = '1') / COUNT(c.id_chamada)) * 100 AS 'Frequência (%)'
+FROM
+    chamada c
+INNER JOIN
+    aula a ON c.id_aula = a.id_aula
+WHERE
+    a.cod_turma = 'INF2024009' -- Substitua pelo código da turma desejada
+    AND MONTH(a.data_aula) = 4
+    AND YEAR(a.data_aula) = 2024 -- Ajuste o ano conforme necessário
+GROUP BY
+    a.cod_turma;
+
+use clau;
+
+select * from turma;
