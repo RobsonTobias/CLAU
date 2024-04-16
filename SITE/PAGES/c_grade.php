@@ -167,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Professor_id'])) {
     <main>
         <table>
             <tr>
-                <th></th>
+                <th class="invisible"></th>
                 <?php
                 $dias_semana = array(
                     1 => 'Segunda-feira',

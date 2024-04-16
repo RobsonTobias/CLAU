@@ -191,3 +191,10 @@ main{
     top: 75px;
 }
 /* -------- FIM DO DROPDOWN MENU -------- */
+
+/* Gambiarra */
+
+.invisible{
+    opacity: 0;
+    border: none;
+}

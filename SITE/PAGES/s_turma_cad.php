@@ -181,7 +181,7 @@
             ?>
             <br>
             <!-- Campo de texto para mostrar os dias selecionados -->
-            <input type="text" id="codigo_dias" name="codigo_dias" readonly>
+            <input type="hidden" id="codigo_dias" name="codigo_dias" readonly>
             <br>
 
             <label for="Turma_Obs">Observações:</label>

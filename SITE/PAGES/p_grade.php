@@ -46,6 +46,9 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
+        .grade path{
+            fill: #043140;
+        }
         table {
             border-collapse: collapse;
             width: 100%;
@@ -59,7 +62,7 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
             background-color:#61d4a8;
         }
         /* Estilo para células com turma do professor */
-        .turma {
+        .turmas {
             background-color: #a5d6a7;
             padding: 5px; /* Espaçamento interno para melhor visualização */
         }
@@ -104,7 +107,7 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
     <main>
         <table>
             <tr>
-                <th></th>
+                <th class="invisible"></th>
                 <?php
                 $dias_semana = array(
                     1 => 'Segunda-feira',
@@ -138,7 +141,7 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
                         $turma_termino = strtotime($turma['turma_horario_termino']);
 
                         if (in_array($dia_numero_turma, $dias_turma) && $i >= date('H', $turma_inicio) && $i < date('H', $turma_termino)) {
-                            echo "<div class='turma'>" . $turma['turma_cod'] . "</div>";
+                            echo "<div class='turmas'>" . $turma['turma_cod'] . "</div>";
                             $aula_encontrada = true;
                             break;
                         }

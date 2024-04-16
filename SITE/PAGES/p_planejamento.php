@@ -87,6 +87,9 @@ if (!$resultadoCursos) {
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
+        .planejamento path{
+            fill: #043140;
+        }
         .content-container {
             display: flex;
             flex-direction: row;
