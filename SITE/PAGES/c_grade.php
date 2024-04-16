@@ -58,6 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Professor_id'])) {
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
+        .grade path{
+            fill: #043140;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -70,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Professor_id'])) {
         th {
             background-color:#61d4a8;
         }
-        .turma {
+        .turmas {
             background-color: #a5d6a7;
             padding: 5px;
         }
@@ -197,7 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Professor_id'])) {
                         $turma_termino = strtotime($turma['turma_horario_termino']);
 
                         if (in_array($dia_numero_turma, $dias_turma) && $i >= date('H', $turma_inicio) && $i < date('H', $turma_termino)) {
-                            echo "<div class='turma'>" . $turma['turma_cod'] . "</div>";
+                            echo "<div class='turmas'>" . $turma['turma_cod'] . "</div>";
                             $aula_encontrada = true;
                             break;
                         }

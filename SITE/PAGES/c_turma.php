@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
+        .turma path{
+            fill: #043140;
+        }
         .turmas-table {
             width: 100%;
             border-collapse: collapse;

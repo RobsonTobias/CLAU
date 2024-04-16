@@ -58,10 +58,6 @@
           <span class="link_name">FALE CONOSCO</span>
         </a>
       </li>
-
-      <div class="version">
-        <span>v 1.0</span>
-      </div>
     </ul>
 </div>
 ';}
@@ -242,10 +238,6 @@ elseif($permissao == 3){
           <span class="link_name">FALE CONOSCO</span>
         </a>
       </li>
-
-      <div class="version">
-        <span>v 1.0</span>
-      </div>
     </ul>
 </div>
 ';
@@ -355,10 +347,6 @@ elseif($permissao == 4){
           <span class="link_name">FALE CONOSCO</span>
         </a>
       </li>
-
-      <div class="version">
-        <span>v 1.0</span>
-      </div>
     </ul>
 </div>
 ';
@@ -468,10 +456,6 @@ elseif($permissao == 5){
           <span class="link_name">FALE CONOSCO</span>
         </a>
       </li>
-
-      <div class="version">
-        <span>v 1.0</span>
-      </div>
     </ul>
 </div>
 ';

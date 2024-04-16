@@ -85,6 +85,9 @@ if (isset($_POST['submitAula'])) {
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
     
+    .planejamento path{
+        fill: #043140;
+    }
 
     .form-container {
         display: flex;
