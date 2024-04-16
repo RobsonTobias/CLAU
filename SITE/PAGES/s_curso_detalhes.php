@@ -168,7 +168,7 @@
                         <?php echo $curso_info['Curso_PreRequisito']; ?>
                     </li>
                     <li><strong>Status:</strong>
-                        <?php echo ($curso_info['Curso_Status'] == "1") ? "ativo" : "inativo"; ?>
+                        <?php echo ($curso_info['Curso_Status'] == "1") ? "Ativo" : "Inativo"; ?>
                     </li>
                     <li><strong>Quantidade de Turmas:</strong> <?php echo $num_turmas; ?></li>
                 </ul>

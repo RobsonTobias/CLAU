@@ -1,3 +1,16 @@
+@media (max-width: 1200px) {
+    .ajuste{
+        flex-wrap: wrap;
+    }
+    .pesquisa{
+        order:2;
+    }
+    .informacoes{
+        order: 1;
+    }
+}
+
+
 main{
     margin-top: 1%;
     display: flex;
@@ -18,6 +31,13 @@ main{
     flex-direction: column;
     gap: 15px;
     min-width: 700px;
+}
+.pesquisa {
+    width: 40%;
+}
+
+.informacoes {
+    width: 60%;
 }
 
 .pesquisa p{

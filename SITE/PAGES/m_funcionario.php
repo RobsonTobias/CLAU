@@ -1,13 +1,14 @@
 <?php
-    include ('../conexao.php');
+include ('../conexao.php');
 
-    if (session_status() == PHP_SESSION_NONE) {
-        // Se não houver sessão ativa, inicia a sessão
-        session_start();
-    }
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,40 +25,40 @@
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .funcionario path{
+        .funcionario path {
             fill: #043140;
         }
     </style>
 </head>
 
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<?php include('../PHP/data.php');?>
-<?php include('../PHP/sidebar/menu.php');?>
-<?php include('../PHP/redes.php');?>
-<?php include('../PHP/dropdown.php');?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <?php include ('../PHP/data.php'); ?>
+    <?php include ('../PHP/sidebar/menu.php'); ?>
+    <?php include ('../PHP/redes.php'); ?>
+    <?php include ('../PHP/dropdown.php'); ?>
 
     <header>
         <div class="title">
             <div class="nomedata closed">
                 <h1>RELATÓRIO DE FUNCIONÁRIOS</h1>
                 <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
+                    <?php echo $date; ?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
+                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
     </header>
 
     <div>
-        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
+        <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
     </div>
-    
-    <main>
+
+    <main class="ajuste">
         <div class="pesquisa">
             <p>Pesquisar:</p>
             <input type="text" id="searchInput" placeholder="Digite um nome para pesquisar">
@@ -88,66 +89,86 @@
                 ?>
             </table>
         </div>
-        <div class="informacao">
-            <div class="titulo">
-                <p>Informações Pessoais</p>
-                <button class="editar" type="button" onclick="editar()">EDITAR INFORMAÇÕES</button>
-            </div>
-            <div class="infofuncionario">
-                <div class="func">
-                    <div class="foto">
-                        <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
+        <div class="informacoes">
+            <div class="informacao">
+                <div class="titulo">
+                    <p>Informações Pessoais</p>
+                    <button class="editar" type="button" onclick="editar()">EDITAR INFORMAÇÕES</button>
+                </div>
+                <div class="infofuncionario">
+                    <div class="func">
+                        <div class="foto">
+                            <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
+                        </div>
+                        <div class="info-func">
+                            <div class="modal">Nome: <div class="texto" id="modalNome"></div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 modal">Nascimento: <div class="texto" id="modalNascimento"></div>
+                                </div>
+                                <div class="col2 modal" for="idade">Idade: <div class="texto" id="modalIdade"></div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 modal">CPF: <div class="texto" id="modalCpf"></div>
+                                </div>
+                                <div class="col2 modal">RG: <div class="texto" id="modalRg"></div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 modal">Sexo: <div class="texto" id="modalSexo"></div>
+                                </div>
+                                <div class="col2 modal">E-mail: <div class="texto" id="modalEmail"></div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 modal">Celular: <div class="texto" id="modalCelular"></div>
+                                </div>
+                                <div class="col2 modal">Data de Ingresso: <div class="texto" id="modalIngresso"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="info-func">
-                        <div class="modal">Nome: <div class="texto" id="modalNome"></div></div>
-                        <div class="linha">
-                            <div class="col1 modal">Nascimento: <div class="texto" id="modalNascimento"></div></div>
-                            <div class="col2 modal" for="idade">Idade: <div class="texto" id="modalIdade"></div></div>
-                        </div>
-                        <div class="linha">
-                            <div class="col1 modal">CPF: <div class="texto" id="modalCpf"></div></div>
-                            <div class="col2 modal">RG: <div class="texto" id="modalRg"></div></div>
-                        </div>
-                        <div class="linha">
-                            <div class="col1 modal">Sexo: <div class="texto" id="modalSexo"></div></div>
-                            <div class="col2 modal">E-mail: <div class="texto" id="modalEmail"></div></div>
-                        </div>
-                        <div class="linha">
-                            <div class="col1 modal">Celular: <div class="texto" id="modalCelular"></div></div>
-                            <div class="col2 modal">Data de Ingresso: <div class="texto" id="modalIngresso"></div></div>
-                        </div>
+                    <div class="obs-func">
+                        <p id="modalObs">Nenhuma informação cadastrada!</p>
                     </div>
                 </div>
-                <div class="obs-func">
-                    <p id="modalObs">Nenhuma informação cadastrada!</p>
-                </div>
-            </div>
-            <div class="endereco">
-                <p>Endereço</p>
-                <div class="linha">
-                    <div class="col1 cola modal">Logradouro: <div class="texto" id="modalLogradouro"></div> </div>
-                    <div class="col2 colb modal">Nº: <div class="texto" id="modalNumero"></div></div>
-                </div>
-                <div class="linha">
-                    <div class="col1 cola modal">Complemento: <div class="texto" id="modalComplemento"></div></div>
-                    <div class="col2 colb modal">CEP: <div class="texto" id="modalCep"></div></div>
-                </div>
-                <div class="linha">
-                    <div class="col1 cola modal">Bairro: <div class="texto" id="modalBairro"></div></div>
-                    <div class="col2 colb modal">Cidade: <div class="texto" id="modalCidade"></div></div>
-                    <div class="col3 colc modal">UF: <div class="texto" id="modalUf"></div></div>
+                <div class="endereco">
+                    <p>Endereço</p>
+                    <div class="linha">
+                        <div class="col1 cola modal">Logradouro: <div class="texto" id="modalLogradouro"></div>
+                        </div>
+                        <div class="col2 colb modal">Nº: <div class="texto" id="modalNumero"></div>
+                        </div>
+                    </div>
+                    <div class="linha">
+                        <div class="col1 cola modal">Complemento: <div class="texto" id="modalComplemento"></div>
+                        </div>
+                        <div class="col2 colb modal">CEP: <div class="texto" id="modalCep"></div>
+                        </div>
+                    </div>
+                    <div class="linha">
+                        <div class="col1 cola modal">Bairro: <div class="texto" id="modalBairro"></div>
+                        </div>
+                        <div class="col2 colb modal">Cidade: <div class="texto" id="modalCidade"></div>
+                        </div>
+                        <div class="col3 colc modal">UF: <div class="texto" id="modalUf"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
     <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
     </div>
 
     <script src="../JS/dropdown.js"></script>
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
+
+    <script src="../JS/pesquisa.js"></script>
     <script>
         var selectedUserId; // Variável global para armazenar o ID do usuário selecionado
 
@@ -158,12 +179,12 @@
                 url: '../PHP/det_func.php',
                 type: 'GET',
                 data: { userId: selectedUserId }, // Deve ser selectedUserId, não userId
-                success: function(response) {
-                // Aqui você vai lidar com a resposta
-                exibirDetalhesUsuario(response);
+                success: function (response) {
+                    // Aqui você vai lidar com a resposta
+                    exibirDetalhesUsuario(response);
                 },
-                error: function() {
-                alert("Erro ao obter dados do usuário.");
+                error: function () {
+                    alert("Erro ao obter dados do usuário.");
                 }
             });
         }
@@ -179,25 +200,7 @@
             }
         }
     </script>
-    <script>
-    document.getElementById('searchInput').addEventListener('keyup', function(event) {
-    var searchQuery = event.target.value.toLowerCase();
-    var tableRows = document.querySelectorAll('.table tr');
-
-    tableRows.forEach(function(row) {
-        // Verifica se a linha não é o cabeçalho da tabela
-        if (row.querySelector('td')) {
-            // Obter o texto da primeira célula (coluna NOME) da linha
-            var nameText = row.querySelector('td').textContent.toLowerCase();
-            if (nameText.startsWith(searchQuery)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        }
-    }); // Fecha o 'tableRows'
-    }); // Encerra o 'addEventListener'
-    </script>
+    <
 
     <script>
         function exibirDetalhesUsuario(dados) {
@@ -205,7 +208,7 @@
             var nome = document.getElementById('modalNome');
             var contNome = '';
 
-            if(dados){
+            if (dados) {
                 contNome += dados.Usuario_Nome;
             } else {
                 contNome = '<p>Não informado</p>';
@@ -218,7 +221,7 @@
             var nascimento = document.getElementById('modalNascimento');
             var contNascimento = '';
 
-            if(dados && dados.Usuario_Nascimento) {
+            if (dados && dados.Usuario_Nascimento) {
                 // Converter a data para um objeto Date
                 var dataObj = new Date(dados.Usuario_Nascimento);
 
@@ -255,7 +258,7 @@
             var idade = document.getElementById('modalIdade');
             var contIdade = '';
 
-            if(dados){
+            if (dados) {
                 contIdade = calcIdade + ' anos';
             } else {
                 contIdade = '<p>Não informado</p>';
@@ -268,7 +271,7 @@
             var Cpf = document.getElementById('modalCpf');
             var contCpf = '';
 
-            if(dados){
+            if (dados) {
                 contCpf += dados.Usuario_Cpf;
             } else {
                 contCpf = '<p>Não informado</p>';
@@ -281,7 +284,7 @@
             var Rg = document.getElementById('modalRg');
             var contRg = '';
 
-            if(dados){
+            if (dados) {
                 contRg += dados.Usuario_Rg;
             } else {
                 contRg = '<p>Não informado</p>';
@@ -294,7 +297,7 @@
             var Sexo = document.getElementById('modalSexo');
             var contSexo = '';
 
-            if(dados){
+            if (dados) {
                 contSexo += dados.Usuario_Sexo;
             } else {
                 contSexo = '<p>Não informado</p>';
@@ -307,7 +310,7 @@
             var Email = document.getElementById('modalEmail');
             var contEmail = '';
 
-            if(dados){
+            if (dados) {
                 contEmail += dados.Usuario_Email;
             } else {
                 contEmail = '<p>Não informado</p>';
@@ -320,7 +323,7 @@
             var Celular = document.getElementById('modalCelular');
             var contCelular = '';
 
-            if(dados){
+            if (dados) {
                 contCelular += dados.Usuario_Fone;
             } else {
                 contCelular = '<p>Não informado</p>';
@@ -333,7 +336,7 @@
             var Ingresso = document.getElementById('modalIngresso');
             var contIngresso = '';
 
-            if(dados && dados.Registro_Data) {
+            if (dados && dados.Registro_Data) {
                 // Converter a data para um objeto Date
                 var dataObj = new Date(dados.Registro_Data);
 
@@ -355,7 +358,7 @@
             var obs = document.getElementById('modalObs');
             var contObs = '';
 
-            if(dados){
+            if (dados) {
                 contObs += dados.Usuario_Obs;
             } else {
                 contObs = '<p>Não informado</p>';
@@ -368,7 +371,7 @@
             var Logradouro = document.getElementById('modalLogradouro');
             var contLogradouro = '';
 
-            if(dados){
+            if (dados) {
                 contLogradouro += dados.Enderecos_Rua;
             } else {
                 contLogradouro = '<p>Não informado</p>';
@@ -381,7 +384,7 @@
             var Numero = document.getElementById('modalNumero');
             var contNumero = '';
 
-            if(dados){
+            if (dados) {
                 contNumero += dados.Enderecos_Numero;
             } else {
                 contNumero = '<p>Não informado</p>';
@@ -394,7 +397,7 @@
             var Complemento = document.getElementById('modalComplemento');
             var contComplemento = '';
 
-            if(dados){
+            if (dados) {
                 contComplemento += dados.Enderecos_Complemento;
             } else {
                 contComplemento = '<p>Não informado</p>';
@@ -407,7 +410,7 @@
             var Cep = document.getElementById('modalCep');
             var contCep = '';
 
-            if(dados){
+            if (dados) {
                 contCep += dados.Enderecos_Cep;
             } else {
                 contCep = '<p>Não informado</p>';
@@ -420,7 +423,7 @@
             var Bairro = document.getElementById('modalBairro');
             var contBairro = '';
 
-            if(dados){
+            if (dados) {
                 contBairro += dados.Enderecos_Bairro;
             } else {
                 contBairro = '<p>Não informado</p>';
@@ -433,7 +436,7 @@
             var Cidade = document.getElementById('modalCidade');
             var contCidade = '';
 
-            if(dados){
+            if (dados) {
                 contCidade += dados.Enderecos_Cidade;
             } else {
                 contCidade = '<p>Não informado</p>';
@@ -446,7 +449,7 @@
             var Uf = document.getElementById('modalUf');
             var contUf = '';
 
-            if(dados){
+            if (dados) {
                 contUf += dados.Enderecos_Uf;
             } else {
                 contUf = '<p>Não informado</p>';
@@ -458,7 +461,7 @@
             // Variável para a imagem
             var imagem = document.getElementById('imagemExibida');
 
-            if(dados && dados.Usuario_Foto) {
+            if (dados && dados.Usuario_Foto) {
                 imagem.src = dados.Usuario_Foto;
             } else {
                 imagem.src = '../ICON/perfil.svg';

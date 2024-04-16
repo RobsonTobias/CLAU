@@ -1,5 +1,5 @@
 <?php
-include('../conexao.php');
+include ('../conexao.php');
 
 if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
@@ -28,15 +28,19 @@ if (session_status() == PHP_SESSION_NONE) {
         .aluno path {
             fill: #043140;
         }
+
+        .ajuste {
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php include('../PHP/data.php'); ?>
-    <?php include('../PHP/sidebar/menu.php'); ?>
-    <?php include('../PHP/redes.php'); ?>
-    <?php include('../PHP/dropdown.php'); ?>
+    <?php include ('../PHP/data.php'); ?>
+    <?php include ('../PHP/sidebar/menu.php'); ?>
+    <?php include ('../PHP/redes.php'); ?>
+    <?php include ('../PHP/dropdown.php'); ?>
 
     <header>
         <div class="title">
@@ -58,7 +62,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
     </div>
 
-    <main>
+    <main class="ajuste">
         <div class="pesquisa">
             <p>Pesquisar:</p>
             <input type="text" id="searchInput" placeholder="Digite um nome para pesquisar">
@@ -89,7 +93,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 ?>
             </table>
         </div>
-        <div>
+        <div class="informacoes">
             <div class="informacao">
                 <div class="titulo">
                     <p>Informações Pessoais</p>
@@ -168,25 +172,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
 
-    <script>
-        document.getElementById('searchInput').addEventListener('keyup', function (event) {
-            var searchQuery = event.target.value.toLowerCase();
-            var tableRows = document.querySelectorAll('.table tr');
-
-            tableRows.forEach(function (row) {
-                // Verifica se a linha não é o cabeçalho da tabela
-                if (row.querySelector('td')) {
-                    // Obter o texto da primeira célula (coluna NOME) da linha
-                    var nameText = row.querySelector('td').textContent.toLowerCase();
-                    if (nameText.startsWith(searchQuery)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                }
-            }); // Fecha o 'tableRows'
-        }); // Encerra o 'addEventListener'
-    </script>
+    <script src="../JS/pesquisa.js"></script>
 
     <script>
         var selectedUserId; // Variável global para armazenar o ID do usuário selecionado
