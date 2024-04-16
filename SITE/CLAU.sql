@@ -365,6 +365,32 @@ VALUES
 (5, 1),
 (6, 1);
 
+
+
+
+-- Inserir módulos para o curso de Administração de Empresas
+INSERT INTO Modulo (Modulo_Nome, Modulo_Desc, Modulo_Status)
+VALUES
+('Fundamentos de Administração', 'Conceitos básicos e introdução à administração', '1'),
+('Gestão Financeira', 'Princípios básicos de finanças e contabilidade', '1'),
+('Marketing e Vendas', 'Conceitos fundamentais de marketing e técnicas de vendas', '1'),
+('Gestão de Recursos Humanos', 'Fundamentos sobre o gerenciamento de pessoal', '1'),
+('Empreendedorismo', 'Iniciação ao empreendedorismo e criação de novos negócios', '1'),
+('Ética e Responsabilidade Social', 'Práticas de ética empresarial e responsabilidade social', '1');
+
+-- Associar os módulos recém inseridos ao curso de Administração
+-- Supondo que os IDs dos módulos inseridos sejam de 7 a 12
+INSERT INTO Modulo_Curso (Modulo_Modulo_cd, Curso_Curso_cd)
+VALUES
+(7, 2),
+(8, 2),
+(9, 2),
+(10, 2),
+(11, 2),
+(12, 2);
+
+
+
 -- *********************************************************** --
 -- ************ INSERIR EDIÇÕES A PARTIR DAQUI *************** --
 -- *********************************************************** --
