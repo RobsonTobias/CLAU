@@ -14,122 +14,106 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-.turmas-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+        .turmas-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra leve para destacar a tabela */
+        }
 
-.turmas-table th, .turmas-table td {
-    padding: 12px; /* Ajuste o espaçamento interno */
-    text-align: left;
-    border: 1px solid #ddd; /* Adicione bordas às células */
-}
+        .turmas-table th, .turmas-table td {
+            padding: 12px 15px; /* Aumenta o espaçamento interno para conforto visual */
+            border: 1px solid #ddd; /* Linhas sutis para não sobrecarregar visualmente */
+            text-align: left;
+        }
 
-.turmas-table th {
-    background-color: #009155; /* Cor de fundo para os cabeçalhos */
-    color: #fff; /* Cor do texto nos cabeçalhos */
-}
+        .turmas-table th {
+            background-color: #4CAF50; /* Um verde mais vibrante para cabeçalhos */
+            color: #fff;
+        }
 
-.turmas-table tbody tr:hover {
-    background-color: #f5f5f5; /* Cor de fundo das linhas ao passar o cursor */
-}
+        .turmas-table tbody tr:hover {
+            background-color: #f5f5f5; /* Efeito de hover mais suave */
+        }
+
+        .turmas-table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9; /* Alternando cores de fundo para linhas para melhor leitura */
+        }
+
+        .button-link {
+            text-decoration: none;
+            color: white;
+            background-color: #009578; /* Cor sincronizada com o cabeçalho para um design coeso */
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button-link:hover {
+            background-color: #007B5E; /* Mudança de cor no hover para interatividade */
+        }
     </style>
 </head>
-
 <body>
-
-<?php include('../PHP/data.php');?>
-<?php include('../PHP/sidebar/menu.php');?>
-<?php include('../PHP/redes.php');?>
-<?php include('../PHP/dropdown.php');?>
-
-<?php 
-    // Inclua aqui os arquivos PHP necessários
-    // Aqui você pode incluir sua conexão com o banco de dados, por exemplo:
-    include '../conexao.php';
-
-    // Verifica se uma sessão já está ativa
-    if (session_status() == PHP_SESSION_NONE) {
-        // Se não houver sessão ativa, inicia a sessão
-        session_start();
-    }
-?>
-
+    <?php include('../PHP/data.php');?>
+    <?php include('../PHP/sidebar/menu.php');?>
+    <?php include('../PHP/redes.php');?>
+    <?php include('../PHP/dropdown.php');?>
     <header>
         <div class="title">
             <div class="nomedata closed">
                 <h1>RELATÓRIO DE TURMAS</h1>
-                <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
-                </div>
+                <div class="php"><?php echo $date; ?></div>
             </div>
-
-            <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
+            <div class="user"><?php echo $dropdown; ?></div>
         </div>
         <hr>
     </header>
-
-    <div>
-        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
-    </div>
-    
- 
+    <div><?php echo $sidebarHTML; ?></div>
     <main>
-    <div class="tabela-turmas">
-        <table class="turmas-table">
-            <thead>
-                <tr>
-                    <th>Código da Turma</th>
-                    <th>Horário</th>
-                    <th>Vagas</th>
-                    <th>Dias</th>
-                    <th>Início</th>
-                    <th>Ações</th> <!-- Nova coluna para os botões -->
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    // Consulta SQL para obter todas as turmas
+        <div class="tabela-turmas">
+            <table class="turmas-table">
+                <thead>
+                    <tr>
+                        <th>Código da Turma</th>
+                        <th>Horário</th>
+                        <th>Vagas</th>
+                        <th>Dias</th>
+                        <th>Início</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    include '../conexao.php';
+                    if (session_status() == PHP_SESSION_NONE) {
+                        session_start();
+                    }
                     $query = "SELECT * FROM Turma";
-
-                    // Executar a consulta
                     $result = mysqli_query($conn, $query);
-
-                    // Verificar se a consulta retornou algum resultado
                     if (mysqli_num_rows($result) > 0) {
-                        // Loop através de todas as linhas da tabela
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
                             echo "<td>" . $row['Turma_Cod'] . "</td>";
                             echo "<td>" . $row['Turma_Horario'] . "</td>";
                             echo "<td>" . $row['Turma_Vagas'] . "</td>";
                             echo "<td>" . $row['Turma_Dias'] . "</td>";
-                            echo "<td>" . date('d/m/Y', strtotime($row['Turma_Inicio'])) . "</td>"; // Data no formato brasileiro
-                            echo "<td><a href='s_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='button-link'>Detalhes</a></td>"; // Link para detalhes da turma
+                            echo "<td>" . date('d/m/Y', strtotime($row['Turma_Inicio'])) . "</td>";
+                            echo "<td><a href='s_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='button-link'>Detalhes</a></td>";
                             echo "</tr>";
                         }
                     } else {
                         echo "<tr><td colspan='6'>Nenhuma turma encontrada</td></tr>";
                     }
-
-                    // Fechar a conexão com o banco de dados
                     mysqli_close($conn);
-                ?>
-            </tbody>
-        </table>
-    </div>
-</main>
-
-    <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
-    </div>
-
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <div class="buttons"><?php echo $redes; ?></div>
     <script src="../JS/dropdown.js"></script>
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
 </body>
-
 </html>
