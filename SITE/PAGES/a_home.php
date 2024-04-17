@@ -30,7 +30,7 @@ $_SESSION['Tipo_Tipo_cd'] = 3;
 <body>
 
 <?php include('../PHP/data.php');?>
-<?php include('../PHP/sidebar/menu_aluno.php');?>
+<?php include('../PHP/sidebar/menu.php');?>
 <?php include('../PHP/redes.php');?>
 <?php include('../PHP/dropdown.php');?>
 

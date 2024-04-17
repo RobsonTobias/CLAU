@@ -162,7 +162,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div class="titulo">
                     <p>Turmas que leciona</p>
                 </div>
-                <div class="pesquisa">
+                <div class="pesquisa turma">
                     <table class="table table-hover">
                         <thead>
                             <tr>
