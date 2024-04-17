@@ -8,6 +8,10 @@
     .informacoes{
         order: 1;
     }
+    .coluna{
+        scale: 0.9;
+        margin-left: 78px;
+    }
 }
 
 
