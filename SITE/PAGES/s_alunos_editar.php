@@ -18,6 +18,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $estadocivil = $row['Usuario_EstadoCivil'];
+    $_SESSION['imagemOriginal'] = $row['Usuario_Foto'];
 } else {
     echo "Usuário não encontrado";
 }
@@ -80,7 +81,7 @@ if ($result->num_rows > 0) {
     <main>
         <div class="geral">
             <p>Informações do Aluno</p>
-            <form action="../PHP/alt_professor.php" id="form" class="form" method="post" enctype="multipart/form-data">
+            <form action="../PHP/alt_aluno.php" id="form" class="form" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="usuario_id" value="<?php echo $userId; ?>">
                 <div class="info">
                     <div class="dados">
@@ -255,7 +256,7 @@ if ($result->num_rows > 0) {
                     </div>
                 </div>
                 <div class="botao func">
-                    <button class="cadastrar" type="submit" onclick="cadastrar()">SALVAR</button>
+                    <button class="cadastrar" type="submit">SALVAR</button>
                 </div>
             </form>
         </div>
@@ -278,14 +279,14 @@ if ($result->num_rows > 0) {
                 var formData = new FormData(this);
 
                 $.ajax({
-                    url: '../PHP/alt_professor.php',
+                    url: '../PHP/alt_aluno.php',
                     type: 'POST',
                     data: formData,
                     success: function (response) {
-                        if (response.includes("Cadastro realizado com sucesso!")) {
-                            $('#form').trigger("reset"); // Limpa o formulário
-                            $('#imagemExibida').attr('src', 'https://placekitten.com/400/400');
-                            alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
+                        if (response.includes("Cadastro alterado com sucesso!")) {
+                            //$('#form').trigger("reset"); // Limpa o formulário
+                            //$('#imagemExibida').attr('src', '../ICON/perfil.svg');
+                            alert("Cadastro alterado com sucesso!"); // Exibe um alerta de sucesso
                         } else {
                             alert(response); // Exibe outros alertas retornados pelo servidor
                         }
