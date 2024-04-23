@@ -23,6 +23,7 @@ if (isset($_SESSION['Usuario_Nome'])) {
     $userAluno = $_SESSION['Usuario_id'];
     $sqlNotas = 'select
         n.nota,
+        ROUND((COUNT(CASE WHEN ch.presenca = 1 THEN 1 END) / COUNT(*) * 100), 0) AS Porcentagem_Presenca,
         t.Turma_Cod,
         c.Curso_Nome,
         m.Modulo_Nome,
@@ -39,7 +40,11 @@ if (isset($_SESSION['Usuario_Nome'])) {
         Modulo m ON n.id_modulo = m.Modulo_id
     INNER JOIN
         Usuario u ON at.Usuario_Usuario_cd = u.Usuario_id
+    LEFT JOIN
+        chamada ch ON n.id_aluno_turma = ch.id_aluno_turma
         where Usuario_id = "' . $userAluno . '"
+        GROUP BY
+        u.Usuario_Nome, n.nota, t.Turma_Cod, c.Curso_Nome, m.Modulo_Nome, t.Turma_Inicio
         order by Curso_Nome, Modulo_Nome asc;';
     $resultadoNota = mysqli_query($conn, $sqlNotas);
 
@@ -132,6 +137,7 @@ if (isset($_SESSION['Usuario_Nome'])) {
                                 <th>Modulo</th>
                                 <th>Curso</th>
                                 <th>Sua nota</th>
+                                <th>Sua presença</th>
                                 <th>Turma</th>
                                 <th>Ano de Inicio</th>
                             </tr>
@@ -154,6 +160,10 @@ if (isset($_SESSION['Usuario_Nome'])) {
 
                                     <td>
                                         <?php echo $l['nota']; ?>
+                                    </td>
+
+                                    <td>
+                                        <?php echo $l['Porcentagem_Presenca'],"%"?>
                                     </td>
 
                                     <td>
