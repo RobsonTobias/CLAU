@@ -250,10 +250,9 @@ if ($result->num_rows > 0) {
                     type: 'POST',
                     data: formData,
                     success: function (response) {
-                        if (response.includes("Cadastro realizado com sucesso!")) {
-                            $('#form').trigger("reset"); // Limpa o formulário
-                            $('#imagemExibida').attr('src', 'https://placekitten.com/400/400');
-                            alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
+                        if (response.includes("Dados do usuário atualizados com sucesso")) {
+                            alert("Dados do usuário atualizados com sucesso"); // Exibe um alerta de sucesso
+                            window.location.href = '../PAGES/s_professores_relatorio.php';
                         } else {
                             alert(response); // Exibe outros alertas retornados pelo servidor
                         }
