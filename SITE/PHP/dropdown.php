@@ -17,7 +17,7 @@ if (isset($_SESSION['Usuario_Nome']) && !empty($_SESSION['Usuario_Nome'])) {
         <div id="myDropdown" class="dropdown-content">
             <a href="perfil.php">Perfil</a>
             <a href="notificacoes.php">Notificação</a>
-            <a href="../index.html">Sair</a>
+            <a href="../logout.php">Sair</a>
         </div>
     </div>
     ';

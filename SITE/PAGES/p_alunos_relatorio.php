@@ -5,6 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
 	// Se não houver sessão ativa, inicia a sessão
 	session_start();
 }
+$idProfessor = $_SESSION['Usuario_id'];
+//echo $idProfessor;
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -72,9 +74,10 @@ if (session_status() == PHP_SESSION_NONE) {
 					<th>MATRÍCULA</th>
 				</tr>
 				<?php
-				$sql = "SELECT * FROM Usuario
-                INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
-                Where Registro_Usuario.Tipo_Tipo_cd = 3;";
+				$sql = "select * from usuario
+				join Aluno_turma on Usuario.Usuario_id = Aluno_turma.Usuario_Usuario_cd
+				JOIN Turma ON aluno_turma.Turma_Turma_Cod = turma.Turma_Cod
+				WHERE turma.Usuario_Usuario_cd = '.$idProfessor.';";
 
 				$contador = 0;
 				$resultado = $conn->query($sql);

@@ -61,7 +61,7 @@ $_SESSION['Tipo_Tipo_cd'] = 4;
         <a href="p_notas.php" class="item"><img src="../ICON/nota.svg" alt="Notas">
             <p>Notas</p>
         </a>
-        <a href="p_aluno.php" class="item"><img src="../ICON/aluno.svg" alt="Aluno">
+        <a href="p_alunos_relatorio.php" class="item"><img src="../ICON/aluno.svg" alt="Aluno">
             <p>Aluno</p>
         </a>
         <a href="p_turma.php" class="item"><img src="../ICON/turma.svg" alt="Turma">
@@ -75,9 +75,6 @@ $_SESSION['Tipo_Tipo_cd'] = 4;
         </a>
         <a href="p_grade.php" class="item"><img src="../ICON/grade.svg" alt="Grade_Horaria">
             <p>Grade Horária</p>
-        </a>
-        <a href="p_calendario.php" class="item"><img src="../ICON/calendario.svg" alt="Calendario">
-            <p>Calendário</p>
         </a>
     </main>
 
