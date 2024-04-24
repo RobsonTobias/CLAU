@@ -129,10 +129,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Não há nenhum  registro de responsável com esse CPF.
                 // Inserindo a nova responsável no banco de dados e obtendo seu ID.
                 $respon = "INSERT INTO Responsavel (Respon_Nome, Respon_Fone, Respon_Cpf, Respon_Rg, Respon_Parentesco) VALUES ('$nomeResponsavel', '$celularResponsavel', '$cpfResponsavel', '$rgResponsavel', '$parentesco')";
-                if ($conn->query($respon) === TRUE){
+                if ($conn->query($respon) === TRUE) {
                     $responsavelId = $conn->insert_id;
-                }else{
-                    $erroMsg .= "Erro ao inserir responsável: ".$conn->error;
+                } else {
+                    $erroMsg .= "Erro ao inserir responsável: " . $conn->error;
                 }
             }
         }
@@ -145,28 +145,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("sssssssssssssiii", $nome, $apelido, $email, $sexo, $cpf, $rg, $nascimento, $estadocivil, $celular, $telrecado, $apelido, $obs, $caminhoCompleto, $enderecoId, $responsavelId, $userId);
                 $stmt->execute();
-                
-                if ($stmt->execute()) {
-                    echo "Executado com sucesso, linhas alteradas: " . $stmt->affected_rows;
-                    if ($stmt->affected_rows > 0) {
-                        header("Location: ../PAGES/s_alunos_info.php");
-                        exit;
-                    } else {
-                        $erroMsg .= "Nenhuma alteração necessária ou erro ao atualizar os dados do usuário: " . $stmt->error . "<br>";
-                    }
+
+                if ($stmt->affected_rows > 0) {
+                    echo "Dados do usuário atualizados com sucesso";
+                    header("Location: ../PAGES/s_alunos_info.php");
+                    exit;
                 } else {
-                    $erroMsg .= "Erro ao executar a consulta: " . $stmt->error . "<br>";
+                    $erroMsg .= "Nenhuma alteração necessária ou erro ao atualizar os dados do usuário: " . $stmt->error . "<br>";
                 }
-                
+
+
                 $stmt->close();
             } else {
                 $erroMsg .= "Erro ao preparar consulta: " . $conn->error;
             }
-            
+
             if (!empty($erroMsg)) {
                 echo $erroMsg;  // Exibe a mensagem de erro, se houver alguma
             }
-            
+
         }
     }
 

@@ -283,10 +283,9 @@ if ($result->num_rows > 0) {
                     type: 'POST',
                     data: formData,
                     success: function (response) {
-                        if (response.includes("Cadastro alterado com sucesso!")) {
-                            //$('#form').trigger("reset"); // Limpa o formulário
-                            //$('#imagemExibida').attr('src', '../ICON/perfil.svg');
-                            alert("Cadastro alterado com sucesso!"); // Exibe um alerta de sucesso
+                        if (response.includes("Dados do usuário atualizados com sucesso")) {
+                            alert("Dados do usuário atualizados com sucesso"); // Exibe um alerta de sucesso
+                            window.location.href = '../PAGES/s_alunos_info.php';
                         } else {
                             alert(response); // Exibe outros alertas retornados pelo servidor
                         }
