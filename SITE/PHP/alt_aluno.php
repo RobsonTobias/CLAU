@@ -1,9 +1,5 @@
 <?php
-ob_start(); // Iniciar buffer de saída
 include '../conexao.php';
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -148,7 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if ($stmt->affected_rows > 0) {
                     echo "Dados do usuário atualizados com sucesso";
-                    header("Location: ../PAGES/s_alunos_info.php");
                     exit;
                 } else {
                     $erroMsg .= "Nenhuma alteração necessária ou erro ao atualizar os dados do usuário: " . $stmt->error . "<br>";
@@ -159,11 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $erroMsg .= "Erro ao preparar consulta: " . $conn->error;
             }
-
-            if (!empty($erroMsg)) {
-                echo $erroMsg;  // Exibe a mensagem de erro, se houver alguma
-            }
-
         }
     }
 
@@ -171,5 +161,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo $erroMsg;
     }
 }
-ob_end_flush(); // Enviar tudo do buffer para o navegador
 ?>

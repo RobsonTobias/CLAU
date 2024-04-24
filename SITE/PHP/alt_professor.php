@@ -123,7 +123,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->execute();
                 if ($stmt->affected_rows > 0) {
                     echo "Dados do usuário atualizados com sucesso";
-                    header("Location: ../PAGES/s_professores_relatorio.php");
                     exit;
                 } else {
                     $erroMsg .= "Erro ao atualizar os dados do usuário: " . $stmt->error . "<br>";

@@ -154,7 +154,9 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                 <div class="titulo">
                     <p>Informações Pessoais</p>
                     <input type="hidden" name="usuario_id" value="<?php echo $userId; ?>">
-                    <button class="editar" type="button" onclick="editar()">EDITAR INFORMAÇÃO</button>
+                    <a href="s_alunos_editar.php">
+                    <button class="editar" type="button" >EDITAR INFORMAÇÃO</button>
+                    </a>
                 </div>
                 <div class="infofuncionario">
                     <div class="func">
@@ -497,13 +499,6 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
         var selectedUserId = <?php echo json_encode($userId); ?>; // Atribui o valor PHP à variável JavaScript
         var alunoTurmaId = <?php echo json_encode($alunoTurmaId); ?>;// Variável global com a ID da Turma do Aluno logado
 
-        function editar() {
-            if (selectedUserId) {
-                window.location.href = "s_alunos_editar.php";
-            } else {
-                alert("Por favor, selecione um aluno antes de editar.");
-            }
-        }
     </script>
 
     <script>
