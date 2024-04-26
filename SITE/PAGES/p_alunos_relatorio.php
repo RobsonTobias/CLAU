@@ -77,7 +77,7 @@ $idProfessor = $_SESSION['Usuario_id'];
 				$sql = "select * from usuario
 				join Aluno_turma on Usuario.Usuario_id = Aluno_turma.Usuario_Usuario_cd
 				JOIN Turma ON aluno_turma.Turma_Turma_Cod = turma.Turma_Cod
-				WHERE turma.Usuario_Usuario_cd = '.$idProfessor.';";
+				WHERE turma.Usuario_Usuario_cd = ".$idProfessor." group by usuario_id;";
 
 				$contador = 0;
 				$resultado = $conn->query($sql);
@@ -199,7 +199,7 @@ $idProfessor = $_SESSION['Usuario_id'];
 
 		function informacao() {
 			if (selectedUserId) {
-				window.location.href = "s_alunos_info.php?userId=" + selectedUserId;
+				window.location.href = "p_alunos_info.php?userId=" + selectedUserId;
 			} else {
 				alert("Por favor, selecione um aluno.");
 			}

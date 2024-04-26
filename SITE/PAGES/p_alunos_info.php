@@ -154,9 +154,6 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                 <div class="titulo">
                     <p>Informações Pessoais</p>
                     <input type="hidden" name="usuario_id" value="<?php echo $userId; ?>">
-                    <a href="s_alunos_editar.php">
-                    <button class="editar" type="button" >EDITAR INFORMAÇÃO</button>
-                    </a>
                 </div>
                 <div class="infofuncionario">
                     <div class="func">
@@ -174,16 +171,12 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                                         echo $nascimento->format('d/m/Y'); ?>
                                     </div>
                                 </div>
-                                <div class="col2 modal idade" for="idade">Idade:
+                                <div class="col2 modal" for="idade">Idade:
                                     <div class="texto" id="modalIdade">
                                         <?php echo $row['Idade'] . " anos"; ?>
                                     </div>
                                 </div>
-                                <div class="col3 colc modal">Matrícula:
-                                    <div class="texto" id="modalUf">
-                                        <?php echo $row['Usuario_Matricula']; ?>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <div class="linha">
                                 <div class="col1 modal">CPF: <div class="texto" id="modalCpf">
@@ -204,8 +197,9 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                                         } ?>
                                     </div>
                                 </div>
-                                <div class="col2 modal">E-mail: <div class="texto" id="modalEmail">
-                                        <?php echo $row['Usuario_Email']; ?>
+                                <div class="col2 colc modal">Matrícula:
+                                    <div class="texto" id="modalUf">
+                                        <?php echo $row['Usuario_Matricula']; ?>
                                     </div>
                                 </div>
                             </div>
@@ -214,8 +208,8 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                                         <?php echo $row['Usuario_Fone']; ?>
                                     </div>
                                 </div>
-                                <div class="col2 modal">Data de Ingresso: <div class="texto" id="modalIngresso">
-                                        <?php echo $row['Registro_Data']; ?>
+                                <div class="col2 modal">E-mail: <div class="texto" id="modalEmail">
+                                        <?php echo $row['Usuario_Email']; ?>
                                     </div>
                                 </div>
                             </div>
@@ -293,9 +287,6 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
             <div class="informacao">
                 <div class="titulo">
                     <p>Informações Acadêmicas</p>
-                    <button class="editar editarSituacao" id="editarSalvar" type="button"
-                        onclick="window.location.href = 's_alunos_turma_cad.php'">
-                        NOVA TURMA </button>
                 </div>
                 <?php
                 // Supondo que $resultTurmas é o resultado da sua consulta ao banco de dados
@@ -355,47 +346,6 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                     echo "<div>Nenhuma turma encontrada para este aluno.</div>";
                 }
                 ?>
-
-            </div>
-            <div class="informacao">
-                <div class="titulo">
-                    <p>Troca de Turma</p>
-                    <button class="editar editarSituacao" id="editarSalvarTurma" type="button"
-                        onclick="editarTurma()">TROCAR
-                        TURMA</button>
-                </div>
-                <div class="infofuncionario">
-                    <div class="linha ocorrencia">
-                        <div class="col1 cola modal">Turma Atual:
-                            <div class="texto" id="turmaAtual">
-                            </div>
-                        </div>
-                        <div class="col2 colb modal">Turma Destino:
-                            <div class="texto" id="turmaTexto">
-                                --
-                            </div>
-                            <div class="select" id="turmaDestinoSelect">
-                                <select name="turmaDestino" id="turmaDestino" style="display:none;">
-                                    <?php
-                                    // Consulta SQL para obter as turmas do curso especificado
-                                    $sqlTurma = "SELECT Turma_Cod FROM Turma WHERE Curso_cd = $cursoId";
-                                    $resultTurma = $conn->query($sqlTurma);
-
-                                    // Verifica se foram encontradas turmas para o curso
-                                    if ($resultTurma->num_rows > 0) {
-                                        // Loop para exibir cada turma como uma opção no menu suspenso
-                                        while ($rowTurma = $resultTurma->fetch_assoc()) {
-                                            echo "<option value='" . $rowTurma["Turma_Cod"] . "'>" . $rowTurma["Turma_Cod"] . " </option>";
-                                        }
-                                    } else {
-                                        echo "<option>Nenhuma Turma encontrada!</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
@@ -534,6 +484,45 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
             // Recarrega a página imediatamente após cancelar
             location.reload();
         }
+    </script>
+    <script>
+        function CPFMask(value) {
+            return value
+                .replace(/\D/g, '')                 // Remove tudo o que não é dígito
+                .replace(/(\d{3})(\d)/, '$1.$2')    // Coloca ponto após os três primeiros dígitos
+                .replace(/(\d{3})(\d)/, '$1.$2')    // Coloca ponto após os seis primeiros dígitos
+                .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Coloca hífen antes dos dois últimos dígitos
+        }
+
+        function RGMask(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d{2})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        }
+
+        function CelularMask(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d)/, '($1')
+                .replace(/(\d{2})(\d)/, '$1) $2')
+                .replace(/(\d{5})(\d)/, '$1-$2');
+        }
+
+        function applyMasks() {
+            var cpfElement = document.getElementById('modalCpf');
+            if (cpfElement) cpfElement.textContent = CPFMask(cpfElement.textContent);
+
+            var rgElement = document.getElementById('modalRg');
+            if (rgElement) rgElement.textContent = RGMask(rgElement.textContent);
+
+            var celularElement = document.getElementById('modalCelular');
+            if (celularElement) celularElement.textContent = CelularMask(celularElement.textContent);
+
+        }
+
+        document.addEventListener('DOMContentLoaded', applyMasks);
     </script>
 
 
