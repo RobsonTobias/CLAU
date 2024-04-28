@@ -163,7 +163,7 @@ if (isset($_POST['submitAula'])) {
     <header>
         <div class="title">
             <div class="nomedata closed">
-                <h1>PLANEJAMENTO DIDÁTICO</h1>
+                <h1>PLANEJAMENTO DIDÁTICO - COORDENADOR</h1>
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
