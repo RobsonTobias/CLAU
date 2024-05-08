@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="foto">
-                        <img id="imagemExibida" src="https://placekitten.com/400/400" alt="foto">
+                        <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
                         <label for="imagemInput">INSERIR FOTO</label>
                         <input type="file" id="imagemInput" name="imagem" accept="image/*" onchange="exibirImagem()">
                     </div>
@@ -209,7 +209,7 @@
                     success: function (response) {
                         if (response.includes("Cadastro realizado com sucesso!")) {
                             $('#form').trigger("reset"); // Limpa o formulário
-                            $('#imagemExibida').attr('src', 'https://placekitten.com/400/400');
+                            $('#imagemExibida').attr('src', '../ICON/perfil.svg');
                             alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
                         } else {
                             alert(response); // Exibe outros alertas retornados pelo servidor

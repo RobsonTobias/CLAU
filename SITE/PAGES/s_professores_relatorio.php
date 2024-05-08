@@ -29,6 +29,9 @@ if (session_status() == PHP_SESSION_NONE) {
             fill: #043140;
         }
 
+        .centro {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -165,10 +168,9 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div class="pesquisa turma">
                     <table class="table table-hover">
                         <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Curso</th>
-                                <th>Alunos</th>
+                            <th>Código</th>
+                            <th>Curso</th>
+                            <th class="centro">Alunos</th>
                             </tr>
                         </thead>
 
@@ -189,7 +191,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="../PHP/sidebar/menu.js"></script>
 
     <script src="../JS/pesquisa.js">
-        
+
     </script>
 
     <script>
@@ -234,21 +236,24 @@ if (session_status() == PHP_SESSION_NONE) {
 
                     // Verifica se a resposta contém turmas
                     if (response && response.length > 0) {
+                        let contador = 0;
                         response.forEach(function (turma) {
+                            const classeLinha = (contador % 2 === 0) ? 'linha-par' : 'linha-impar';
                             // Cria uma nova linha na tabela para cada turma
                             var linha = document.createElement('tr');
+                            linha.className = classeLinha;
                             linha.innerHTML = `
                         <td>${turma.Turma_Cod}</td>
                         <td>${turma.Curso_Nome}</td>
-                        <td>${turma.Total_Alunos}</td>
+                        <td class="centro">${turma.Total_Alunos}</td>
                     `;
                             // Adiciona a nova linha na tabela
                             tabelaTurmas.appendChild(linha);
                             linha.addEventListener('click', function () {
                                 window.location.href = `s_turma_detalhes.php?id=${turma.Turma_Cod}`;
                             });
+                            contador++;
                         });
-
                     } else {
                         // Caso não haja turmas, mostra uma mensagem na tabela
                         tabelaTurmas.innerHTML = '<tr><td colspan="3">Nenhuma turma encontrada para este professor.</td></tr>';
