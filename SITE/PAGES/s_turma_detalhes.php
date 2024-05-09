@@ -19,6 +19,30 @@
         .turma path {
             fill: #043140;
         }
+
+        main {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .informacoes {
+            gap: 20px;
+        }
+
+        .informacao p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #233939;
+            min-width: 600px;
+        }
+
+        .linha {
+            margin-top: 5px;
+        }
+
+        .infofuncionario {
+            padding: 10px;
+        }
     </style>
 </head>
 
@@ -106,52 +130,6 @@
             </div>
         </div>
         <hr>
-        <style>
-            main {
-                display: flex;
-                flex-direction: row;
-            }
-
-            .course-details {
-                max-width: 1000px;
-                margin: 20px auto;
-                padding: 20px;
-                background: #fff;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
-            }
-
-            .course-details h1,
-            .course-details h2 {
-                color: #043140;
-                margin-bottom: 10px;
-            }
-
-            .course-details ul {
-                list-style-type: none;
-                padding: 0;
-            }
-
-            .course-details ul li {
-                margin-bottom: 10px;
-                font-size: 16px;
-            }
-
-            .course-details .back-link {
-                display: inline-block;
-                margin-top: 20px;
-                padding: 10px 15px;
-                background-color: #043140;
-                color: #fff;
-                border-radius: 5px;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-            .course-details .back-link:hover {
-                background-color: #035A70;
-            }
-        </style>
     </header>
 
     <div>
@@ -182,36 +160,95 @@
                         echo "</tr>";
                         $contador++;
                     }
+
+                    $frequencia = "SELECT t.Turma_Cod, 
+                        COUNT(c.presenca) AS Total_Chamadas, 
+                        SUM(c.presenca = '1') AS Presencas, 
+                        (SUM(c.presenca = '1') / COUNT(c.presenca)) * 100 AS Porcentagem_Presenca
+                    FROM chamada c
+                    JOIN aula a ON c.id_aula = a.id_aula
+                    JOIN Turma t ON a.cod_turma = t.Turma_Cod
+                    WHERE t.Turma_Cod = '$id_turma' GROUP BY t.Turma_Cod;";
+                    $resultado_frequencia = $conn->query($frequencia);
+
                 } else {
                     echo "<tr><td colspan='2'>Nenhum aluno encontrado.</td></tr>";
                 }
                 ?>
             </table>
         </div>
-        <div class="course-details">
-            <?php if (isset($turma)): ?>
-                <ul>
-                    <li><strong>Código da Turma:</strong> <?php echo $turma['Turma_Cod']; ?></li>
-                    <li><strong>Horário de inicio:</strong> <?php echo $turma['Turma_Horario']; ?>h</li>
-                    <li><strong>Horário de termino:</strong> <?php echo $turma['Turma_Horario_Termino']; ?>h</li>
-                    <li><strong>Vagas:</strong> <?php echo $turma['Turma_Vagas']; ?></li>
-                    <li><strong>Dias de Aula:</strong> <?php echo $dias_aula_turma_texto; ?></li>
-                    <li><strong>Início:</strong> <?php echo date('d/m/Y', strtotime($turma['Turma_Inicio'])); ?></li>
-                    <li><strong>Término:</strong> <?php echo date('d/m/Y', strtotime($turma['Turma_Termino'])); ?></li>
-                    <li><strong>Observações:</strong> <?php echo $turma['Turma_Obs']; ?></li>
-                    <li><strong>Professor:</strong> <?php echo $turma['Nome_Professor']; ?></li>
-                    <li><strong>Curso:</strong> <?php echo $turma['Nome_Curso']; ?></li>
-                </ul>
-
-                <p class="back-link" onclick="voltar()">Voltar</p>
-            <?php else: ?>
-                <p>Nenhum detalhe da turma encontrado.</p>
-            <?php endif; ?>
+        <div class="informacoes">
+            <div class="informacao">
+                <p>Informações Gerais</p>
+                <div class="infofuncionario">
+                    <div class="col1 modal">Curso: <div class="texto">
+                            <?php echo $turma['Nome_Curso']; ?>
+                        </div>
+                    </div>
+                    <div class="linha">
+                        <div class="col1 modal">Turma: <div class="texto">
+                                <?php echo $turma['Turma_Cod']; ?>
+                            </div>
+                        </div>
+                        <div class="col2 modal">Professor: <div class="texto">
+                                <?php echo $turma['Nome_Professor']; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="linha">
+                        <div class="col1 modal">Início: <div class="texto">
+                                <?php echo date('d/m/Y', strtotime($turma['Turma_Inicio'])); ?>
+                            </div>
+                        </div>
+                        <div class="col2 modal">Término: <div class="texto">
+                                <?php echo date('d/m/Y', strtotime($turma['Turma_Termino'])); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="linha">
+                        <div class="col1 modal">Horário: <div class="texto">
+                                <?php echo $turma['Turma_Horario']; ?>h
+                            </div>
+                        </div>
+                        <div class="col2 modal">Dias de aula: <div class="texto">
+                                <?php echo $dias_aula_turma_texto; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="obs-func" style="margin-inline: 0; margin-top: 5px;">
+                        <p><?php echo $turma['Turma_Obs']; ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="informacao" style="margin-top: 20px;">
+                <p>Informações Acadêmicas</p>
+                <div class="infofuncionario">
+                    <div class="linha" style="margin-top: 0;">
+                        <div class="col1 modal">Alunos matriculados: <div class="texto">
+                                <?php echo $turma['Turma_Horario']; ?>h
+                            </div>
+                        </div>
+                        <div class="col2 modal">Máximo de alunos: <div class="texto">
+                                <?php echo $turma['Turma_Vagas']; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="linha">
+                        <div class="col1 modal">Frequência:
+                            <div class="texto"> <?php $resultado_frequencia ?> % </div>&nbsp;&nbsp;
+                            <div class="barra-frequencia-container">
+                                <div class="barra-frequencia" style="width:'<?php $resultado_frequencia ?>;%'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <div class="buttons">
-        <!-- Aqui pode ser incluído o código PHP para exibir o botão de fale conosco -->
+        <?php echo $redes; ?>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -227,10 +264,10 @@
                     const alunoId = this.getAttribute('data-id');
                     // Chamada AJAX para configurar a sessão
                     $.ajax({
-                        url: 'set_usuario_session.php',
+                        url: '../PHP/set_usuario_session.php',
                         type: 'GET',
                         data: { userId: alunoId },
-                        success: function(response) {
+                        success: function (response) {
                             console.log(response); // Log da resposta
                             window.location.href = `s_alunos_info.php?id=${alunoId}`; // Redirecionamento após configuração da sessão
                         }

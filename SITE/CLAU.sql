@@ -166,8 +166,8 @@ CREATE TABLE aula (
     descricao VARCHAR(255),
     data_aula DATE,
     data_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (cod_turma) REFERENCES Turma(Turma_cod), -- Substitua Turma(id) pelo nome correto da sua tabela e coluna de turma
-    FOREIGN KEY (id_modulo) REFERENCES Modulo(Modulo_id) -- Substitua Modulo(id) pelo nome correto da sua tabela e coluna de módulo
+    FOREIGN KEY (cod_turma) REFERENCES Turma(Turma_cod), 
+    FOREIGN KEY (id_modulo) REFERENCES Modulo(Modulo_id)
 );
 
 CREATE TABLE notas (

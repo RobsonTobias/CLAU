@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        
+        .curso path {
+            fill: #043140;
+        }
         .top{
             position: relative;
             display: flex;

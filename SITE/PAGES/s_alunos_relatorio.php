@@ -105,7 +105,8 @@ if (session_status() == PHP_SESSION_NONE) {
 							<img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
 						</div>
 						<div class="info-func">
-							<div class="modal">Nome: <div class="texto" id="modalNome"></div>
+							<div class="modal">Nome:
+								<div class="texto" id="modalNome"></div>
 							</div>
 							<div class="linha">
 								<div class="col1 modal">Nascimento: <div class="texto" id="modalNascimento"></div>
