@@ -2,6 +2,15 @@
 
 include '../conexao.php';
 
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Inserir informações do curso
     $nome = $_POST['nome'];
@@ -15,8 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$nome', '$sigla', '$carga_horaria', '$descricao', '$duracao', '$pre_requisito')";
 
     if ($conn->query($sql_curso) === TRUE) {
-        echo "<script>alert('Curso inserido com sucesso!')</script>";
+        // echo "<script>alert('Curso inserido com sucesso!')</script>";
         $curso_id = $conn->insert_id; // Obtém o ID do curso inserido
+        $_SESSION['cursoId'] = $curso_id;
 
         // Inserir informações dos módulos (se existirem)
         if (isset($_POST['modulos'])) {
@@ -33,8 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $modulo_id = $row["Modulo_id"];
                 } else {
                     // O módulo não existe na tabela, inseri-lo
-                    $sql_inserir_modulo = "INSERT INTO modulo (Modulo_Nome, Modulo_Desc, Modulo_Registro, Modulo_Status)
-                                        VALUES ('$modulo_nome', 'Descrição do módulo', current_timestamp(), '1')";
+                    $sql_inserir_modulo = "INSERT INTO Modulo (Modulo_Nome, Modulo_Desc) VALUES ('$modulo_nome', 'Descrição do módulo')";
 
                     if ($conn->query($sql_inserir_modulo) === TRUE) {
                         // Obter o ID do módulo recém-inserido
@@ -45,18 +54,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 // Associar o módulo ao curso na tabela modulo_curso
-                $sql_associar_modulo_curso = "INSERT INTO modulo_curso (Modulo_Modulo_cd, Curso_Curso_cd, Modulo_Curso_Registro)
-                                            VALUES ('$modulo_id', '$curso_id', current_timestamp())";
+                $sql_associar_modulo_curso = "INSERT INTO Modulo_Curso (Modulo_Modulo_cd, Curso_Curso_cd) VALUES ('$modulo_id', '$curso_id')";
 
                 if ($conn->query($sql_associar_modulo_curso) !== TRUE) {
                     echo "Erro ao associar módulo ao curso: " . $conn->error;
+                } else{
+                    echo "Cadastro realizado com sucesso!";
                 }
             }
         }
     } else {
         echo "Erro ao inserir curso: " . $conn->error;
     }
-
-    $conn->close(); // Fecha a conexão com o banco de dados
 }
 ?>

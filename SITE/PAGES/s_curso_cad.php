@@ -1,3 +1,9 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -28,92 +34,39 @@
             width: 100%;
         }
 
-        /* main {
-            margin: 20px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-        } */
-
-        /* form {
-            max-width: 600px;
-            margin: 0 auto;
+        .campoModulo label {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
         }
 
-        label,
-        input,
-        textarea {
-            width: calc(50% - 7.5px);
-            margin-bottom: 15px;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            background-color: #007bff;
-            color: #fff;
+        .adicionarModulo {
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            font-size: 16px;
+            font-weight: bolder;
+            display: flex;
+            justify-content: center;
+            background-color: #4CAF50;
             border: none;
-            padding: 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            color: #FFFFFF;
         }
 
-        input[type="submit"]:hover {
-            background-color: #0056b3;
+        .removerModulo {
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            font-size: 16px;
+            font-weight: bolder;
+            display: flex;
+            justify-content: center;
+            background-color: #F24E1E;
+            border: none;
+            color: #FFFFFF;
         }
-
-        /* Estilos dos alertas */
-        /* .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .alert.success {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-
-        .alert.error {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #043140;
-            color: #fff;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-
-        .back-link:hover {
-            background-color: #035A70;
-        } */
     </style>
     <script>
         function limitarValor(input, limite) {
@@ -126,7 +79,7 @@
 </head>
 
 <body>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <?php include ('../PHP/data.php'); ?>
     <?php include ('../PHP/sidebar/menu.php'); ?>
     <?php include ('../PHP/redes.php'); ?>
@@ -161,68 +114,65 @@
                     <div class="dados">
                         <div class="linha">
                             <label for="nome">
-                                <p>Nome do Curso:</p>
+                                <p>NOME DO CURSO:</p>
                                 <input type="text" id="nome" name="nome" required>
                             </label>
                         </div>
                         <div class="linha">
                             <label for="sigla">
-                                <p>Sigla:</p>
+                                <p>SIGLA:</p>
                                 <input type="text" id="sigla" name="sigla" maxlength="3" required>
                             </label>
                             <label for="carga_horaria">
-                                <p>Carga Horária:</p>
+                                <p>CARGA HORÁRIA:</p>
                                 <input type="number" id="carga_horaria" name="carga_horaria"
                                     oninput="limitarValor(this,400)" required>
                             </label>
                             <label for="duracao">
-                                <p>Duração (em meses):</p>
+                                <p>DURAÇÃO (meses):</p>
                                 <input type="number" id="duracao" name="duracao" min="0" oninput="limitarValor(this,36)"
                                     required>
                             </label>
                         </div>
                         <div class="linha">
                             <label for="pre_requisito">
-                                <p>Pré-requisito:</p>
-                                <input id="pre_requisito" name="pre_requisito" rows="4" cols="50" required></input>
+                                <p>PRÉ-REQUISITO:</p>
+                                <input id="pre_requisito" name="pre_requisito" rows="4" cols="50"
+                                    value="Sem pré-requisito!"></input>
                             </label>
                         </div>
                         <div>
                             <label for="descricao" class="obs_aluno">
-                                <p>Descrição:</p>
-                                <textarea id="descricao" name="descricao" placeholder="Descrição do curso"
-                                    required style="width: 100%;"></textarea>
+                                <p>DESCRIÇÃO:</p>
+                                <textarea id="descricao" name="descricao" placeholder="Descrição do curso" required
+                                    style="width: 100%;"></textarea>
                             </label>
                         </div>
-
-
-
-
-
-
-
-
-                        <h2>Adicionar Módulos</h2>
-
-                        <div id="camposModulos">
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="dados" style="width: 100%; gap: 5px;">
+                        <div class="linha" style="gap:5px;">
+                            <p>ADICIONAR MÓDULOS</p>
+                            <button class="adicionarModulo" type="button" onclick="adicionarCampoModulo()">+</button>
+                        </div>
+                        <div class="modulo" id="camposModulos">
                             <div class="campoModulo">
-                                <label for="modulo">Módulo:</label>
-                                <input type="text" name="modulos[]" required>
-                                <button type="button" onclick="adicionarCampoModulo()">Adicionar Módulo</button>
+                                <label for="modulo">
+                                    <p>Módulo:</p>
+                                    <input type="text" name="modulos[]" required>
+                                </label>
                             </div>
                         </div>
-
-                        
                     </div>
+                </div>
+                <div class="botao func">
+                    <button class="cadastrar" type="submit">CADASTRAR</button>
+                    <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
                 </div>
             </form>
 
 
-
-            <div class="botao func">
-                <button class="cadastrar" type="submit">CADASTRAR</button>
-                <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
-            </div>
         </div>
     </main>
 
@@ -235,6 +185,7 @@
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/utils.js"></script>
     <script>
+
         $(document).ready(function () {
             $("#form").on("submit", function (e) {
                 e.preventDefault(); // Impede o envio normal do formulário
@@ -249,7 +200,7 @@
                         if (response.includes("Cadastro realizado com sucesso!")) {
                             $('#form').trigger("reset"); // Limpa o formulário
                             alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
-                            window.location.href = "s_curso_detalhes.php"; // Redireciona para a nova página
+                            window.location.href = "s_curso_consulta.php"; // Redireciona para a nova página
                         } else {
                             alert(response); // Exibe outros alertas retornados pelo servidor
                         }
@@ -274,22 +225,26 @@
             novoCampo.classList.add('campoModulo');
 
             var label = document.createElement('label');
-            label.textContent = 'Módulo:';
             novoCampo.appendChild(label);
+
+            var p = document.createElement('p');
+            p.textContent = 'Módulo:';
+            label.appendChild(p);
 
             var input = document.createElement('input');
             input.type = 'text';
             input.name = 'modulos[]';
             input.required = true;
-            novoCampo.appendChild(input);
+            label.appendChild(input);
 
             var botaoRemover = document.createElement('button');
             botaoRemover.type = 'button';
-            botaoRemover.textContent = 'Remover';
+            botaoRemover.textContent = '-';
+            botaoRemover.classList.add('removerModulo');
             botaoRemover.onclick = function () {
                 divCampos.removeChild(novoCampo);
             };
-            novoCampo.appendChild(botaoRemover);
+            label.appendChild(botaoRemover);
 
             divCampos.appendChild(novoCampo);
         }

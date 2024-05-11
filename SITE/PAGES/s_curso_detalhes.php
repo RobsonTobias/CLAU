@@ -102,8 +102,6 @@
             die("Erro na conexão com o banco de dados: " . mysqli_connect_error());
         }
 
-
-
         if (isset($_GET['id'])) {
             $curso_id = $_GET['id'];
 
