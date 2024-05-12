@@ -16,7 +16,13 @@
   overflow: hidden;
 }
 
+hr{
+  border:1px;
+  margin:0;
+}
+
 .sidebar.close{
+  opacity: 1;
   width: 78px;
 }
 
@@ -257,4 +263,9 @@
   opacity: 0;
   z-index: -199;
   transition: opacity 0s;
+}
+
+.version span{
+  font-size: 1rem;
+  font-weight: normal;
 }
