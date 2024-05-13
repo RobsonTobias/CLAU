@@ -22,8 +22,8 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
     <link rel="stylesheet" href="../STYLE/data.css">
-
     <link rel="stylesheet" href="../STYLE/style_home.css">
+    <link rel="stylesheet" href="../STYLE/cadastro.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
         .curso path {
@@ -119,10 +119,10 @@ if (session_status() == PHP_SESSION_NONE) {
             margin: 0;
             padding: 0;
             margin-top: 2%;
+            gap: 1rem;
         }
 
         .principal {
-            /* width: 20rem; */
             background-color: #E7E7E7;
             border-radius: 1.25rem;
             border: none;
@@ -141,7 +141,7 @@ if (session_status() == PHP_SESSION_NONE) {
             margin: 0;
         }
 
-        .row {
+        .teste {
             margin: 0;
         }
 
@@ -200,11 +200,11 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
     </div>
 
-    <main>
-        <div class="card row principal">
-            <div class="row justify-content-between">
+    <main class="row">
+        <div class="card principal">
+            <div class="row justify-content-between teste">
                 <p class="card-title">Lista de Cursos</p>
-                <a href="s_curso_cad.php" class="row d-flex align-items-center">
+                <a href="s_curso_cad.php" class="row d-flex align-items-center teste">
                     <button class="adicionar" type="button">+</button>
                     <p>Adicionar Curso</p>
                 </a>
@@ -228,11 +228,11 @@ if (session_status() == PHP_SESSION_NONE) {
                             while ($row = $resultado->fetch_assoc()) {
                                 ?>
                                 <tr data-id='"<?php $row['$curso_id']; ?>"'>
-                                    <td class="text-left"><?php echo $row['Curso_Nome']; ?></td>
+                                    <td class="text-left" onclick='mostrarDetalhes(this)'><?php echo $row['Curso_Nome']; ?></td>
                                     <td><?php echo $row['Curso_Sigla']; ?></td>
                                     <td><?php echo $row['Curso_Duracao']; ?> meses</td>
                                     <td><?php echo $row['Curso_Carga_horaria']; ?> horas</td>
-                                    <td><?php echo ($row['Curso_Status']== 1 ? "Ativo" : "Inativo"); ?></td>
+                                    <td><?php echo ($row['Curso_Status'] == 1 ? "Ativo" : "Inativo"); ?></td>
                                 </tr>
                                 <?php
                             }
@@ -242,6 +242,64 @@ if (session_status() == PHP_SESSION_NONE) {
                         ?>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="card principal">
+            <div class="card info">
+                <div class="dados">
+                    <div class="linha">
+                        <label for="nome">
+                            <p>NOME DO CURSO:</p>
+                            <input type="text" id="nome" name="nome" required>
+                        </label>
+                    </div>
+                    <div class="linha">
+                        <label for="sigla">
+                            <p>SIGLA:</p>
+                            <input type="text" id="sigla" name="sigla" maxlength="3" required>
+                        </label>
+                        <label for="carga_horaria">
+                            <p>CARGA HORÁRIA:</p>
+                            <input type="number" id="carga_horaria" name="carga_horaria"
+                                oninput="limitarValor(this,400)" required>
+                        </label>
+                        <label for="duracao">
+                            <p>DURAÇÃO (meses):</p>
+                            <input type="number" id="duracao" name="duracao" min="0" oninput="limitarValor(this,36)"
+                                required>
+                        </label>
+                    </div>
+                    <div class="linha">
+                        <label for="pre_requisito">
+                            <p>PRÉ-REQUISITO:</p>
+                            <input id="pre_requisito" name="pre_requisito" rows="4" cols="50"
+                                value="Sem pré-requisito!"></input>
+                        </label>
+                    </div>
+                    <div>
+                        <label for="descricao" class="obs_aluno">
+                            <p>DESCRIÇÃO:</p>
+                            <textarea id="descricao" name="descricao" placeholder="Descrição do curso" required
+                                style="width: 100%;"></textarea>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="info">
+                <div class="dados" style="width: 100%; gap: 5px;">
+                    <div class="linha" style="gap:5px;">
+                        <p>ADICIONAR MÓDULOS</p>
+                        <button class="adicionarModulo" type="button" onclick="adicionarCampoModulo()">+</button>
+                    </div>
+                    <div class="modulo" id="camposModulos">
+                        <div class="campoModulo">
+                            <label for="modulo">
+                                <p>Módulo:</p>
+                                <input type="text" name="modulos[]" required>
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -319,6 +377,27 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
         integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
         crossorigin="anonymous"></script>
+
+    <script>
+        var selectedCursoId; // Variável global para armazenar o ID do usuário selecionado
+
+        function mostrarDetalhes(elemento) {
+            selectedCursoId = elemento.getAttribute('data-id'); // Atualiza a variável global
+
+            $.ajax({
+                url: '../PHP/det_curso.php',
+                type: 'GET',
+                data: { userId: selectedCursoId }, // Deve ser selectedUserId, não userId
+                success: function (response) {
+                    // Aqui você vai lidar com a resposta
+                    exibirDetalhesUsuario(response);
+                },
+                error: function () {
+                    alert("Erro ao obter dados do usuário.");
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
