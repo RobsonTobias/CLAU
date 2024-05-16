@@ -20,6 +20,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nomeUsuario = $row['Usuario_Apelido'];
         $UsuarioId = $row['Usuario_id'];
         $usuariofoto = $row['Usuario_Foto'];
+        //$mudarSenha = $row['Mudar_Senha'];
+
+        // Adicionar entrada na tabela Login
+        $sqlLogin = "INSERT INTO Login (Usuario_Usuario_cd) VALUES ('$UsuarioId')";
+        mysqli_query($conn, $sqlLogin);
+
+        // Verificar se é necessário mudar a senha
+        // if ($mudarSenha) {
+        //     // Redirecionar para a página de mudança de senha
+        //     $_SESSION['Usuario_id'] = $UsuarioId;
+        //     header("Location: PAGES/change_password.php");
+        //     exit;
+        // }
 
         // Consulta para obter o valor de Tipo_Tipo_cd da tabela Registro_Usuario
         $sqlRegistroUsuario = "SELECT * FROM Registro_Usuario WHERE Usuario_Usuario_cd = '$UsuarioId'";

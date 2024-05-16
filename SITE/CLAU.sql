@@ -46,6 +46,7 @@ CREATE TABLE Usuario (
   Usuario_Status CHAR(1) DEFAULT 1,
   Usuario_Foto VARCHAR(255) NULL,
   Usuario_Matricula INT (6) NULL,
+  Mudar_Senha BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (Usuario_id),
   UNIQUE INDEX Aluno_Cpf_UNIQUE (Usuario_Cpf ASC),
   UNIQUE INDEX Aluno_Email_UNIQUE (Usuario_Email ASC),
@@ -208,6 +209,13 @@ CREATE TABLE chamada (
     -- Assuma que você tem uma tabela chamada aluno_turma com uma coluna id representando id_aluno_turma
     FOREIGN KEY (id_aluno_turma) REFERENCES aluno_turma(Aluno_Turma_id) -- Substitua aluno_turma(id) conforme necessário
 );
+
+CREATE TABLE Login(
+  Usuario_Usuario_cd INT NOT NULL,
+  Login_Data DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (Usuario_Usuario_cd, Login_Data),
+  FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
+) ENGINE=InnoDB;
 
 -- Dados da tabela Tipo
 INSERT INTO Tipo (Tipo_Descricao)
