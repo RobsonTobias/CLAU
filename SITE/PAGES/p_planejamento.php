@@ -5,6 +5,9 @@ if (!isset($_SESSION['Usuario_id'])) {
     header("Location: index.html");
     exit();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 4){
+    header("Location: ../logout.php");
+}
 
 $usuarioId = $_SESSION['Usuario_id'];
 include '../conexao.php'; // Certifique-se que este arquivo contém a conexão MySQLi correta.

@@ -4,6 +4,9 @@ include ('../conexao.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 2){
+    header("Location: ../logout.php");
+}
 
 $userId = $_SESSION['UsuarioSelecionado'] ?? null;
 if (!$userId) {

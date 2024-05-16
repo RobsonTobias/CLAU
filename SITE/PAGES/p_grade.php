@@ -6,6 +6,9 @@ if (!isset($_SESSION['Usuario_id'])) {
     header("Location: index.html");
     exit();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 4){
+    header("Location: ../logout.php");
+}
 
 // Resgata o ID do usuário logado
 $usuarioId = $_SESSION['Usuario_id'];

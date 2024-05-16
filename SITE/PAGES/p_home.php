@@ -3,7 +3,9 @@ if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
     session_start();
 }
-$_SESSION['Tipo_Tipo_cd'] = 4;
+if($_SESSION['Tipo_Tipo_cd'] != 4){
+    header("Location: ../logout.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

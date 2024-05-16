@@ -5,7 +5,9 @@ if (!isset($_SESSION['Usuario_id'])) {
     header("Location: index.html");
     exit();
 }
-
+if($_SESSION['Tipo_Tipo_cd'] != 3){
+    header("Location: ../logout.php");
+}
 
 include '../conexao.php';
 include ('../PHP/data.php');

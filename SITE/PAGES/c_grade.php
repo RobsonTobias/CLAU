@@ -6,6 +6,9 @@ if (!isset($_SESSION['Usuario_id'])) {
     header("Location: index.html");
     exit();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 5){
+    header("Location: ../logout.php");
+}
 
 // Inclua seu arquivo de conexão com o banco de dados
 include '../conexao.php';
