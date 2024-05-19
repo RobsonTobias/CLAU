@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // if ($mudarSenha) {
         //     // Redirecionar para a página de mudança de senha
         //     $_SESSION['Usuario_id'] = $UsuarioId;
-        //     header("Location: PAGES/change_password.php");
+        //     header("Location: modal-senha.php?changePassword=true");
         //     exit;
         // }
 
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Credenciais incorretas, redireciona para a página de index.
-        header("Location:index.html");
+        header("Location:index.php");
     }
 }
 ?>

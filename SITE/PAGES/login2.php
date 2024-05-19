@@ -8,7 +8,7 @@ if (isset($_SESSION['Permissoes']) && !empty($_SESSION['Permissoes'])) {
     $permissoes = $_SESSION['Permissoes'];
 } else {
     // Se não houver permissões definidas, redirecione de volta para a página de login ou trate o erro
-    header('Location: index.html');
+    header('Location: index.php');
     exit();
 }
 ?>

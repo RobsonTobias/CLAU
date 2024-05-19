@@ -462,6 +462,6 @@ elseif($permissao == 5){
 ';
 }}else {
   // Se a variável de sessão não estiver definida, redirecione para a página de login ou exiba uma mensagem de erro
-  header("Location: ../index.html");
+  header("Location: ../index.php");
 }
 ?>

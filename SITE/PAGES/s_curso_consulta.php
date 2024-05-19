@@ -33,89 +33,35 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
             fill: #043140;
         }
 
-        .top {
-            position: relative;
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: flex-end;
-        }
-
-        .top a {
-            text-decoration: none;
-            color: #4CAF50;
-            position: absolute;
-            right: 11%;
-            bottom: 3px;
-            display: flex;
-            transition: 0.2s ease-in-out;
-        }
-
-        .top a:hover {
-            opacity: 0.5;
-        }
-
-        .top a img {
-            margin-right: 3px;
-        }
-
-
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 0 auto;
-            /* Centraliza a tabela */
-            border-radius: 15px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            color: #000;
-
-            /* ou a cor desejada para o texto do cabeçalho */
-        }
+        
 
         /* As linhas pares terão uma cor de fundo */
         tr:nth-child(even) {
-            background-color: #eee;
+            background-color: #D9D9D9;
 
             /* ou a cor clara de sua escolha */
         }
 
         /* As linhas ímpares terão outra cor de fundo */
         tr:nth-child(odd) {
-            background-color: #ddd;
+            background-color: #B0B0B0;
             /* ou a cor escura de sua escolha */
         }
 
         /* Estilo para o hover que indica clicabilidade */
         tr:hover {
-            background-color: #ccc;
+            background-color: #b4e0e0;
             /* ou a cor que deseja usar no hover */
             cursor: pointer;
             /* Altera o cursor para indicar que é clicável */
         }
 
-        td {
-            padding: 8px;
-            text-align: center;
-            color: #233939
-                /* Centraliza o texto */
+        .row{
+            flex-wrap: nowrap;
+            align-items: flex-start;
         }
+        
 
-        /* Removendo as bordas internas das células */
-        th,
-        td {
-            border-bottom: 1px solid #ddd;
-
-            /* Linha sutil no fundo de cada célula */
-        }
-
-        .titulos th {
-            background-color: #2E2E2E;
-            color: white;
-            cursor: default;
-        }
 
 
         main {
@@ -172,6 +118,47 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
             text-decoration: none;
             opacity: 0.5;
         }
+        label {
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        .campoModulo label {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .adicionarModulo {
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            font-size: 16px;
+            font-weight: bolder;
+            display: flex;
+            justify-content: center;
+            background-color: #4CAF50;
+            border: none;
+            color: #FFFFFF;
+        }
+
+        .removerModulo {
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            font-size: 16px;
+            font-weight: bolder;
+            display: flex;
+            justify-content: center;
+            background-color: #F24E1E;
+            border: none;
+            color: #FFFFFF;
+        }
     </style>
 
 </head>
@@ -213,13 +200,11 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                 </a>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Curso</th>
+                            <th class="">Curso</th>
                             <th class="text-center">Sigla</th>
-                            <th class="text-center">Duração</th>
-                            <th class="text-center">Carga Horária</th>
                             <th class="text-center">Status</th>
                         </tr>
                     </thead>
@@ -232,10 +217,8 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                                 ?>
                                 <tr data-id='"<?php $row['$curso_id']; ?>"'>
                                     <td class="text-left" onclick='mostrarDetalhes(this)'><?php echo $row['Curso_Nome']; ?></td>
-                                    <td><?php echo $row['Curso_Sigla']; ?></td>
-                                    <td><?php echo $row['Curso_Duracao']; ?> meses</td>
-                                    <td><?php echo $row['Curso_Carga_horaria']; ?> horas</td>
-                                    <td><?php echo ($row['Curso_Status'] == 1 ? "Ativo" : "Inativo"); ?></td>
+                                    <td class="text-center"><?php echo $row['Curso_Sigla']; ?></td>
+                                    <td class="text-center"><?php echo ($row['Curso_Status'] == 1 ? "Ativo" : "Inativo"); ?></td>
                                 </tr>
                                 <?php
                             }
@@ -290,10 +273,6 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
             </div>
             <div class="info">
                 <div class="dados" style="width: 100%; gap: 5px;">
-                    <div class="linha" style="gap:5px;">
-                        <p>ADICIONAR MÓDULOS</p>
-                        <button class="adicionarModulo" type="button" onclick="adicionarCampoModulo()">+</button>
-                    </div>
                     <div class="modulo" id="camposModulos">
                         <div class="campoModulo">
                             <label for="modulo">
@@ -305,63 +284,6 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                 </div>
             </div>
         </div>
-
-
-
-
-
-        <div class="top">
-            <h1>Lista de Cursos</h1>
-            <a href="s_curso_cad.php"><img src="../ICON/sinal-mais.svg" alt="">Adicionar Curso</a>
-        </div>
-
-        <table>
-            <tr class="titulos">
-
-                <th>ID do Curso</th>
-                <th>Nome do Curso</th>
-                <th>Sigla</th>
-                <th>Carga Horária</th>
-                <th>Descrição</th>
-                <th>Duração</th>
-                <th>Pré-requisito</th>
-                <th>Status</th>
-
-            </tr>
-            <?php
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "CLAU";
-
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            if (!$conn) {
-                die("Erro na conexão com o banco de dados: " . mysqli_connect_error());
-            }
-
-            $sql = "SELECT Curso_id, Curso_Nome, Curso_Sigla, Curso_Carga_horaria, Curso_Desc, Curso_Duracao, Curso_PreRequisito, Curso_Status FROM curso";
-            $result = mysqli_query($conn, $sql);
-
-            if (!$result) {
-                die("Erro na consulta ao banco de dados: " . mysqli_error($conn));
-            }
-
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr onclick=\"window.location='s_curso_detalhes.php?id={$row['Curso_id']}';\">";
-                echo "<td>{$row['Curso_id']}</td>";
-                echo "<td>{$row['Curso_Nome']}</td>";
-                echo "<td>{$row['Curso_Sigla']}</td>";
-                echo "<td>{$row['Curso_Carga_horaria']}</td>";
-                echo "<td>{$row['Curso_Desc']}</td>";
-                echo "<td>{$row['Curso_Duracao']}</td>";
-                echo "<td>{$row['Curso_PreRequisito']}</td>";
-                echo "<td>" . ($row['Curso_Status'] == 1 ? "Ativo" : "Inativo") . "</td>";
-                echo "</tr>";
-            }
-            mysqli_close($conn);
-            ?>
-        </table>
     </main>
 
     <div class="buttons">
