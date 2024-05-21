@@ -3,7 +3,11 @@ if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
     session_start();
 }
-$_SESSION['Tipo_Tipo_cd'] = 5;
+$_SESSION['Tipo_Tipo_cd'] = 1;
+?>
+
+<?php
+    require_once '../PHP/toats/toats.php';
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +24,7 @@ $_SESSION['Tipo_Tipo_cd'] = 5;
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../STYLE/style_home.css">
+    <link rel="stylesheet" href="../PHP/toats/toats.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
         .home path{
@@ -56,36 +61,32 @@ $_SESSION['Tipo_Tipo_cd'] = 5;
     </div>
     
     <main>
-        <a href="p_chamada.php" class="item"><img src="../ICON/chamada.svg" alt="Chamada_Diario">
-            <p>Chamadas e Diário de Classe</p>
+        <a href="m_funcionario_cad.php" class="item"><img src="../ICON/cadastro_funcionario.svg" alt="Cad_Funcionario">
+            <p>Cadastrar Funcionário</p>
         </a>
-        <a href="p_notas.php" class="item"><img src="../ICON/nota.svg" alt="Notas">
-            <p>Notas</p>
+        <a href="m_funcionario.php" class="item"><img src="../ICON/funcionario.svg" alt="Pesquisar_Funcionario">
+            <p>Pesquisar Funcionário</p>
         </a>
-        <a href="c_escolha_aluno.php" class="item"><img src="../ICON/aluno.svg" alt="Aluno">
-            <p>Aluno</p>
+        <a href="m_nivers.php" class="item"><img src="../ICON/funcionario.svg" alt="Pesquisar_Funcionario">
+            <p>Aniversariantes do mês</p>
         </a>
-        <a href="c_turma.php" class="item"><img src="../ICON/turma.svg" alt="Turma">
-            <p>Turma</p>
-        </a>
-        <a href="c_planejamento.php" class="item"><img src="../ICON/planejamento.svg" alt="Planejamento">
-            <p>Planejamento</p>
-        </a>
-        <a href="p_prova.php" class="item"><img src="../ICON/prova.svg" alt="Provas e Atividades">
-            <p>Provas e Atividades</p>
-        </a>
-        <a href="c_grade.php" class="item"><img src="../ICON/grade.svg" alt="Grade_Horaria">
-            <p>Grade Horária</p>
-        </a>
-        <a href="p_calendario.php" class="item"><img src="../ICON/calendario.svg" alt="Calendario">
-            <p>Calendário</p>
-        </a>
-        <div class="local-toat-right">
+        
+        
     </main>
-
+    <div class="local-toat-right">
+        <?php 
+            if (isset($_GET["tipo"])){
+                $tipo = $_GET['tipo'];
+                echo toatsActive($tipo);
+            }
+        ?>
+    </div>
     <div class="buttons">
         <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
     </div>
+
+    <script src="../PHP/toats/toats.js"></script>
+
     <script src="../JS/dropdown.js"></script>
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
