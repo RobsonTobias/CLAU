@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
     session_start();
 }
-if($_SESSION['Tipo_Tipo_cd'] != 2){
+if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
 ?>
@@ -27,13 +27,14 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
     <link rel="stylesheet" href="../STYLE/data.css">
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="stylesheet" href="../STYLE/cadastro.css">
+    <!-- <link rel="stylesheet" href="../STYLE/relatorio.css"> -->
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
         .curso path {
             fill: #043140;
         }
 
-        
+
 
         /* As linhas pares terão uma cor de fundo */
         tr:nth-child(even) {
@@ -56,11 +57,11 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
             /* Altera o cursor para indicar que é clicável */
         }
 
-        .row{
+        .row {
             flex-wrap: nowrap;
             align-items: flex-start;
         }
-        
+
 
 
 
@@ -118,6 +119,7 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
             text-decoration: none;
             opacity: 0.5;
         }
+
         label {
             width: 100%;
         }
@@ -215,10 +217,11 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                         if ($resultado && $resultado->num_rows > 0) {
                             while ($row = $resultado->fetch_assoc()) {
                                 ?>
-                                <tr data-id='"<?php $row['$curso_id']; ?>"'>
+                                <tr data-id='"<?php $row['$Curso_id']; ?>"'>
                                     <td class="text-left" onclick='mostrarDetalhes(this)'><?php echo $row['Curso_Nome']; ?></td>
                                     <td class="text-center"><?php echo $row['Curso_Sigla']; ?></td>
-                                    <td class="text-center"><?php echo ($row['Curso_Status'] == 1 ? "Ativo" : "Inativo"); ?></td>
+                                    <td class="text-center"><?php echo ($row['Curso_Status'] == 1 ? "Ativo" : "Inativo"); ?>
+                                    </td>
                                 </tr>
                                 <?php
                             }
@@ -236,7 +239,7 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                     <div class="linha">
                         <label for="nome">
                             <p>NOME DO CURSO:</p>
-                            <input type="text" id="nome" name="nome" required>
+                            <input type="text" id="modalNome" name="nome" disabled>
                         </label>
                     </div>
                     <div class="linha">
@@ -321,6 +324,275 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                     alert("Erro ao obter dados do usuário.");
                 }
             });
+        }
+    </script>
+    <script>
+        function exibirDetalhesUsuario(dados) {
+            //Variavel Nome
+            var nome = document.getElementById('modalNome');
+            var contNome = '';
+
+            if (dados) {
+                contNome += dados.Curso_Nome;
+            } else {
+                contNome = '<p>Não informado</p>';
+            }
+
+            nome.innerHTML = contNome;
+            nome.style.display = 'block';
+
+            // Variável Nascimento
+            var nascimento = document.getElementById('modalNascimento');
+            var contNascimento = '';
+
+            if (dados && dados.Usuario_Nascimento) {
+                // Converter a data para um objeto Date
+                var dataObj = new Date(dados.Usuario_Nascimento);
+
+                // Extrair dia, mês e ano
+                var dia = ("0" + dataObj.getDate()).slice(-2); // Adiciona um zero à esquerda se necessário
+                var mes = ("0" + (dataObj.getMonth() + 1)).slice(-2); // Adiciona um zero à esquerda, mês começa em 0
+                var ano = dataObj.getFullYear();
+
+                // Montar a string de data no formato desejado
+                contNascimento = dia + '-' + mes + '-' + ano;
+            } else {
+                contNascimento = '<p>Não informado</p>';
+            }
+
+            nascimento.innerHTML = contNascimento;
+            nascimento.style.display = 'block';
+
+            //Variavel Idade
+            function calcularIdade(dataNascimento) {
+                var hoje = new Date();
+                var nascimento = new Date(dataNascimento);
+                var calcIdade = hoje.getFullYear() - nascimento.getFullYear();
+                var m = hoje.getMonth() - nascimento.getMonth();
+
+                if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+                    calcIdade--;
+                }
+
+                return calcIdade;
+            }
+
+            var calcIdade = calcularIdade(dados.Usuario_Nascimento);
+
+            var idade = document.getElementById('modalIdade');
+            var contIdade = '';
+
+            if (dados) {
+                contIdade = calcIdade + ' anos';
+            } else {
+                contIdade = '<p>Não informado</p>';
+            }
+
+            idade.innerHTML = contIdade;
+            idade.style.display = 'block';
+
+            //Variavel CPF
+            var Cpf = document.getElementById('modalCpf');
+            var contCpf = '';
+
+            if (dados) {
+                contCpf += dados.Usuario_Cpf;
+            } else {
+                contCpf = '<p>Não informado</p>';
+            }
+
+            Cpf.innerHTML = contCpf;
+            Cpf.style.display = 'block';
+
+            //Variavel RG
+            var Rg = document.getElementById('modalRg');
+            var contRg = '';
+
+            if (dados) {
+                contRg += dados.Usuario_Rg;
+            } else {
+                contRg = '<p>Não informado</p>';
+            }
+
+            Rg.innerHTML = contRg;
+            Rg.style.display = 'block';
+
+            //Variavel Sexo
+            var Sexo = document.getElementById('modalSexo');
+            var contSexo = '';
+
+            if (dados) {
+                contSexo += dados.Usuario_Sexo;
+            } else {
+                contSexo = '<p>Não informado</p>';
+            }
+
+            Sexo.innerHTML = contSexo;
+            Sexo.style.display = 'block';
+
+            //Variavel E-mail
+            var Email = document.getElementById('modalEmail');
+            var contEmail = '';
+
+            if (dados) {
+                contEmail += dados.Usuario_Email;
+            } else {
+                contEmail = '<p>Não informado</p>';
+            }
+
+            Email.innerHTML = contEmail;
+            Email.style.display = 'block';
+
+            //Variavel Celular
+            var Celular = document.getElementById('modalCelular');
+            var contCelular = '';
+
+            if (dados) {
+                contCelular += dados.Usuario_Fone;
+            } else {
+                contCelular = '<p>Não informado</p>';
+            }
+
+            Celular.innerHTML = contCelular;
+            Celular.style.display = 'block';
+
+            //Variavel Data de Ingresso
+            var Ingresso = document.getElementById('modalIngresso');
+            var contIngresso = '';
+
+            if (dados && dados.Registro_Data) {
+                // Converter a data para um objeto Date
+                var dataObj = new Date(dados.Registro_Data);
+
+                // Extrair dia, mês e ano
+                var dia = ("0" + dataObj.getDate()).slice(-2); // Adiciona um zero à esquerda se necessário
+                var mes = ("0" + (dataObj.getMonth() + 1)).slice(-2); // Adiciona um zero à esquerda, mês começa em 0
+                var ano = dataObj.getFullYear();
+
+                // Montar a string de data no formato desejado
+                contIngresso = dia + '-' + mes + '-' + ano;
+            } else {
+                contIngresso = '<p>Não informado</p>';
+            }
+
+            Ingresso.innerHTML = contIngresso;
+            Ingresso.style.display = 'block';
+
+            //Variavel Obs
+            var obs = document.getElementById('modalObs');
+            var contObs = '';
+
+            if (dados) {
+                contObs += dados.Usuario_Obs;
+            } else {
+                contObs = '<p>Não informado</p>';
+            }
+
+            obs.innerHTML = contObs;
+            obs.style.display = 'block';
+
+            //Variavel Logradouro
+            var Logradouro = document.getElementById('modalLogradouro');
+            var contLogradouro = '';
+
+            if (dados) {
+                contLogradouro += dados.Enderecos_Rua;
+            } else {
+                contLogradouro = '<p>Não informado</p>';
+            }
+
+            Logradouro.innerHTML = contLogradouro;
+            Logradouro.style.display = 'block';
+
+            //Variavel Numero
+            var Numero = document.getElementById('modalNumero');
+            var contNumero = '';
+
+            if (dados) {
+                contNumero += dados.Enderecos_Numero;
+            } else {
+                contNumero = '<p>Não informado</p>';
+            }
+
+            Numero.innerHTML = contNumero;
+            Numero.style.display = 'block';
+
+            //Variavel Complemento
+            var Complemento = document.getElementById('modalComplemento');
+            var contComplemento = '';
+
+            if (dados) {
+                if (dados.Enderecos_Complemento != null) {
+                    contComplemento += dados.Enderecos_Complemento;
+                }
+
+            } else {
+                contComplemento = '<p>Não informado</p>';
+            }
+
+            Complemento.innerHTML = contComplemento;
+            Complemento.style.display = 'block';
+
+            //Variavel Cep
+            var Cep = document.getElementById('modalCep');
+            var contCep = '';
+
+            if (dados) {
+                contCep += dados.Enderecos_Cep;
+            } else {
+                contCep = '<p>Não informado</p>';
+            }
+
+            Cep.innerHTML = contCep;
+            Cep.style.display = 'block';
+
+            //Variavel Bairro
+            var Bairro = document.getElementById('modalBairro');
+            var contBairro = '';
+
+            if (dados) {
+                contBairro += dados.Enderecos_Bairro;
+            } else {
+                contBairro = '<p>Não informado</p>';
+            }
+
+            Bairro.innerHTML = contBairro;
+            Bairro.style.display = 'block';
+
+            //Variavel Cidade
+            var Cidade = document.getElementById('modalCidade');
+            var contCidade = '';
+
+            if (dados) {
+                contCidade += dados.Enderecos_Cidade;
+            } else {
+                contCidade = '<p>Não informado</p>';
+            }
+
+            Cidade.innerHTML = contCidade;
+            Cidade.style.display = 'block';
+
+            //Variavel Uf
+            var Uf = document.getElementById('modalUf');
+            var contUf = '';
+
+            if (dados) {
+                contUf += dados.Enderecos_Uf;
+            } else {
+                contUf = '<p>Não informado</p>';
+            }
+
+            Uf.innerHTML = contUf;
+            Uf.style.display = 'block';
+
+            // Variável para a imagem
+            var imagem = document.getElementById('imagemExibida');
+
+            if (dados && dados.Usuario_Foto) {
+                imagem.src = dados.Usuario_Foto;
+            } else {
+                imagem.src = '../ICON/perfil.svg';
+            }
         }
     </script>
 </body>
