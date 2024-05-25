@@ -3,8 +3,26 @@ if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
     session_start();
 }
-if($_SESSION['Tipo_Tipo_cd'] != 2){
+
+// Verifica se o parâmetro POST 'Tipo_Tipo_cd' está definido
+if (isset($_POST['Tipo_Tipo_cd']) && !empty($_POST['Tipo_Tipo_cd'])) {
+    // Valida e sanitiza o parâmetro POST
+    $tipo_tipo_cd = filter_input(INPUT_POST, 'Tipo_Tipo_cd', FILTER_VALIDATE_INT);
+    
+    if ($tipo_tipo_cd !== false && $tipo_tipo_cd > 0 && $tipo_tipo_cd <= 2) {
+        // Parâmetro válido, define a sessão
+        $_SESSION['Tipo_Tipo_cd'] = $tipo_tipo_cd;
+    } else {
+        // Parâmetro inválido, redireciona para logout ou outra página de erro
+        header("Location: ../logout.php");
+        exit();
+    }
+}
+
+// Verifica se o usuário tem a permissão correta para a página
+if (!isset($_SESSION['Tipo_Tipo_cd']) || $_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>

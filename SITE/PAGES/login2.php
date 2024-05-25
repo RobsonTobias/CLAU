@@ -6,6 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 // Certifique-se de que a variável de sessão Permissoes existe e não está vazia
 if (isset($_SESSION['Permissoes']) && !empty($_SESSION['Permissoes'])) {
     $permissoes = $_SESSION['Permissoes'];
+
 } else {
     // Se não houver permissões definidas, redirecione de volta para a página de login ou trate o erro
     header('Location: index.php');
@@ -15,6 +16,7 @@ if (isset($_SESSION['Permissoes']) && !empty($_SESSION['Permissoes'])) {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,59 +29,89 @@ if (isset($_SESSION['Permissoes']) && !empty($_SESSION['Permissoes'])) {
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../STYLE/login.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
+    <style>
+        button {
+            background-color: #043140;
+            border: none;
+        }
+        form.item:hover button {
+            background-color: #176204;
+        }
+    </style>
 </head>
 
 <body>
 
-<?php include('../PHP/data.php');?>
-<?php include('../PHP/redes.php');?>
-<?php include('../PHP/dropdown.php');?>
+    <?php include ('../PHP/data.php'); ?>
+    <?php include ('../PHP/redes.php'); ?>
+    <?php include ('../PHP/dropdown.php'); ?>
 
     <header>
         <div class="title">
             <div class="nomedata closed">
                 <h1>LOGIN</h1>
                 <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
+                    <?php echo $date; ?><!--  Mostrar o data atual -->
                 </div>
             </div>
 
             <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
+                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
             </div>
         </div>
         <hr>
     </header>
 
     <main>
-        <?php if (in_array(1, $permissoes)):?>
-            <a href="m_home.php" class="item"><img src="../ICON/diretor.svg" alt="Diretor"><p>Diretor</p>
-            </a>
-        <?php endif?>
+        <?php if (in_array(1, $permissoes)): ?>
+            <form method="post" action="m_home.php" class="item">
+                <input type="hidden" name="Tipo_Tipo_cd" value="1">
+                <button type="submit"><img src="../ICON/diretor.svg" alt="Diretor">
+                    <p>Diretor</p>
+                </button>
+            </form>
+        <?php endif ?>
 
-        <?php if (in_array(2, $permissoes)):?>
-            <a href="s_home.php" class="item"><img src="../ICON/funcionario.svg" alt="Secretaria"><p>Secretaria</p>
-            </a>
-        <?php endif?>
+        <?php if (in_array(2, $permissoes)): ?>
+            <form method="post" action="s_home.php" class="item">
+                <input type="hidden" name="Tipo_Tipo_cd" value="2">
+                <button type="submit"><img src="../ICON/funcionario.svg" alt="Secretaria">
+                    <p>Secretaria</p>
+                </button>
+            </form>
+        <?php endif ?>
 
-        <?php if (in_array(3, $permissoes)):?>
-            <a href="a_home.php" class="item"><img src="../ICON/aluno.svg" alt="Alunos"><p>Aluno</p>
-            </a>
-        <?php endif?>
+        <?php if (in_array(3, $permissoes)): ?>
+            <form method="post" action="a_home.php" class="item">
+                <input type="hidden" name="Tipo_Tipo_cd" value="3">
+                <button type="submit"><img src="../ICON/aluno.svg" alt="Alunos">
+                    <p>Aluno</p>
+                </button>
+            </form>
+        <?php endif ?>
 
-        <?php if (in_array(4, $permissoes)):?>
-            <a href="p_home.php" class="item"><img src="../ICON/professores.svg" alt="Professores"><p>Professor</p>
-            </a>
-        <?php endif?>
+        <?php if (in_array(4, $permissoes)): ?>
+            <form method="post" action="p_home.php" class="item">
+                <input type="hidden" name="Tipo_Tipo_cd" value="4">
+                <button type="submit"><img src="../ICON/professores.svg" alt="Professores">
+                    <p>Professor</p>
+                </button>
+            </form>
+        <?php endif ?>
 
-        <?php if (in_array(5, $permissoes)):?>
-            <a href="c_home.php" class="item"><img src="../ICON/coordenacao.svg" alt="Coordenacao"><p>Coordenação</p>
-            </a>
-        <?php endif?>
+        <?php if (in_array(5, $permissoes)): ?>
+            <form method="post" action="c_home.php" class="item">
+                <input type="hidden" name="Tipo_Tipo_cd" value="5">
+                <button type="submit"><img src="../ICON/coordenacao.svg" alt="Coordenacao">
+                    <p>Coordenação</p>
+                </button>
+            </form>
+        <?php endif ?>
     </main>
 
+
     <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
     </div>
 
     <script src="../JS/dropdown.js"></script>
