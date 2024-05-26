@@ -9,6 +9,7 @@ for (var i = 0; i < arrow.length; i++) {
 let sidebar = document.querySelector(".sidebar");
 let versionSpan = document.querySelector(".version span");
 let nomedata = document.querySelector(".nomedata");
+let botaoVoltar = document.querySelector(".botaoVoltar");
 
 // Função para atualizar o conteúdo da versão
 function updateVersionText(isLargeMenu) {
@@ -23,6 +24,7 @@ function updateVersionText(isLargeMenu) {
 sidebar.addEventListener("mouseenter", () => {
   sidebar.classList.remove("close");
   nomedata.classList.remove("closed");
+  botaoVoltar.classList.remove("closed");
   updateVersionText(true); // Atualiza o conteúdo para "Versão 1.0"
 });
 
@@ -30,5 +32,6 @@ sidebar.addEventListener("mouseenter", () => {
 sidebar.addEventListener("mouseleave", () => {
   sidebar.classList.add("close");
   nomedata.classList.add("closed");
+  botaoVoltar.classList.add("closed");
   updateVersionText(false); // Atualiza o conteúdo para "v 1.0"
 });

@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
     session_start();
 }
-if($_SESSION['Tipo_Tipo_cd'] != 1){
+if ($_SESSION['Tipo_Tipo_cd'] != 1) {
     header("Location: ../logout.php");
 }
 ?>
@@ -55,6 +55,9 @@ if($_SESSION['Tipo_Tipo_cd'] != 1){
             </div>
         </div>
         <hr>
+        <div class="botaoVoltar closed">
+            <button onclick="history.back()">Voltar</button>
+        </div>
     </header>
 
     <div>
@@ -203,7 +206,6 @@ if($_SESSION['Tipo_Tipo_cd'] != 1){
             }
         }
     </script>
-    <
 
     <script>
         function exibirDetalhesUsuario(dados) {
