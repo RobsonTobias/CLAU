@@ -25,7 +25,9 @@
         echo "Usuário não encontrado";
     }
 
-    $_SESSION['ImagemAtual'] = $foto
+    $_SESSION['ImagemAtual'] = $foto;
+    $home = 'm_home.php';
+    $titulo = 'ALTERAR FUNCIONÁRIO';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -58,23 +60,7 @@
     <?php include('../PHP/redes.php');?>
     <?php include('../PHP/dropdown.php');?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>ALTERAR FUNCIONÁRIO</h1>
-                <div class="php">
-                    <?php echo $date;?>
-                    <!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown;?>
-                <!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML;?>
@@ -174,7 +160,7 @@
                             </label>
                             <label for="logradouro" class="logradouro">
                                 <p>LOGRADOURO</p>
-                                <input type="text" name="logradouro" id="logradouro" value="<?php echo $row['Enderecos_Rua']; ?>" readonly>
+                                <input type="text" name="logradouro" id="logradouro" value="<?php echo $row['Enderecos_Rua']; ?>">
                             </label>
                             <label for="numero" class="numero">
                                 <p>Nº<span>*</span></p>
@@ -184,7 +170,7 @@
                         <div class="linha">
                             <label for="bairro" class="bairro">
                                 <p>BAIRRO</p>
-                                <input type="text" id="bairro" name="bairro" value="<?php echo $row['Enderecos_Bairro']; ?>" readonly>
+                                <input type="text" id="bairro" name="bairro" value="<?php echo $row['Enderecos_Bairro']; ?>">
                             </label>
                             <label for="complemento" class="complemento">
                                 <p>COMPLEMENTO</p>
@@ -194,11 +180,11 @@
                         <div class="linha">
                             <label for="cidade" class="cidade">
                                 <p>CIDADE</p>
-                                <input type="text" id="cidade" name="cidade" value="<?php echo $row['Enderecos_Cidade']; ?>" readonly>
+                                <input type="text" id="cidade" name="cidade" value="<?php echo $row['Enderecos_Cidade']; ?>">
                             </label>
                             <label for="estado" class="estado">
                                 <p>ESTADO</p>
-                                <input type="text" id="estado" name="estado" value="<?php echo $row['Enderecos_Uf']; ?>" readonly>
+                                <input type="text" id="estado" name="estado" value="<?php echo $row['Enderecos_Uf']; ?>">
                             </label>
                         </div>
                     </div>

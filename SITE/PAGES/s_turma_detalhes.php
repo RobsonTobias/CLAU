@@ -190,36 +190,36 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
             <div class="informacao">
                 <p>Informações Gerais</p>
                 <div class="infofuncionario">
-                    <div class="col1 modal">Curso: <div class="texto">
+                    <div class="col1 modal1">Curso: <div class="texto">
                             <?php echo $turma['Nome_Curso']; ?>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 modal">Turma: <div class="texto">
+                        <div class="col1 modal1">Turma: <div class="texto">
                                 <?php echo $turma['Turma_Cod']; ?>
                             </div>
                         </div>
-                        <div class="col2 modal">Professor: <div class="texto">
+                        <div class="col2 modal1">Professor: <div class="texto">
                                 <?php echo $turma['Nome_Professor']; ?>
                             </div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 modal">Início: <div class="texto">
+                        <div class="col1 modal1">Início: <div class="texto">
                                 <?php echo date('d/m/Y', strtotime($turma['Turma_Inicio'])); ?>
                             </div>
                         </div>
-                        <div class="col2 modal">Término: <div class="texto">
+                        <div class="col2 modal1">Término: <div class="texto">
                                 <?php echo date('d/m/Y', strtotime($turma['Turma_Termino'])); ?>
                             </div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 modal">Horário: <div class="texto">
+                        <div class="col1 modal1">Horário: <div class="texto">
                                 <?php echo $turma['Turma_Horario']; ?>h
                             </div>
                         </div>
-                        <div class="col2 modal">Dias de aula: <div class="texto">
+                        <div class="col2 modal1">Dias de aula: <div class="texto">
                                 <?php echo $dias_aula_turma_texto; ?>
                             </div>
                         </div>
@@ -233,17 +233,17 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                 <p>Informações Acadêmicas</p>
                 <div class="infofuncionario">
                     <div class="linha" style="margin-top: 0;">
-                        <div class="col1 modal">Alunos matriculados: <div class="texto">
+                        <div class="col1 modal1">Alunos matriculados: <div class="texto">
                                 <?php echo $turma['Turma_Horario']; ?>h
                             </div>
                         </div>
-                        <div class="col2 modal">Máximo de alunos: <div class="texto">
+                        <div class="col2 modal1">Máximo de alunos: <div class="texto">
                                 <?php echo $turma['Turma_Vagas']; ?>
                             </div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 modal">Frequência:
+                        <div class="col1 modal1">Frequência:
                             <div class="texto"> <?php $resultado_frequencia ?> % </div>&nbsp;&nbsp;
                             <div class="barra-frequencia-container">
                                 <div class="barra-frequencia" style="width:'<?php $resultado_frequencia ?>;%'">

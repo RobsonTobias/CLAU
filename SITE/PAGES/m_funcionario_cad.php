@@ -6,6 +6,8 @@ if (session_status() == PHP_SESSION_NONE) {
 if($_SESSION['Tipo_Tipo_cd'] != 1){
     header("Location: ../logout.php");
 }
+$home = 'm_home.php';
+$titulo = 'CADASTRO DE FUNCIONÁRIO';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -38,23 +40,7 @@ if($_SESSION['Tipo_Tipo_cd'] != 1){
     <?php include('../PHP/redes.php'); ?>
     <?php include('../PHP/dropdown.php'); ?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>CADASTRO DE FUNCIONÁRIOS</h1>
-                <div class="php">
-                    <?php echo $date; ?>
-                    <!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?>
-                <!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?>
@@ -155,7 +141,7 @@ if($_SESSION['Tipo_Tipo_cd'] != 1){
                             </label>
                             <label for="logradouro" class="logradouro">
                                 <p>LOGRADOURO</p>
-                                <input type="text" name="logradouro" id="logradouro" readonly>
+                                <input type="text" name="logradouro" id="logradouro">
                             </label>
                             <label for="numero" class="numero">
                                 <p>Nº<span>*</span></p>
@@ -165,7 +151,7 @@ if($_SESSION['Tipo_Tipo_cd'] != 1){
                         <div class="linha">
                             <label for="bairro" class="bairro">
                                 <p>BAIRRO</p>
-                                <input type="text" id="bairro" name="bairro" readonly>
+                                <input type="text" id="bairro" name="bairro">
                             </label>
                             <label for="complemento" class="complemento">
                                 <p>COMPLEMENTO</p>
@@ -175,11 +161,11 @@ if($_SESSION['Tipo_Tipo_cd'] != 1){
                         <div class="linha">
                             <label for="cidade" class="cidade">
                                 <p>CIDADE</p>
-                                <input type="text" id="cidade" name="cidade" readonly>
+                                <input type="text" id="cidade" name="cidade">
                             </label>
                             <label for="estado" class="estado">
                                 <p>ESTADO</p>
-                                <input type="text" id="estado" name="estado" readonly>
+                                <input type="text" id="estado" name="estado">
                             </label>
                         </div>
                     </div>

@@ -108,30 +108,30 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                             <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
                         </div>
                         <div class="info-func">
-                            <div class="modal">Nome: <div class="texto" id="modalNome"></div>
+                            <div class="modal1">Nome: <div class="texto" id="modalNome"></div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Nascimento: <div class="texto" id="modalNascimento"></div>
+                                <div class="col1 modal1">Nascimento: <div class="texto" id="modalNascimento"></div>
                                 </div>
-                                <div class="col2 modal" for="idade">Idade: <div class="texto" id="modalIdade"></div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 modal">CPF: <div class="texto" id="modalCpf"></div>
-                                </div>
-                                <div class="col2 modal">RG: <div class="texto" id="modalRg"></div>
+                                <div class="col2 modal1" for="idade">Idade: <div class="texto" id="modalIdade"></div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Sexo: <div class="texto" id="modalSexo"></div>
+                                <div class="col1 modal1">CPF: <div class="texto" id="modalCpf"></div>
                                 </div>
-                                <div class="col2 modal">E-mail: <div class="texto" id="modalEmail"></div>
+                                <div class="col2 modal1">RG: <div class="texto" id="modalRg"></div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Celular: <div class="texto" id="modalCelular"></div>
+                                <div class="col1 modal1">Sexo: <div class="texto" id="modalSexo"></div>
                                 </div>
-                                <div class="col2 modal">Data de Ingresso: <div class="texto" id="modalIngresso"></div>
+                                <div class="col2 modal1">E-mail: <div class="texto" id="modalEmail"></div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 modal1">Celular: <div class="texto" id="modalCelular"></div>
+                                </div>
+                                <div class="col2 modal1">Data de Ingresso: <div class="texto" id="modalIngresso"></div>
                                 </div>
                             </div>
                         </div>
@@ -143,23 +143,23 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
                 <div class="endereco">
                     <p>Endereço</p>
                     <div class="linha">
-                        <div class="col1 cola modal">Logradouro: <div class="texto" id="modalLogradouro"></div>
+                        <div class="col1 cola modal1">Logradouro: <div class="texto" id="modalLogradouro"></div>
                         </div>
-                        <div class="col2 colb modal">Nº: <div class="texto" id="modalNumero"></div>
-                        </div>
-                    </div>
-                    <div class="linha">
-                        <div class="col1 cola modal">Complemento: <div class="texto" id="modalComplemento"></div>
-                        </div>
-                        <div class="col2 colb modal">CEP: <div class="texto" id="modalCep"></div>
+                        <div class="col2 colb modal1">Nº: <div class="texto" id="modalNumero"></div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 cola modal">Bairro: <div class="texto" id="modalBairro"></div>
+                        <div class="col1 cola modal1">Complemento: <div class="texto" id="modalComplemento"></div>
                         </div>
-                        <div class="col2 colb modal">Cidade: <div class="texto" id="modalCidade"></div>
+                        <div class="col2 colb modal1">CEP: <div class="texto" id="modalCep"></div>
                         </div>
-                        <div class="col3 colc modal">UF: <div class="texto" id="modalUf"></div>
+                    </div>
+                    <div class="linha">
+                        <div class="col1 cola modal1">Bairro: <div class="texto" id="modalBairro"></div>
+                        </div>
+                        <div class="col2 colb modal1">Cidade: <div class="texto" id="modalCidade"></div>
+                        </div>
+                        <div class="col3 colc modal1">UF: <div class="texto" id="modalUf"></div>
                         </div>
                     </div>
                 </div>

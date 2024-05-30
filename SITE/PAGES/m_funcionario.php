@@ -8,6 +8,10 @@ if (session_status() == PHP_SESSION_NONE) {
 if ($_SESSION['Tipo_Tipo_cd'] != 1) {
     header("Location: ../logout.php");
 }
+$home = 'm_home.php'; //utilizado pelo botão voltar
+$titulo = 'RELATÓRIO DE FUNCIONÁRIOS'; //Título da página, que fica sobre a data
+$paginaDestino = 'm_funcionario_cad.php'; //utilizado para redirecionar para a página de cadastro
+$elemento = 'Funcionário'; //utilizado no texto de adicionar
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -16,7 +20,7 @@ if ($_SESSION['Tipo_Tipo_cd'] != 1) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLAU - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
+
     <link rel="stylesheet" href="../STYLE/botao.css" />
     <link rel="stylesheet" href="../STYLE/data.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -27,9 +31,37 @@ if ($_SESSION['Tipo_Tipo_cd'] != 1) {
     <link rel="stylesheet" href="../STYLE/relatorio.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
+
     <style>
         .funcionario path {
             fill: #043140;
+        }
+
+        main {
+            display: flex;
+        }
+
+        .pesquisa p {
+            min-width: 0;
+        }
+
+        hr {
+            background-color: #313131;
+            width: 95%;
+            height: 1px;
         }
     </style>
 </head>
@@ -41,24 +73,7 @@ if ($_SESSION['Tipo_Tipo_cd'] != 1) {
     <?php include ('../PHP/redes.php'); ?>
     <?php include ('../PHP/dropdown.php'); ?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>RELATÓRIO DE FUNCIONÁRIOS</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-        <div class="botaoVoltar closed">
-            <button onclick="history.back()">Voltar</button>
-        </div>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
@@ -66,7 +81,10 @@ if ($_SESSION['Tipo_Tipo_cd'] != 1) {
 
     <main class="ajuste">
         <div class="pesquisa">
-            <p>Pesquisar:</p>
+            <div class="d-flex row justify-content-between teste">
+                <p>Pesquisar:</p>
+                <?php require_once '../COMPONENTS/add.php' ?>
+            </div>
             <input type="text" id="searchInput" placeholder="Digite um nome para pesquisar">
             <table class="table table-hover">
                 <tr>
@@ -107,30 +125,30 @@ if ($_SESSION['Tipo_Tipo_cd'] != 1) {
                             <img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
                         </div>
                         <div class="info-func">
-                            <div class="modal">Nome: <div class="texto" id="modalNome"></div>
+                            <div class="modal1">Nome: <div class="texto" id="modalNome"></div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Nascimento: <div class="texto" id="modalNascimento"></div>
+                                <div class="col1 modal1">Nascimento: <div class="texto" id="modalNascimento"></div>
                                 </div>
-                                <div class="col2 modal" for="idade">Idade: <div class="texto" id="modalIdade"></div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 modal">CPF: <div class="texto" id="modalCpf"></div>
-                                </div>
-                                <div class="col2 modal">RG: <div class="texto" id="modalRg"></div>
+                                <div class="col2 modal1" for="idade">Idade: <div class="texto" id="modalIdade"></div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Sexo: <div class="texto" id="modalSexo"></div>
+                                <div class="col1 modal1">CPF: <div class="texto" id="modalCpf"></div>
                                 </div>
-                                <div class="col2 modal">E-mail: <div class="texto" id="modalEmail"></div>
+                                <div class="col2 modal1">RG: <div class="texto" id="modalRg"></div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Celular: <div class="texto" id="modalCelular"></div>
+                                <div class="col1 modal1">Sexo: <div class="texto" id="modalSexo"></div>
                                 </div>
-                                <div class="col2 modal">Data de Ingresso: <div class="texto" id="modalIngresso"></div>
+                                <div class="col2 modal1">E-mail: <div class="texto" id="modalEmail"></div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 modal1">Celular: <div class="texto" id="modalCelular"></div>
+                                </div>
+                                <div class="col2 modal1">Data de Ingresso: <div class="texto" id="modalIngresso"></div>
                                 </div>
                             </div>
                         </div>
@@ -142,23 +160,23 @@ if ($_SESSION['Tipo_Tipo_cd'] != 1) {
                 <div class="endereco">
                     <p>Endereço</p>
                     <div class="linha">
-                        <div class="col1 cola modal">Logradouro: <div class="texto" id="modalLogradouro"></div>
+                        <div class="col1 cola modal1">Logradouro: <div class="texto" id="modalLogradouro"></div>
                         </div>
-                        <div class="col2 colb modal">Nº: <div class="texto" id="modalNumero"></div>
-                        </div>
-                    </div>
-                    <div class="linha">
-                        <div class="col1 cola modal">Complemento: <div class="texto" id="modalComplemento"></div>
-                        </div>
-                        <div class="col2 colb modal">CEP: <div class="texto" id="modalCep"></div>
+                        <div class="col2 colb modal1">Nº: <div class="texto" id="modalNumero"></div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 cola modal">Bairro: <div class="texto" id="modalBairro"></div>
+                        <div class="col1 cola modal1">Complemento: <div class="texto" id="modalComplemento"></div>
                         </div>
-                        <div class="col2 colb modal">Cidade: <div class="texto" id="modalCidade"></div>
+                        <div class="col2 colb modal1">CEP: <div class="texto" id="modalCep"></div>
                         </div>
-                        <div class="col3 colc modal">UF: <div class="texto" id="modalUf"></div>
+                    </div>
+                    <div class="linha">
+                        <div class="col1 cola modal1">Bairro: <div class="texto" id="modalBairro"></div>
+                        </div>
+                        <div class="col2 colb modal1">Cidade: <div class="texto" id="modalCidade"></div>
+                        </div>
+                        <div class="col3 colc modal1">UF: <div class="texto" id="modalUf"></div>
                         </div>
                     </div>
                 </div>

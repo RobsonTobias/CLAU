@@ -8,6 +8,8 @@ if (session_status() == PHP_SESSION_NONE) {
 if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
+$paginaDestino = 's_curso_cad.php';
+$elemento = 'Curso';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -101,35 +103,6 @@ if ($_SESSION['Tipo_Tipo_cd'] != 2) {
             margin: 0;
         }
 
-        .teste {
-            margin: 0;
-        }
-
-        .adicionar {
-            border-radius: 50%;
-            height: 1.25rem;
-            width: 1.25rem;
-            font-size: 1em;
-            font-weight: bolder;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #4CAF50;
-            border: none;
-            color: #FFFFFF;
-        }
-
-        a p {
-            color: #4CAF50;
-            font-weight: bolder;
-            margin-left: 0.5em;
-        }
-
-        a:hover {
-            text-decoration: none;
-            opacity: 0.5;
-        }
-
         label {
             width: 100%;
         }
@@ -206,10 +179,7 @@ if ($_SESSION['Tipo_Tipo_cd'] != 2) {
         <div class="card principal">
             <div class="row justify-content-between teste">
                 <p class="card-title">Lista de Cursos</p>
-                <a href="s_curso_cad.php" class="row d-flex align-items-center teste">
-                    <button class="adicionar" type="button">+</button>
-                    <p>Adicionar Curso</p>
-                </a>
+                <?php require_once '../COMPONENTS/add.php' ?>
             </div>
             <div class="table-responsive">
                 <table class="table">

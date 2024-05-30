@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 if($_SESSION['Tipo_Tipo_cd'] != 1){
     header("Location: ../logout.php");
 }
-
+$home = 'm_home.php';
 include '../conexao.php'; // Inclui o script de conexão ao banco de dados
 
 
@@ -71,6 +71,7 @@ $result = $conn->query($query); // Executa a consulta
                 <div class="php">
                     <?php echo $date;?><!--  Mostrar o data atual -->
                 </div>
+                <?php require_once '../COMPONENTS/buttonBack.php' ?>
             </div>
 
             <div class="user">

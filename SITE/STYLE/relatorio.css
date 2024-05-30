@@ -162,11 +162,11 @@ td{
     padding-bottom: 5px;
 }
 
-.modal, .texto{
+.modal1, .texto{
     font-size: 16px;
     font-weight: bold;
 }
-.modal{
+.modal1{
     color: #068888;
     display: flex;
     margin-top: 2px;

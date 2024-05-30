@@ -20,10 +20,40 @@ function validaCPF($cpf)
     return true;
 }
 
+function obterPrimeirosSeisDigitosCpf($cpf) {
+    // Remove todos os caracteres não numéricos
+    $cpfSomenteNumeros = preg_replace('/\D/', '', $cpf);
+    
+    // Pega os primeiros 6 dígitos
+    $primeirosSeisDigitos = substr($cpfSomenteNumeros, 0, 6);
+    
+    return $primeirosSeisDigitos;
+}
+
 // Verifica se uma sessão já está ativa
 if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
     session_start();
+}
+
+// Função para gerar um login único
+function gerarLoginUnico($conn, $primeiroNome, $ultimoNome)
+{
+    $baseLogin = strtolower($primeiroNome . '.' . $ultimoNome);
+    $login = $baseLogin;
+    $contador = 1;
+
+    while (true) {
+        $queryLogin = "SELECT Usuario_id FROM Usuario WHERE Usuario_Login = '$login'";
+        $resultLogin = $conn->query($queryLogin);
+        if ($resultLogin->num_rows == 0) {
+            break;
+        }
+        $login = $baseLogin . $contador;
+        $contador++;
+    }
+
+    return $login;
 }
 
 // Verificar se o formulário foi enviado
@@ -31,16 +61,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $erroMsg = '';
     $cadastroSucesso = false;
 
-    $apelido = $conn->real_escape_string($_POST['apelido']); // Substitua 'login' pelo nome do campo de login no seu formulário
+    $nomeCompleto = $conn->real_escape_string($_POST['nome']);
+    $partesNome = explode(' ', $nomeCompleto);
+    $primeiroNome = $partesNome[0];
+    $ultimoNome = end($partesNome);
 
-    // Verificar se o login já existe
-    $queryLogin = "SELECT Usuario_id FROM Usuario WHERE Usuario_Login = '$apelido'";
-    $resultLogin = $conn->query($queryLogin);
-    if ($resultLogin && $resultLogin->num_rows > 0) {
-        $erroMsg .= "O login já está em uso.";
-    }
+    // Gerar login único
+    $login = gerarLoginUnico($conn, $primeiroNome, $ultimoNome);
 
     $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
+    $senha = obterPrimeirosSeisDigitosCpf($cpf);
     $queryCpf = "SELECT * FROM Usuario WHERE Usuario_Cpf = '$cpf'";
     $resultCpf = $conn->query($queryCpf);
     if ($resultCpf && $resultCpf->num_rows > 0) {
@@ -123,6 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (!$erroMsg && $uploadOk) {
             $nome = $conn->real_escape_string($_POST['nome']);
+            $apelido = $conn->real_escape_string($_POST['apelido']);
             $sexo = $conn->real_escape_string($_POST['sexo']);
             $rg = preg_replace('/[^0-9]/', '', $_POST['rg']);
             $nascimento = $conn->real_escape_string($_POST['nascimento']);
@@ -135,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $uploadResultado = move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminhoCompleto);
             if (!$nomeArquivo || $uploadResultado) {
                 $usuariocd = $_SESSION['Usuario_id'];
-                $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Responsavel_Respon_cd, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf', '$rg', '$nascimento', '$estadocivil', '$celular', '$telrecado', '$apelido', 'escola123', '$responCd', '$obs', '$enderecosCd', '$usuariocd', '$caminhoCompleto')";
+                $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf', '$rg', '$nascimento', '$estadocivil', '$celular', '$telrecado', '$login', '$senha', '$obs', '$enderecosCd', '$usuariocd', '$caminhoCompleto')";
                 if ($conn->query($sql) === TRUE) {
                     $ultimoUsuario = $conn->insert_id;
                     $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 2)";

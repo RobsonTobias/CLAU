@@ -191,28 +191,28 @@ $alunoId = $_SESSION['AlunoId'];
                             <img id="imagemExibida" src="<?php echo $row['Usuario_Foto']; ?>" alt="foto">
                         </div>
                         <div class="info-func">
-                            <div class="modal">Nome: <div class="texto"><?php echo $row['Usuario_Nome']; ?></div>
+                            <div class="modal1">Nome: <div class="texto"><?php echo $row['Usuario_Nome']; ?></div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Nascimento: <div class="texto"><?php echo $nascimentoFormatado; ?></div>
+                                <div class="col1 modal1">Nascimento: <div class="texto"><?php echo $nascimentoFormatado; ?></div>
                                 </div>
-                                <div class="col2 modal" for="idade">Idade: <div class="texto"><?php echo $idade; ?> anos</div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 modal">CPF: <div class="texto"><?php echo $cpfFormatado; ?></div>
-                                </div>
-                                <div class="col2 modal">RG: <div class="texto"><?php echo $rgFormatado; ?></div>
+                                <div class="col2 modal1" for="idade">Idade: <div class="texto"><?php echo $idade; ?> anos</div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Sexo: <div class="texto"><?php if ($row['Usuario_Sexo'] == 'M'){echo 'Masculino';}else{echo 'Feminino';} ?></div>
+                                <div class="col1 modal1">CPF: <div class="texto"><?php echo $cpfFormatado; ?></div>
                                 </div>
-                                <div class="col2 modal">E-mail: <div class="texto"><?php echo $row['Usuario_Email']; ?></div>
+                                <div class="col2 modal1">RG: <div class="texto"><?php echo $rgFormatado; ?></div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Celular: <div class="texto"><?php echo $foneFormatado; ?></div>
+                                <div class="col1 modal1">Sexo: <div class="texto"><?php if ($row['Usuario_Sexo'] == 'M'){echo 'Masculino';}else{echo 'Feminino';} ?></div>
+                                </div>
+                                <div class="col2 modal1">E-mail: <div class="texto"><?php echo $row['Usuario_Email']; ?></div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 modal1">Celular: <div class="texto"><?php echo $foneFormatado; ?></div>
                                 </div>
                             </div>
                         </div>
