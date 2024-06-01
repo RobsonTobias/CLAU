@@ -42,6 +42,9 @@
     background-color: #16228b;
 }
 
+.buttons__toggle:focus{
+    background-color: #6BC684;
+}
 .buttons__toggle img {
     font-size: 1.6rem;
     scale: 0.7;

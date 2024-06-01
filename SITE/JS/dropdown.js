@@ -1,6 +1,6 @@
 // Ao clicar na imagem, exibe ou esconde o menu
 function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
+    document.getElementById("myDropdown").classList.toggle("Myshow");
   }
   
 // Fecha o dropdown quando clica para fora do menu
@@ -10,8 +10,8 @@ window.onclick = function(event) {
       var i;
       for (i = 0; i < dropdowns.length; i++) {
         var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
+        if (openDropdown.classList.contains('Myshow')) {
+          openDropdown.classList.remove('Myshow');
         }
       }
     }

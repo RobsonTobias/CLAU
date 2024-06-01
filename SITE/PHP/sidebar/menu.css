@@ -3,9 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-body{
-  overflow: hidden;
-}
+
 .sidebar{
   position: fixed;
   top: 0;
@@ -17,13 +15,14 @@ body{
   transition: all 0.5s ease;
   overflow: hidden;
 }
-.nomedata{
-  display: flex; 
-  flex-direction: column;
-  margin-left: 80px;
-  transition: margin-left 0.5s ease;
+
+hr{
+  border:1px;
+  margin:0;
 }
+
 .sidebar.close{
+  opacity: 1;
   width: 78px;
 }
 
@@ -95,12 +94,6 @@ body{
 .sidebar .nav-links li svg{
   height: 30px;
   width: 78px;
-  width: 78px;
-}
-
-.sidebar .nav-links li img{
-  height: 30px;
-  min-width: 78px;
 }
 
 .sidebar .nav-links li.showMenu i.arrow{
@@ -119,6 +112,7 @@ body{
   font-weight: 400;
   color: #fff;
   transition: all 0.4s ease;
+  width: 180px;
 }
 .sidebar.close .nav-links li a .link_name{
   opacity: 0;
@@ -269,4 +263,9 @@ body{
   opacity: 0;
   z-index: -199;
   transition: opacity 0s;
+}
+
+.version span{
+  font-size: 1rem;
+  font-weight: normal;
 }

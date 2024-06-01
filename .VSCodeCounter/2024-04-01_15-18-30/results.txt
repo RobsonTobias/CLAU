@@ -1,0 +1,307 @@
+Date : 2024-04-01 15:18:30
+Directory : c:\xampp\htdocs\CLAU
+Total : 225 files,  20481 codes, 3348 comments, 3073 blanks, all 26902 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| PHP        |        152 |     16,865 |      3,225 |      2,689 |     22,779 |
+| JSON       |         10 |      1,393 |          0 |          9 |      1,402 |
+| CSS        |          9 |      1,297 |         36 |        163 |      1,496 |
+| SQL        |          2 |        315 |         72 |         94 |        481 |
+| Markdown   |          8 |        228 |          0 |         43 |        271 |
+| XML        |         35 |        161 |          1 |         27 |        189 |
+| JavaScript |          8 |        155 |         14 |         35 |        204 |
+| HTML       |          1 |         67 |          0 |         13 |         80 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                             | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                |        225 |     20,481 |      3,348 |      3,073 |     26,902 |
+| . (Files)                                                                                        |          1 |          2 |          0 |          1 |          3 |
+| SITE                                                                                             |        224 |     20,479 |      3,348 |      3,072 |     26,899 |
+| SITE (Files)                                                                                     |          7 |      1,016 |         82 |        121 |      1,219 |
+| SITE\.VSCodeCounter                                                                              |          5 |        190 |          0 |         26 |        216 |
+| SITE\.VSCodeCounter\2024-03-05_08-52-25                                                          |          5 |        190 |          0 |         26 |        216 |
+| SITE\ICON                                                                                        |         33 |        159 |          1 |         27 |        187 |
+| SITE\JS                                                                                          |          7 |        128 |         11 |         30 |        169 |
+| SITE\PAGES                                                                                       |         53 |      8,102 |        345 |      1,318 |      9,765 |
+| SITE\PHP                                                                                         |         24 |      1,978 |        114 |        312 |      2,404 |
+| SITE\PHP (Files)                                                                                 |         16 |      1,013 |        104 |        210 |      1,327 |
+| SITE\PHP\sidebar                                                                                 |          8 |        965 |         10 |        102 |      1,077 |
+| SITE\PHP\sidebar (Files)                                                                         |          6 |        963 |         10 |        102 |      1,075 |
+| SITE\PHP\sidebar\image                                                                           |          2 |          2 |          0 |          0 |          2 |
+| SITE\STYLE                                                                                       |          8 |      1,047 |         36 |        152 |      1,235 |
+| SITE\vendor                                                                                      |         87 |      7,859 |      2,759 |      1,086 |     11,704 |
+| SITE\vendor (Files)                                                                              |          1 |         20 |          1 |          5 |         26 |
+| SITE\vendor\composer                                                                             |         11 |      1,287 |        378 |        152 |      1,817 |
+| SITE\vendor\graham-campbell                                                                      |          4 |        118 |        193 |         36 |        347 |
+| SITE\vendor\graham-campbell\result-type                                                          |          4 |        118 |        193 |         36 |        347 |
+| SITE\vendor\graham-campbell\result-type (Files)                                                  |          1 |         33 |          0 |          1 |         34 |
+| SITE\vendor\graham-campbell\result-type\src                                                      |          3 |         85 |        193 |         35 |        313 |
+| SITE\vendor\phpoption                                                                            |          5 |        437 |        412 |        122 |        971 |
+| SITE\vendor\phpoption\phpoption                                                                  |          5 |        437 |        412 |        122 |        971 |
+| SITE\vendor\phpoption\phpoption (Files)                                                          |          1 |         52 |          0 |          1 |         53 |
+| SITE\vendor\phpoption\phpoption\src                                                              |          4 |        385 |        412 |        121 |        918 |
+| SITE\vendor\phpoption\phpoption\src\PhpOption                                                    |          4 |        385 |        412 |        121 |        918 |
+| SITE\vendor\symfony                                                                              |         24 |      4,486 |        323 |        320 |      5,129 |
+| SITE\vendor\symfony\polyfill-ctype                                                               |          5 |        195 |        143 |         45 |        383 |
+| SITE\vendor\symfony\polyfill-mbstring                                                            |          9 |      4,023 |         82 |        210 |      4,315 |
+| SITE\vendor\symfony\polyfill-mbstring (Files)                                                    |          5 |      1,019 |         81 |        201 |      1,301 |
+| SITE\vendor\symfony\polyfill-mbstring\Resources                                                  |          4 |      3,004 |          1 |          9 |      3,014 |
+| SITE\vendor\symfony\polyfill-mbstring\Resources\unidata                                          |          4 |      3,004 |          1 |          9 |      3,014 |
+| SITE\vendor\symfony\polyfill-php80                                                               |         10 |        268 |         98 |         65 |        431 |
+| SITE\vendor\symfony\polyfill-php80 (Files)                                                       |          5 |        225 |         54 |         48 |        327 |
+| SITE\vendor\symfony\polyfill-php80\Resources                                                     |          5 |         43 |         44 |         17 |        104 |
+| SITE\vendor\symfony\polyfill-php80\Resources\stubs                                               |          5 |         43 |         44 |         17 |        104 |
+| SITE\vendor\vlucas                                                                               |         42 |      1,511 |      1,452 |        451 |      3,414 |
+| SITE\vendor\vlucas\phpdotenv                                                                     |         42 |      1,511 |      1,452 |        451 |      3,414 |
+| SITE\vendor\vlucas\phpdotenv (Files)                                                             |          1 |         60 |          0 |          1 |         61 |
+| SITE\vendor\vlucas\phpdotenv\src                                                                 |         41 |      1,451 |      1,452 |        450 |      3,353 |
+| SITE\vendor\vlucas\phpdotenv\src (Files)                                                         |          2 |        206 |        220 |         52 |        478 |
+| SITE\vendor\vlucas\phpdotenv\src\Exception                                                       |          5 |         35 |          5 |         25 |         65 |
+| SITE\vendor\vlucas\phpdotenv\src\Loader                                                          |          3 |         69 |         46 |         20 |        135 |
+| SITE\vendor\vlucas\phpdotenv\src\Parser                                                          |          7 |        347 |        277 |         87 |        711 |
+| SITE\vendor\vlucas\phpdotenv\src\Repository                                                      |         16 |        555 |        610 |        189 |      1,354 |
+| SITE\vendor\vlucas\phpdotenv\src\Repository (Files)                                              |          3 |        181 |        197 |         55 |        433 |
+| SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter                                              |         13 |        374 |        413 |        134 |        921 |
+| SITE\vendor\vlucas\phpdotenv\src\Store                                                           |          6 |        157 |        185 |         56 |        398 |
+| SITE\vendor\vlucas\phpdotenv\src\Store (Files)                                                   |          4 |        103 |        129 |         39 |        271 |
+| SITE\vendor\vlucas\phpdotenv\src\Store\File                                                      |          2 |         54 |         56 |         17 |        127 |
+| SITE\vendor\vlucas\phpdotenv\src\Util                                                            |          2 |         82 |        109 |         21 |        212 |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                         | language   | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\xampp\htdocs\CLAU\README.md                                                                   | Markdown   |          2 |          0 |          1 |          3 |
+| c:\xampp\htdocs\CLAU\SITE\.VSCodeCounter\2024-03-05_08-52-25\details.md                          | Markdown   |        139 |          0 |          6 |        145 |
+| c:\xampp\htdocs\CLAU\SITE\.VSCodeCounter\2024-03-05_08-52-25\diff-details.md                     | Markdown   |          9 |          0 |          6 |         15 |
+| c:\xampp\htdocs\CLAU\SITE\.VSCodeCounter\2024-03-05_08-52-25\diff.md                             | Markdown   |         12 |          0 |          7 |         19 |
+| c:\xampp\htdocs\CLAU\SITE\.VSCodeCounter\2024-03-05_08-52-25\results.json                        | JSON       |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\CLAU\SITE\.VSCodeCounter\2024-03-05_08-52-25\results.md                          | Markdown   |         29 |          0 |          7 |         36 |
+| c:\xampp\htdocs\CLAU\SITE\CLAU.sql                                                               | SQL        |        269 |         72 |         59 |        400 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\C.svg                                                             | XML        |          9 |          0 |          0 |          9 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\Facebook.svg                                                      | XML        |          4 |          0 |          1 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\Instagram.svg                                                     | XML        |         18 |          0 |          1 |         19 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\Linkedin.svg                                                      | XML        |          5 |          0 |          1 |          6 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\aluno.svg                                                         | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\cadastro_aluno.svg                                                | XML        |          4 |          0 |          1 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\cadastro_curso.svg                                                | XML        |          4 |          0 |          1 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\cadastro_funcionario.svg                                          | XML        |          4 |          0 |          1 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\cadastro_professor.svg                                            | XML        |          4 |          0 |          1 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\cadastro_turma.svg                                                | XML        |          4 |          0 |          1 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\calendario.svg                                                    | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\chamada.svg                                                       | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\coordenacao.svg                                                   | XML        |          4 |          0 |          1 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\cursos.svg                                                        | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\diretor.svg                                                       | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\endereco.svg                                                      | XML        |          5 |          0 |          1 |          6 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\eye-off.svg                                                       | XML        |          6 |          0 |          0 |          6 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\eye.svg                                                           | XML        |          5 |          0 |          0 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\fale.svg                                                          | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\funcionario.svg                                                   | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\grade.svg                                                         | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\home.svg                                                          | XML        |          4 |          0 |          1 |          5 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\insta.svg                                                         | XML        |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\insta2.svg                                                        | XML        |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\nota.svg                                                          | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\perfil.svg                                                        | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\phone.svg                                                         | XML        |         21 |          1 |          0 |         22 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\planejamento.svg                                                  | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\professores.svg                                                   | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\prova.svg                                                         | XML        |          7 |          0 |          1 |          8 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\relatorio.svg                                                     | XML        |          7 |          0 |          1 |          8 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\relatorios.svg                                                    | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\ICON\turma.svg                                                         | XML        |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\JS\app.js                                                              | JavaScript |         24 |          4 |          6 |         34 |
+| c:\xampp\htdocs\CLAU\SITE\JS\botao.js                                                            | JavaScript |         24 |          4 |          4 |         32 |
+| c:\xampp\htdocs\CLAU\SITE\JS\dropdown.js                                                         | JavaScript |         15 |          2 |          1 |         18 |
+| c:\xampp\htdocs\CLAU\SITE\JS\end.js                                                              | JavaScript |         31 |          0 |          9 |         40 |
+| c:\xampp\htdocs\CLAU\SITE\JS\redefinir.js                                                        | JavaScript |         12 |          1 |          2 |         15 |
+| c:\xampp\htdocs\CLAU\SITE\JS\script.js                                                           | JavaScript |         19 |          0 |          7 |         26 |
+| c:\xampp\htdocs\CLAU\SITE\JS\utils.js                                                            | JavaScript |          3 |          0 |          1 |          4 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_aluno.php                                                      | PHP        |        315 |          3 |         36 |        354 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_chamada.php                                                    | PHP        |         53 |          0 |         10 |         63 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_fale.php                                                       | PHP        |        130 |          3 |         26 |        159 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_grade.php                                                      | PHP        |         51 |          0 |         10 |         61 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_home.php                                                       | PHP        |         83 |          1 |          9 |         93 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_notas.php                                                      | PHP        |         51 |          0 |         10 |         61 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_planejamento.php                                               | PHP        |         51 |          0 |         10 |         61 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_prova.php                                                      | PHP        |         51 |          0 |         10 |         61 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\a_turma.php                                                      | PHP        |         51 |          0 |         10 |         61 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\c_grade.php                                                      | PHP        |        199 |         13 |         31 |        243 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\c_home.php                                                       | PHP        |         83 |          1 |          9 |         93 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\c_planejamento.php                                               | PHP        |        180 |          9 |         38 |        227 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\c_turma.php                                                      | PHP        |        108 |          9 |         18 |        135 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\c_turma_detalhes.php                                             | PHP        |        145 |         16 |         25 |        186 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\fale.php                                                         | PHP        |         53 |          0 |         10 |         63 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\login2.php                                                       | PHP        |         73 |          3 |         14 |         90 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\m_funcionario.php                                                | PHP        |        366 |         29 |         77 |        472 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\m_funcionario_alt.php                                            | PHP        |        267 |          3 |         27 |        297 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\m_funcionario_cad.php                                            | PHP        |        251 |          2 |         25 |        278 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\m_home.php                                                       | PHP        |         68 |          1 |          9 |         78 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\m_nivers.php                                                     | PHP        |         99 |          1 |         17 |        117 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\notificacoes.php                                                 | PHP        |         48 |          0 |         10 |         58 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_aluno.php                                                      | PHP        |         51 |          0 |         11 |         62 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_chamada.php                                                    | PHP        |         53 |          0 |         10 |         63 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_grade.php                                                      | PHP        |        140 |          7 |         19 |        166 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_home.php                                                       | PHP        |         83 |          1 |          9 |         93 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_notas.php                                                      | PHP        |        153 |          6 |         22 |        181 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_planejamento.php                                               | PHP        |        307 |         42 |         71 |        420 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_prova.php                                                      | PHP        |         51 |          0 |         10 |         61 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_turma.php                                                      | PHP        |        107 |          3 |         17 |        127 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\p_turma_detalhes.php                                             | PHP        |        171 |         20 |         34 |        225 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\perfil.php                                                       | PHP        |        155 |         10 |         35 |        200 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_alunos.php                                                     | PHP        |         59 |          0 |          9 |         68 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_alunos_cad.php                                                 | PHP        |        299 |          1 |         29 |        329 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_alunos_consulta.php                                            | PHP        |         53 |          0 |         10 |         63 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_alunos_info.php                                                | PHP        |        329 |          5 |         25 |        359 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_alunos_relatorio.php                                           | PHP        |        384 |         28 |         79 |        491 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_alunos_turma_cad.php                                           | PHP        |        482 |         23 |         59 |        564 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_curso.php                                                      | PHP        |         59 |          0 |          9 |         68 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_curso_cad.php                                                  | PHP        |        235 |          9 |         52 |        296 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_curso_consulta.php                                             | PHP        |        148 |         12 |         34 |        194 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_curso_detalhes.php                                             | PHP        |        169 |          2 |         39 |        210 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_curso_info.php                                                 | PHP        |         53 |          0 |         10 |         63 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_fale.php                                                       | PHP        |        130 |          3 |         26 |        159 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_home.php                                                       | PHP        |         71 |          1 |          9 |         81 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_professores.php                                                | PHP        |         59 |          0 |          9 |         68 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_professores_cad.php                                            | PHP        |        275 |          1 |         30 |        306 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_professores_editar.php                                         | PHP        |        284 |          3 |         29 |        316 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_professores_relatorio.php                                      | PHP        |        433 |         33 |         88 |        554 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_turma.php                                                      | PHP        |         59 |          0 |          9 |         68 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_turma_cad.php                                                  | PHP        |        221 |         16 |         41 |        278 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_turma_consulta.php                                             | PHP        |        108 |          9 |         18 |        135 |
+| c:\xampp\htdocs\CLAU\SITE\PAGES\s_turma_detalhes.php                                             | PHP        |        145 |         16 |         25 |        186 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\alt_func.php                                                       | PHP        |         92 |         12 |         20 |        124 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\alt_professor.php                                                  | PHP        |        103 |         13 |         26 |        142 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\cad_aluno.php                                                      | PHP        |        170 |         15 |         29 |        214 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\cad_aluno_turma.php                                                | PHP        |         40 |          4 |          6 |         50 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\cad_func.php                                                       | PHP        |        138 |         13 |         19 |        170 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\cad_professor.php                                                  | PHP        |        136 |          5 |         26 |        167 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\cad_turma.php                                                      | PHP        |         73 |          2 |         10 |         85 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\data.php                                                           | PHP        |         11 |          2 |          5 |         18 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\det_func.php                                                       | PHP        |         29 |          3 |         12 |         44 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\det_turma.php                                                      | PHP        |         27 |          3 |         11 |         41 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\dropdown.php                                                       | PHP        |         23 |          3 |          2 |         28 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\redefinir.php                                                      | PHP        |         49 |          9 |         14 |         72 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\redes.php                                                          | PHP        |         10 |          0 |          0 |         10 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\salvar_notas.php                                                   | PHP        |         40 |          4 |          8 |         52 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\sidebar\image\C-BRANCO.svg                                         | XML        |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\sidebar\image\CLAU-BRANCO.svg                                      | XML        |          1 |          0 |          0 |          1 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\sidebar\menu.css                                                   | CSS        |        250 |          0 |         11 |        261 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\sidebar\menu.js                                                    | JavaScript |         27 |          3 |          5 |         35 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\sidebar\menu.php                                                   | PHP        |        422 |          7 |         54 |        483 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\sidebar\menu_aluno.php                                             | PHP        |        100 |          0 |         12 |        112 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\sidebar\menu_coordenacao.php                                       | PHP        |        100 |          0 |         12 |        112 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\sidebar\menu_secretaria.php                                        | PHP        |         64 |          0 |          8 |         72 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\trocar_senha.php                                                   | PHP        |         46 |         14 |         13 |         73 |
+| c:\xampp\htdocs\CLAU\SITE\PHP\turma_professor.php                                                | PHP        |         26 |          2 |          9 |         37 |
+| c:\xampp\htdocs\CLAU\SITE\STYLE\alterar.css                                                      | CSS        |         21 |          0 |          1 |         22 |
+| c:\xampp\htdocs\CLAU\SITE\STYLE\botao.css                                                        | CSS        |        107 |          0 |          5 |        112 |
+| c:\xampp\htdocs\CLAU\SITE\STYLE\cadastro.css                                                     | CSS        |        213 |          0 |         32 |        245 |
+| c:\xampp\htdocs\CLAU\SITE\STYLE\data.css                                                         | CSS        |          5 |          1 |          0 |          6 |
+| c:\xampp\htdocs\CLAU\SITE\STYLE\login.css                                                        | CSS        |        151 |         18 |         24 |        193 |
+| c:\xampp\htdocs\CLAU\SITE\STYLE\relatorio.css                                                    | CSS        |        192 |          0 |         30 |        222 |
+| c:\xampp\htdocs\CLAU\SITE\STYLE\style1.css                                                       | CSS        |        206 |          0 |         36 |        242 |
+| c:\xampp\htdocs\CLAU\SITE\STYLE\style_home.css                                                   | CSS        |        152 |         17 |         24 |        193 |
+| c:\xampp\htdocs\CLAU\SITE\composer.json                                                          | JSON       |          6 |          0 |          1 |          7 |
+| c:\xampp\htdocs\CLAU\SITE\composer.lock                                                          | JSON       |        560 |          0 |          1 |        561 |
+| c:\xampp\htdocs\CLAU\SITE\conexao.php                                                            | PHP        |         10 |          2 |          3 |         15 |
+| c:\xampp\htdocs\CLAU\SITE\consultas.sql                                                          | SQL        |         46 |          0 |         35 |         81 |
+| c:\xampp\htdocs\CLAU\SITE\index.html                                                             | HTML       |         67 |          0 |         13 |         80 |
+| c:\xampp\htdocs\CLAU\SITE\login.php                                                              | PHP        |         58 |          8 |          9 |         75 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\autoload.php                                                    | PHP        |         20 |          1 |          5 |         26 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\ClassLoader.php                                        | PHP        |        286 |        235 |         59 |        580 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\InstalledVersions.php                                  | PHP        |        178 |        133 |         49 |        360 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\autoload_classmap.php                                  | PHP        |         11 |          1 |          4 |         16 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\autoload_files.php                                     | PHP        |          8 |          1 |          4 |         13 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\autoload_namespaces.php                                | PHP        |          5 |          1 |          4 |         10 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\autoload_psr4.php                                      | PHP        |         12 |          1 |          4 |         17 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\autoload_real.php                                      | PHP        |         35 |          4 |         12 |         51 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\autoload_static.php                                    | PHP        |         77 |          1 |          9 |         87 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\installed.json                                         | JSON       |        568 |          0 |          1 |        569 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\installed.php                                          | PHP        |         86 |          0 |          1 |         87 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\composer\platform_check.php                                     | PHP        |         21 |          1 |          5 |         27 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\graham-campbell\result-type\composer.json                       | JSON       |         33 |          0 |          1 |         34 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\graham-campbell\result-type\src\Error.php                       | PHP        |         37 |         72 |         13 |        122 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\graham-campbell\result-type\src\Result.php                      | PHP        |         11 |         50 |          9 |         70 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\graham-campbell\result-type\src\Success.php                     | PHP        |         37 |         71 |         13 |        121 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\phpoption\phpoption\composer.json                               | JSON       |         52 |          0 |          1 |         53 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\phpoption\phpoption\src\PhpOption\LazyOption.php                | PHP        |        105 |         41 |         30 |        176 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\phpoption\phpoption\src\PhpOption\None.php                      | PHP        |         88 |         23 |         26 |        137 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\phpoption\phpoption\src\PhpOption\Option.php                    | PHP        |         88 |        313 |         34 |        435 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\phpoption\phpoption\src\PhpOption\Some.php                      | PHP        |        104 |         35 |         31 |        170 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-ctype\Ctype.php                                | PHP        |         76 |        127 |         30 |        233 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-ctype\README.md                                | Markdown   |          8 |          0 |          5 |         13 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-ctype\bootstrap.php                            | PHP        |         38 |          8 |          5 |         51 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-ctype\bootstrap80.php                          | PHP        |         35 |          8 |          4 |         47 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-ctype\composer.json                            | JSON       |         38 |          0 |          1 |         39 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\Mbstring.php                          | PHP        |        707 |         65 |        176 |        948 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\README.md                             | Markdown   |          9 |          0 |          5 |         14 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\Resources\unidata\caseFolding.php     | PHP        |        118 |          0 |          2 |        120 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\Resources\unidata\lowerCase.php       | PHP        |      1,396 |          0 |          2 |      1,398 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\Resources\unidata\titleCaseRegexp.php | PHP        |          2 |          1 |          3 |          6 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\Resources\unidata\upperCase.php       | PHP        |      1,488 |          0 |          2 |      1,490 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\bootstrap.php                         | PHP        |        134 |          8 |         10 |        152 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\bootstrap80.php                       | PHP        |        131 |          8 |          9 |        148 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-mbstring\composer.json                         | JSON       |         38 |          0 |          1 |         39 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\Php80.php                                | PHP        |         82 |         15 |         19 |        116 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\PhpToken.php                             | PHP        |         57 |         31 |         16 |        104 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\README.md                                | Markdown   |         20 |          0 |          6 |         26 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\Resources\stubs\Attribute.php            | PHP        |         18 |          9 |          5 |         32 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\Resources\stubs\PhpToken.php             | PHP        |          6 |          8 |          3 |         17 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\Resources\stubs\Stringable.php           | PHP        |          7 |         11 |          3 |         21 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\Resources\stubs\UnhandledMatchError.php  | PHP        |          6 |          8 |          3 |         17 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\Resources\stubs\ValueError.php           | PHP        |          6 |          8 |          3 |         17 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\bootstrap.php                            | PHP        |         29 |          8 |          6 |         43 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\symfony\polyfill-php80\composer.json                            | JSON       |         37 |          0 |          1 |         38 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\composer.json                                  | JSON       |         60 |          0 |          1 |         61 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Dotenv.php                                 | PHP        |        104 |        132 |         32 |        268 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Exception\ExceptionInterface.php           | PHP        |          7 |          1 |          5 |         13 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Exception\InvalidEncodingException.php     | PHP        |          7 |          1 |          5 |         13 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Exception\InvalidFileException.php         | PHP        |          7 |          1 |          5 |         13 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Exception\InvalidPathException.php         | PHP        |          7 |          1 |          5 |         13 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Exception\ValidationException.php          | PHP        |          7 |          1 |          5 |         13 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Loader\Loader.php                          | PHP        |         29 |         11 |          8 |         48 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Loader\LoaderInterface.php                 | PHP        |          8 |          8 |          5 |         21 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Loader\Resolver.php                        | PHP        |         32 |         27 |          7 |         66 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Parser\Entry.php                           | PHP        |         22 |         29 |          9 |         60 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Parser\EntryParser.php                     | PHP        |        166 |        110 |         25 |        301 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Parser\Lexer.php                           | PHP        |         27 |         21 |         11 |         59 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Parser\Lines.php                           | PHP        |         60 |         49 |         19 |        128 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Parser\Parser.php                          | PHP        |         30 |         18 |          6 |         54 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Parser\ParserInterface.php                 | PHP        |          7 |          9 |          4 |         20 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Parser\Value.php                           | PHP        |         35 |         41 |         13 |         89 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\AdapterRepository.php           | PHP        |         41 |         53 |         14 |        108 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\AdapterInterface.php    | PHP        |          7 |          5 |          4 |         16 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\ApacheAdapter.php       | PHP        |         37 |         42 |         11 |         90 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\ArrayAdapter.php        | PHP        |         31 |         38 |         12 |         81 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\EnvConstAdapter.php     | PHP        |         41 |         36 |         13 |         90 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\GuardedWriter.php       | PHP        |         31 |         44 |         11 |         86 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\ImmutableWriter.php     | PHP        |         41 |         54 |         16 |        111 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\MultiReader.php         | PHP        |         22 |         19 |          8 |         49 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\MultiWriter.php         | PHP        |         29 |         27 |          9 |         65 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\PutenvAdapter.php       | PHP        |         39 |         40 |         13 |         92 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\ReaderInterface.php     | PHP        |          7 |          7 |          4 |         18 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\ReplacingWriter.php     | PHP        |         40 |         50 |         15 |        105 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\ServerConstAdapter.php  | PHP        |         41 |         36 |         13 |         90 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\Adapter\WriterInterface.php     | PHP        |          8 |         15 |          5 |         28 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\RepositoryBuilder.php           | PHP        |        130 |        109 |         34 |        273 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Repository\RepositoryInterface.php         | PHP        |         10 |         35 |          7 |         52 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Store\FileStore.php                        | PHP        |         30 |         31 |         12 |         73 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Store\File\Paths.php                       | PHP        |         19 |         19 |          7 |         45 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Store\File\Reader.php                      | PHP        |         35 |         37 |         10 |         82 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Store\StoreBuilder.php                     | PHP        |         51 |         74 |         17 |        142 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Store\StoreInterface.php                   | PHP        |          7 |          7 |          4 |         18 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Store\StringStore.php                      | PHP        |         15 |         17 |          6 |         38 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Util\Regex.php                             | PHP        |         43 |         58 |         12 |        113 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Util\Str.php                               | PHP        |         39 |         51 |          9 |         99 |
+| c:\xampp\htdocs\CLAU\SITE\vendor\vlucas\phpdotenv\src\Validator.php                              | PHP        |        102 |         88 |         20 |        210 |
+| Total                                                                                            |            |     20,481 |      3,348 |      3,073 |     26,902 |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

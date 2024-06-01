@@ -1,0 +1,63 @@
+<?php
+include 'conexao.php';
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usuario = mysqli_real_escape_string($conn, $_POST['usuario']);
+    $senha = $_POST['password']; // Não usar real_escape_string em senhas
+
+    // Usar consulta preparada para melhorar a segurança
+    $stmt = $conn->prepare("SELECT Usuario_id, Usuario_Apelido, Usuario_Foto, Usuario_Senha FROM Usuario WHERE Usuario_Login = ?");
+    $stmt->bind_param("s", $usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        // Verifica a senha com a versão hash armazenada no banco
+        if (password_verify($senha, $row['Usuario_Senha'])) {
+            $nomeUsuario = $row['Usuario_Apelido'];
+            $UsuarioId = $row['Usuario_id'];
+            $usuariofoto = $row['Usuario_Foto'];
+
+            // Armazenar dados essenciais na sessão
+            $_SESSION['Usuario_Nome'] = $nomeUsuario;
+            $_SESSION['Usuario_id'] = $UsuarioId;
+            $_SESSION['Usuario_Foto'] = $usuariofoto;
+
+            // Consulta para obter o valor de Tipo_Tipo_cd da tabela Registro_Usuario
+            $stmt = $conn->prepare("SELECT Tipo_Tipo_cd FROM Registro_Usuario WHERE Usuario_Usuario_cd = ?");
+            $stmt->bind_param("i", $UsuarioId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows == 1) {
+                $rowRegistroUsuario = $result->fetch_assoc();
+                $permissao = $rowRegistroUsuario['Tipo_Tipo_cd'];
+                $_SESSION['Tipo_Tipo_cd'] = $permissao;
+
+                // Redirecionar com base na permissão
+                header("location: PAGES/" . $permissao . "_home.php");
+            } elseif ($result->num_rows > 1) {
+                $permissoes = [];
+                while ($rowRegistroUsuario = $result->fetch_assoc()) {
+                    array_push($permissoes, $rowRegistroUsuario['Tipo_Tipo_cd']);
+                }
+                $_SESSION['Permissoes'] = $permissoes;
+                header("Location: PAGES/login2.php"); // Supondo que esta página lidará com múltiplas permissões
+            } else {
+                // Tratar erros de obtenção de permissões
+                echo 'Permissão não concedida';
+            }
+        } else {
+            // Senha incorreta
+            header("Location: index.html?error=SenhaIncorreta");
+        }
+    } else {
+        // Usuário não encontrado
+        header("Location: index.html?error=UsuarioNaoEncontrado");
+    }
+}
+?>

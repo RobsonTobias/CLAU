@@ -8,6 +8,7 @@ for (var i = 0; i < arrow.length; i++) {
 
 let sidebar = document.querySelector(".sidebar");
 let versionSpan = document.querySelector(".version span");
+let nomedata = document.querySelector(".nomedata");
 
 // Função para atualizar o conteúdo da versão
 function updateVersionText(isLargeMenu) {
@@ -21,12 +22,13 @@ function updateVersionText(isLargeMenu) {
 // Adiciona um ouvinte de evento para o evento "mouseenter"
 sidebar.addEventListener("mouseenter", () => {
   sidebar.classList.remove("close");
+  nomedata.classList.remove("closed");
   updateVersionText(true); // Atualiza o conteúdo para "Versão 1.0"
 });
 
 // Adiciona um ouvinte de evento para o evento "mouseleave"
 sidebar.addEventListener("mouseleave", () => {
   sidebar.classList.add("close");
+  nomedata.classList.add("closed");
   updateVersionText(false); // Atualiza o conteúdo para "v 1.0"
 });
-
