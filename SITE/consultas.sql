@@ -26,7 +26,7 @@ select * from turma;
 delete from turma where turma_vagas =  21;
 
 select * from curso;
-
+select * from modulo_curso;
 UPDATE turma
 SET Turma_Horario_Termino = "12:00:00"
 WHERE Turma_Cod = "INF2024003";
@@ -123,3 +123,9 @@ GROUP BY
 use clau;
 
 select * from turma;
+
+	SELECT Curso.Curso_Nome, Curso.Curso_Sigla, Curso.Curso_Status, Modulo.Modulo_Nome 
+	FROM Curso 
+	INNER JOIN Modulo_Curso ON Modulo_Curso.Curso_Curso_cd = Curso.Curso_id  
+	INNER JOIN Modulo ON Modulo.Modulo_id = Modulo_Curso.Modulo_Curso_id
+	WHERE Curso.Curso_id = 1;  -- Substitua 1 pelo ID de um curso conhecido
