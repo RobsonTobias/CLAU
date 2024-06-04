@@ -38,7 +38,7 @@ CREATE TABLE Usuario (
   Usuario_Fone VARCHAR(15) NOT NULL,
   Usuario_Fone_Recado VARCHAR(15) NULL,
   Usuario_Login VARCHAR(100) NOT NULL,
-  Usuario_Senha VARCHAR(45) NOT NULL,
+  Usuario_Senha TEXT NOT NULL,
   Responsavel_Respon_cd INT NULL,
   Usuario_Obs VARCHAR(5000) NULL,
   Enderecos_Enderecos_cd INT NOT NULL,

@@ -55,7 +55,7 @@ $titulo = 'HOME'; //Título da página, que fica sobre a data
 <?php include('../PHP/redes.php');?>
 <?php include('../PHP/dropdown.php');?>
 
-<?php require_once '../COMPONENTS/header.php' ?>
+<?php require_once '../COMPONENTS/headerHome.php' ?>
 
     <div>
         <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
