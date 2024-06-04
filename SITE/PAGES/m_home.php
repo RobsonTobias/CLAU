@@ -24,6 +24,7 @@ if (!isset($_SESSION['Tipo_Tipo_cd']) || $_SESSION['Tipo_Tipo_cd'] != 1) {
     header("Location: ../logout.php");
     exit();
 }
+$titulo = 'HOME'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -54,21 +55,9 @@ if (!isset($_SESSION['Tipo_Tipo_cd']) || $_SESSION['Tipo_Tipo_cd'] != 1) {
 <?php include('../PHP/redes.php');?>
 <?php include('../PHP/dropdown.php');?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>HOME</h1>
-                <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
-                </div>
-            </div>
+<?php require_once '../COMPONENTS/headerHome.php' ?>
 
-            <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    
 
     <div>
         <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->

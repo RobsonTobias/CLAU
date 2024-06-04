@@ -27,8 +27,8 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../STYLE/style_home.css">
-    <link rel="stylesheet" href="../STYLE/relatorio.css">
+
+
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -43,6 +43,8 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
         integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../STYLE/style_home.css">
+    <link rel="stylesheet" href="../STYLE/relatorio.css">
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
 
     <style>
@@ -56,6 +58,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
 
         .pesquisa p {
             min-width: 0;
+            margin-bottom: 0;
         }
 
         hr {

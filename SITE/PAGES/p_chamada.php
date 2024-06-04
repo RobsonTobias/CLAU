@@ -66,6 +66,8 @@ include '../PHP/data.php';
 include '../PHP/sidebar/menu.php';
 include '../PHP/redes.php';
 include '../PHP/dropdown.php';
+
+$titulo = 'LISTA DE CHAMADA E DIÁRIO DE CLASSE'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -90,21 +92,7 @@ include '../PHP/dropdown.php';
 </head>
 
 <body>
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>LISTA DE CHAMADA E DIÁRIO DE CLASSE</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar a data atual -->
-                </div>
-            </div>
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuário, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
-    
+<?php require_once '../COMPONENTS/header.php' ?>
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
     </div>

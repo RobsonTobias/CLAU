@@ -9,8 +9,6 @@ if($_SESSION['Tipo_Tipo_cd'] != 1){
 $home = 'm_home.php';
 include '../conexao.php'; // Inclui o script de conexão ao banco de dados
 
-
-
 $query = "SELECT DISTINCT Usuario.Usuario_Nome, Usuario.Usuario_Nascimento
 FROM Usuario
 JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
@@ -18,9 +16,8 @@ WHERE MONTH(Usuario.Usuario_Nascimento) = MONTH(CURRENT_DATE())
 AND Registro_Usuario.Tipo_Tipo_cd != 3
 ORDER BY DAY(Usuario.Usuario_Nascimento) ASC;";
 
-
-
 $result = $conn->query($query); // Executa a consulta
+$titulo = 'ANIVERSARIANTES DO MÊS'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -64,22 +61,7 @@ $result = $conn->query($query); // Executa a consulta
 <?php include('../PHP/redes.php');?>
 <?php include('../PHP/dropdown.php');?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>ANIVERSARIANTES DO MÊS</h1>
-                <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
-                </div>
-                <?php require_once '../COMPONENTS/buttonBack.php' ?>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+<?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->

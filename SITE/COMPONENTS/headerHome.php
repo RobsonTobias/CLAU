@@ -73,7 +73,6 @@
                 <?php echo $date; ?>
                 <!--  Mostrar o data atual -->
             </div>
-            <?php require_once '../COMPONENTS/buttonBack.php' ?>
         </div>
 
         <div class="user">
