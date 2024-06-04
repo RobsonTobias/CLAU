@@ -39,6 +39,8 @@ $stmtOcorrencias = $conn->prepare($sqlOcorrencias);
 $stmtOcorrencias->bind_param("i", $userId);
 $stmtOcorrencias->execute();
 $resultOcorrencias = $stmtOcorrencias->get_result();
+
+$titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -130,21 +132,7 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
         </div>
     </div>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>INFORMAÇÕES DO ALUNO</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->

@@ -6,6 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 if($_SESSION['Tipo_Tipo_cd'] != 2){
     header("Location: ../logout.php");
 }
+$titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -125,21 +126,7 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
     }
     ?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>DETALHES DA TURMA</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+<?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->

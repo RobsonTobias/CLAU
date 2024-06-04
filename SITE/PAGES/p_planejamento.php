@@ -72,6 +72,8 @@ $resultadoCursos = mysqli_query($conn, "SELECT Curso_id, Curso_Nome FROM Curso")
 if (!$resultadoCursos) {
     die("Erro ao executar a consulta de cursos: " . mysqli_error($conn));
 }
+
+$titulo = 'PLANEJAMENTO DIDÁTICO'; //Título da página, que fica sobre a data
 ?>
 
 
@@ -304,21 +306,7 @@ if (!$resultadoCursos) {
     <?php include('../PHP/redes.php'); ?>
     <?php include('../PHP/dropdown.php'); ?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>PLANEJAMENTO DIDÁTICO</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->

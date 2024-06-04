@@ -12,6 +12,8 @@ if (isset($_SESSION['Permissoes']) && !empty($_SESSION['Permissoes'])) {
     header('Location: index.php');
     exit();
 }
+
+$titulo = 'LOGIN'; //Título da página, que fica sobre a data
 ?>
 
 <!DOCTYPE html>
@@ -46,21 +48,7 @@ if (isset($_SESSION['Permissoes']) && !empty($_SESSION['Permissoes'])) {
     <?php include ('../PHP/redes.php'); ?>
     <?php include ('../PHP/dropdown.php'); ?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>LOGIN</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <main>
         <?php if (in_array(1, $permissoes)): ?>
