@@ -164,9 +164,9 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
             </select>
 
             <label for="Turma_Horario">Horário de inicio:</label>
-            <input type="time" id="Turma_Horario_inicio" name="Turma_Horario_inicio" required><br><br>
+            <input type="time" min="08:00" max="18:00" id="Turma_Horario_inicio" name="Turma_Horario_inicio" required><br><br>
             <label for="Turma_Horario">Horário de termino:</label>
-            <input type="time" id="Turma_Horario_termino" name="Turma_Horario_termino" required><br><br>
+            <input type="time" min="10:00" max="20:00" id="Turma_Horario_termino" name="Turma_Horario_termino" required><br><br>
 
             <label for="Turma_Vagas">Vagas:</label>
             <input type="number" id="Turma_Vagas" name="Turma_Vagas" required><br><br>
