@@ -20,18 +20,14 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLAU - Sistema de Gestão Escolar</title>
-
     <link rel="stylesheet" href="../STYLE/botao.css" />
     <link rel="stylesheet" href="../STYLE/data.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-
-
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -293,12 +289,25 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             idade.innerHTML = contIdade;
             idade.style.display = 'block';
 
+            // Função para formatar o CPF
+            function formatarCPF(cpf) {
+                // Remove tudo que não for dígito
+                cpf = cpf.replace(/\D/g, '');
+
+                // Formata o CPF
+                cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+                cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+                cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+                return cpf;
+            }
             //Variavel CPF
             var Cpf = document.getElementById('modalCpf');
             var contCpf = '';
 
             if (dados) {
-                contCpf += dados.Usuario_Cpf;
+                // Formata o CPF antes de adicionar ao conteúdo
+                contCpf += formatarCPF(dados.Usuario_Cpf);
             } else {
                 contCpf = '<p>Não informado</p>';
             }
@@ -306,18 +315,30 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             Cpf.innerHTML = contCpf;
             Cpf.style.display = 'block';
 
+            // Função para formatar o RG
+            function formatarRG(rg) {
+                // Remove tudo que não for dígito
+                rg = rg.replace(/\D/g, '');
+
+                // Formata o RG
+                rg = rg.replace(/(\d{2})(\d)/, "$1.$2");
+                rg = rg.replace(/(\d{3})(\d)/, "$1.$2");
+                rg = rg.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+                return rg;
+            }
             //Variavel RG
-            var Rg = document.getElementById('modalRg');
+            var rg = document.getElementById('modalRg');
             var contRg = '';
 
             if (dados) {
-                contRg += dados.Usuario_Rg;
+                contRg += formatarRG(dados.Usuario_Rg);
             } else {
                 contRg = '<p>Não informado</p>';
             }
 
-            Rg.innerHTML = contRg;
-            Rg.style.display = 'block';
+            rg.innerHTML = contRg;
+            rg.style.display = 'block';
 
             //Variavel Sexo
             var Sexo = document.getElementById('modalSexo');
@@ -345,18 +366,32 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             Email.innerHTML = contEmail;
             Email.style.display = 'block';
 
-            //Variavel Celular
+
+            // Função para formatar o celular
+            function formatarCelular(celular) {
+                // Remove tudo que não for dígito
+                celular = celular.replace(/\D/g, '');
+
+                // Formata o celular
+                celular = celular.replace(/(\d{2})(\d)/, "($1) $2");
+                celular = celular.replace(/(\d{5})(\d)/, "$1-$2");
+
+                return celular;
+            }
+
             var Celular = document.getElementById('modalCelular');
             var contCelular = '';
 
             if (dados) {
-                contCelular += dados.Usuario_Fone;
+                // Formata o celular antes de adicionar ao conteúdo
+                contCelular += formatarCelular(dados.Usuario_Fone);
             } else {
                 contCelular = '<p>Não informado</p>';
             }
 
             Celular.innerHTML = contCelular;
             Celular.style.display = 'block';
+
 
             //Variavel Data de Ingresso
             var Ingresso = document.getElementById('modalIngresso');
@@ -397,7 +432,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             var Logradouro = document.getElementById('modalLogradouro');
             var contLogradouro = '';
 
-            if (dados) {
+            if (dados && dados.Enderecos_Rua) {
                 contLogradouro += dados.Enderecos_Rua;
             } else {
                 contLogradouro = '<p>Não informado</p>';
@@ -410,7 +445,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             var Numero = document.getElementById('modalNumero');
             var contNumero = '';
 
-            if (dados) {
+            if (dados && dados.Enderecos_Numero) {
                 contNumero += dados.Enderecos_Numero;
             } else {
                 contNumero = '<p>Não informado</p>';
@@ -423,7 +458,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             var Complemento = document.getElementById('modalComplemento');
             var contComplemento = '';
 
-            if (dados) {
+            if (dados && dados.Enderecos_Complemento) {
                 contComplemento += dados.Enderecos_Complemento;
             } else {
                 contComplemento = '<p>Não informado</p>';
@@ -432,12 +467,25 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             Complemento.innerHTML = contComplemento;
             Complemento.style.display = 'block';
 
+            // Função para formatar o CEP
+            function formatarCEP(cep) {
+                // Remove tudo que não for dígito
+                cep = cep.replace(/\D/g, '');
+
+                // Formata o CEP
+                if (cep.length === 8) {
+                    cep = cep.replace(/(\d{5})(\d{3})/, "$1-$2");
+                }
+
+                return cep;
+            }
+
             //Variavel Cep
             var Cep = document.getElementById('modalCep');
             var contCep = '';
 
-            if (dados) {
-                contCep += dados.Enderecos_Cep;
+            if (dados && dados.Enderecos_Cep) {
+                contCep += formatarCEP(dados.Enderecos_Cep);
             } else {
                 contCep = '<p>Não informado</p>';
             }
@@ -445,11 +493,12 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             Cep.innerHTML = contCep;
             Cep.style.display = 'block';
 
+
             //Variavel Bairro
             var Bairro = document.getElementById('modalBairro');
             var contBairro = '';
 
-            if (dados) {
+            if (dados && dados.Enderecos_Bairro) {
                 contBairro += dados.Enderecos_Bairro;
             } else {
                 contBairro = '<p>Não informado</p>';
@@ -462,7 +511,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             var Cidade = document.getElementById('modalCidade');
             var contCidade = '';
 
-            if (dados) {
+            if (dados && dados.Enderecos_Cidade) {
                 contCidade += dados.Enderecos_Cidade;
             } else {
                 contCidade = '<p>Não informado</p>';
@@ -475,7 +524,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             var Uf = document.getElementById('modalUf');
             var contUf = '';
 
-            if (dados) {
+            if (dados && dados.Enderecos_Uf) {
                 contUf += dados.Enderecos_Uf;
             } else {
                 contUf = '<p>Não informado</p>';
@@ -483,7 +532,6 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
 
             Uf.innerHTML = contUf;
             Uf.style.display = 'block';
-
             // Variável para a imagem
             var imagem = document.getElementById('imagemExibida');
 

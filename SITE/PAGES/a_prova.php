@@ -24,6 +24,8 @@
         echo "Usuário não encontrado";
     }
 
+    $home = 'a_home.php';
+    $titulo = 'CONSULTA DA TURMA';
 ?>
 
 
@@ -57,24 +59,7 @@
     <?php include('../PHP/sidebar/menu.php');?>
     <?php include('../PHP/redes.php');?>
     <?php include('../PHP/dropdown.php');?>
-
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>CONSULTA DA TURMA</h1>
-                <div class="php">
-                    <?php echo $date;?>
-                    <!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown;?>
-                <!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML;?>
