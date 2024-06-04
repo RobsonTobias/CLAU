@@ -118,7 +118,7 @@ $titulo = 'CADASTRO DE TURMAS'; //Título da página, que fica sobre a data
 
     <main>
         <h2>Cadastro de Turmas</h2>
-        <form action="../PHP/cad_turma.php" method="post">
+        <form action="../PHP/cad_turma.php" method="post" id="formDias">
             <label for="Turma_Cod">Código da Turma:</label>
             <input type="text" id="Turma_Cod" name="Turma_Cod" readonly required><br><br>
             <label for="Turma_Inicio">Curso</label>
@@ -151,9 +151,9 @@ $titulo = 'CADASTRO DE TURMAS'; //Título da página, que fica sobre a data
             </select>
 
             <label for="Turma_Horario">Horário de inicio:</label>
-            <input type="time" id="Turma_Horario_inicio" name="Turma_Horario_inicio" required><br><br>
+            <input type="time" min="08:00" max="18:00" id="Turma_Horario_inicio" name="Turma_Horario_inicio" required><br><br>
             <label for="Turma_Horario">Horário de termino:</label>
-            <input type="time" id="Turma_Horario_termino" name="Turma_Horario_termino" required><br><br>
+            <input type="time" min="10:00" max="20:00" id="Turma_Horario_termino" name="Turma_Horario_termino" required><br><br>
 
             <label for="Turma_Vagas">Vagas:</label>
             <input type="number" id="Turma_Vagas" name="Turma_Vagas" required><br><br>
@@ -181,7 +181,7 @@ $titulo = 'CADASTRO DE TURMAS'; //Título da página, que fica sobre a data
             <br>
 
             <label for="Turma_Obs">Observações:</label>
-            <textarea id="Turma_Obs" name="Turma_Obs"></textarea><br><br>
+            <textarea id="Turma_Obs" name="Turma_Obs" required></textarea><br><br>
 
             <label for="Turma_Inicio">Data de Início:</label>
             <input type="date" id="Turma_Inicio" name="Turma_Inicio" required><br><br>
@@ -225,59 +225,80 @@ $titulo = 'CADASTRO DE TURMAS'; //Título da página, que fica sobre a data
     </div>
 
     <script>
-        // Script para atualizar o campo de texto com os dias selecionados
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const codigoDias = document.getElementById('codigo_dias');
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="Turma_Dias[]"]');
+    const codigoDias = document.getElementById('codigo_dias');
 
-            checkboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    let codigo = '';
-                    checkboxes.forEach(function (cb) {
-                        if (cb.checked) {
-                            codigo += cb.value;
-                        }
-                    });
-                    codigoDias.value = codigo;
-                });
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const horarioInicioInput = document.getElementById('Turma_Horario_inicio');
-            const dataInicioInput = document.getElementById('Turma_Inicio');
-            const codigoTurmaInput = document.getElementById('Turma_Cod');
-
-            // Monitore mudanças nos inputs relevantes e nos checkboxes
-            horarioInicioInput.addEventListener('change', atualizarCodigoTurma);
-            dataInicioInput.addEventListener('change', atualizarCodigoTurma);
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', atualizarCodigoTurma);
-            });
-
-            function atualizarCodigoTurma() {
-                const cursoSelect = document.getElementById('Curso_id');
-                const siglaCurso = cursoSelect.value; // Agora pega a sigla diretamente do select
-                const horarioInicio = horarioInicioInput.value;
-                const dataInicio = new Date(dataInicioInput.value);
-                let diasCodigo = '';
-                document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-                    diasCodigo += checkbox.value;
-                });
-
-                const horarioCodigo = horarioInicio.replace(':', '').substring(0, 2);
-                const mesInicio = (dataInicio.getMonth() + 1).toString().padStart(2, '0');
-                const anoInicio = dataInicio.getFullYear().toString().substring(2, 4);
-
-                const codigoTurma = `${siglaCurso}${horarioCodigo}${diasCodigo}${mesInicio}${anoInicio}`;
-                codigoTurmaInput.value = codigoTurma;
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            let checkedCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
+            if (checkedCheckboxes.length > 3) {
+                alert('Você pode selecionar no máximo 3 dias de aula.');
+                checkbox.checked = false;
+                return;
             }
 
-            // Inicializa o código da turma ao carregar a página, caso já existam valores predefinidos
-            atualizarCodigoTurma();
+            let codigo = '';
+            checkedCheckboxes.forEach(function(cb) {
+                codigo += cb.value;
+            });
+            codigoDias.value = codigo;
+
+            atualizarCodigoTurma();  // Atualiza o código da turma, se necessário
+        });
+    });
+
+    const horarioInicioInput = document.getElementById('Turma_Horario_inicio');
+    const dataInicioInput = document.getElementById('Turma_Inicio');
+    const codigoTurmaInput = document.getElementById('Turma_Cod');
+
+    function atualizarCodigoTurma() {
+        const cursoSelect = document.getElementById('Curso_id');
+        const siglaCurso = cursoSelect.value;
+        const horarioInicio = horarioInicioInput.value;
+        const dataInicio = new Date(dataInicioInput.value);
+        let diasCodigo = '';
+        document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+            diasCodigo += checkbox.value;
         });
 
-    </script>
+        const horarioCodigo = horarioInicio.replace(':', '').substring(0, 2);
+        const mesInicio = (dataInicio.getMonth() + 1).toString().padStart(2, '0');
+        const anoInicio = dataInicio.getFullYear().toString().substring(2, 4);
+
+        const codigoTurma = `${siglaCurso}${horarioCodigo}${diasCodigo}${mesInicio}${anoInicio}`;
+        codigoTurmaInput.value = codigoTurma;
+    }
+
+    horarioInicioInput.addEventListener('change', atualizarCodigoTurma);
+    dataInicioInput.addEventListener('change', atualizarCodigoTurma);
+
+    // Inicializa o código da turma ao carregar a página, caso já existam valores predefinidos
+    atualizarCodigoTurma();
+});
+
+document.getElementById('formDias').addEventListener('submit', function(event) {
+    var checkboxes = document.querySelectorAll("input[type='checkbox'][name='Turma_Dias[]']");
+    var isAnyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+    if (!isAnyChecked) {
+        alert('Por favor, selecione pelo menos um dia da semana.');
+        event.preventDefault(); // Impede o envio do formulário
+    }
+});
+</script>
+
+    <script>
+document.getElementById('formDias').addEventListener('submit', function(event) {
+    var checkboxes = document.querySelectorAll("input[type='checkbox'][name='Turma_Dias[]']");
+    var isAnyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+    if (!isAnyChecked) {
+        alert('Por favor, selecione pelo menos um dia da semana.');
+        event.preventDefault(); // Impede o envio do formulário
+    }
+});
+</script>
 </body>
 
 </html>
