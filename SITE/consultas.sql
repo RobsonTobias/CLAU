@@ -129,3 +129,14 @@ select * from turma;
 	INNER JOIN Modulo_Curso ON Modulo_Curso.Curso_Curso_cd = Curso.Curso_id  
 	INNER JOIN Modulo ON Modulo.Modulo_id = Modulo_Curso.Modulo_Curso_id
 	WHERE Curso.Curso_id = 1;  -- Substitua 1 pelo ID de um curso conhecido
+
+
+delete from turma where turma_vagas = 21 and curso_cd = 2;
+
+select * from turma;
+SET SQL_SAFE_UPDATES=0;
+update turma set turma_status = 0 where turma_vagas = 11 and turma_dias = 1456;
+
+update usuario set usuario_status = 0 where usuario_apelido = "Evelyn";
+
+select * from usuario;

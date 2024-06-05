@@ -100,7 +100,7 @@ $titulo = 'RELATÓRIO DE TURMAS'; //Título da página, que fica sobre a data
                 <tbody>
                     <?php
                     // Consulta SQL para obter todas as turmas
-                    $query = "SELECT * FROM Turma";
+                    $query = "SELECT * FROM Turma where turma_status = 1";
 
                     // Executar a consulta
                     $result = mysqli_query($conn, $query);

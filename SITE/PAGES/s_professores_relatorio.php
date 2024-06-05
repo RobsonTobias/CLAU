@@ -64,7 +64,7 @@ $titulo = 'RELATÓRIO DE PROFESSORES'; //Título da página, que fica sobre a da
                 <?php
                 $sql = "SELECT * FROM Usuario
                     INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
-                    Where Registro_Usuario.Tipo_Tipo_cd = 4;";
+                    Where Registro_Usuario.Tipo_Tipo_cd = 4 and usuario_status = 1;";
 
                 $contador = 0;
                 $resultado = $conn->query($sql);
