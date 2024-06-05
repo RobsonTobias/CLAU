@@ -18,7 +18,7 @@ include '../conexao.php'; // Inclua seu arquivo de conexão com o banco de dados
 $sql = "SELECT turma.turma_cod, usuario.usuario_nome AS professor_responsavel
         FROM turma
         INNER JOIN usuario ON usuario.usuario_id = turma.usuario_usuario_cd
-        WHERE usuario.usuario_id = $usuarioId"; // Substitua pelo nome correto das tabelas e campos
+        WHERE usuario.usuario_id = $usuarioId and turma_status = 1"; // Substitua pelo nome correto das tabelas e campos
 
 $resultado = mysqli_query($conn, $sql);
 if (!$resultado) {

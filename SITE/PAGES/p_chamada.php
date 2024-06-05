@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $resultadoModulos = mysqli_query($conn, $sqlModulos);
 
 // Consulta SQL para obter as turmas
-$sqlTurmas = "SELECT turma_cod FROM turma WHERE usuario_usuario_cd = '$usuarioId'";
+$sqlTurmas = "SELECT turma_cod FROM turma WHERE turma_status = 1 and usuario_usuario_cd = '$usuarioId'";
 $resultadoTurmas = mysqli_query($conn, $sqlTurmas);
 
 // Consulta para obter os alunos se a turma e o módulo foram selecionados
