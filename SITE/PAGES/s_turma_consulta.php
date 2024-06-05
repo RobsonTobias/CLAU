@@ -26,35 +26,53 @@ $titulo = 'RELATÓRIO DE TURMAS'; //Título da página, que fica sobre a data
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
         .turma path {
-            fill: #043140;
+            fill: #004765;
         }
 
         .turmas-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        font-family: Arial, sans-serif; /* Fonte mais moderna e legível */
+    }
 
-        .turmas-table th,
-        .turmas-table td {
-            padding: 12px;
-            /* Ajuste o espaçamento interno */
-            text-align: left;
-            border: 1px solid #ddd;
-            /* Adicione bordas às células */
-        }
+    .turmas-table th, .turmas-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0; /* Bordas mais sutis */
+    }
 
-        .turmas-table th {
-            background-color: #009155;
-            /* Cor de fundo para os cabeçalhos */
-            color: #fff;
-            /* Cor do texto nos cabeçalhos */
-        }
+    .turmas-table th {
+        background-color: #0ae092; /* Cor de fundo neutra para os cabeçalhos */
+        color: #333; /* Cor de texto mais suave */
+        font-weight: normal;
+        text-transform: uppercase; /* Letras maiúsculas aumentam a legibilidade */
+    }
 
-        .turmas-table tbody tr:hover {
-            background-color: #f5f5f5;
-            /* Cor de fundo das linhas ao passar o cursor */
-        }
+    .turmas-table tbody tr:hover {
+        background-color: #f1f1f1; /* Hover com uma cor mais discreta */
+    }
+
+    /* Adicionando uma sombra sutil nas células do cabeçalho */
+    .turmas-table th {
+        box-shadow: inset 0 -1px 0 0 #e0e0e0;
+    }
+
+    /* Estilização do link como botão */
+    .button-link {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .button-link:hover {
+        background-color: #45a049;
+    }
     </style>
 </head>
 
