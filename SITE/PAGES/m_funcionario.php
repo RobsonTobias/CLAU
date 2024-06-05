@@ -233,7 +233,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados) {
                 contNome += dados.Usuario_Nome;
             } else {
-                contNome = '<p>Não informado</p>';
+                contNome = 'Não informado';
             }
 
             nome.innerHTML = contNome;
@@ -255,7 +255,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
                 // Montar a string de data no formato desejado
                 contNascimento = dia + '-' + mes + '-' + ano;
             } else {
-                contNascimento = '<p>Não informado</p>';
+                contNascimento = 'Não informado';
             }
 
             nascimento.innerHTML = contNascimento;
@@ -283,7 +283,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados) {
                 contIdade = calcIdade + ' anos';
             } else {
-                contIdade = '<p>Não informado</p>';
+                contIdade = 'Não informado';
             }
 
             idade.innerHTML = contIdade;
@@ -309,7 +309,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
                 // Formata o CPF antes de adicionar ao conteúdo
                 contCpf += formatarCPF(dados.Usuario_Cpf);
             } else {
-                contCpf = '<p>Não informado</p>';
+                contCpf = 'Não informado';
             }
 
             Cpf.innerHTML = contCpf;
@@ -334,7 +334,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados) {
                 contRg += formatarRG(dados.Usuario_Rg);
             } else {
-                contRg = '<p>Não informado</p>';
+                contRg = 'Não informado';
             }
 
             rg.innerHTML = contRg;
@@ -347,7 +347,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados) {
                 contSexo += dados.Usuario_Sexo;
             } else {
-                contSexo = '<p>Não informado</p>';
+                contSexo = 'Não informado';
             }
 
             Sexo.innerHTML = contSexo;
@@ -360,7 +360,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados) {
                 contEmail += dados.Usuario_Email;
             } else {
-                contEmail = '<p>Não informado</p>';
+                contEmail = 'Não informado';
             }
 
             Email.innerHTML = contEmail;
@@ -386,7 +386,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
                 // Formata o celular antes de adicionar ao conteúdo
                 contCelular += formatarCelular(dados.Usuario_Fone);
             } else {
-                contCelular = '<p>Não informado</p>';
+                contCelular = 'Não informado';
             }
 
             Celular.innerHTML = contCelular;
@@ -409,7 +409,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
                 // Montar a string de data no formato desejado
                 contIngresso = dia + '-' + mes + '-' + ano;
             } else {
-                contIngresso = '<p>Não informado</p>';
+                contIngresso = 'Não informado';
             }
 
             Ingresso.innerHTML = contIngresso;
@@ -422,7 +422,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados) {
                 contObs += dados.Usuario_Obs;
             } else {
-                contObs = '<p>Não informado</p>';
+                contObs = 'Não informado';
             }
 
             obs.innerHTML = contObs;
@@ -435,7 +435,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados && dados.Enderecos_Rua) {
                 contLogradouro += dados.Enderecos_Rua;
             } else {
-                contLogradouro = '<p>Não informado</p>';
+                contLogradouro = 'Não informado';
             }
 
             Logradouro.innerHTML = contLogradouro;
@@ -448,7 +448,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados && dados.Enderecos_Numero) {
                 contNumero += dados.Enderecos_Numero;
             } else {
-                contNumero = '<p>Não informado</p>';
+                contNumero = 'Não informado';
             }
 
             Numero.innerHTML = contNumero;
@@ -461,7 +461,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados && dados.Enderecos_Complemento) {
                 contComplemento += dados.Enderecos_Complemento;
             } else {
-                contComplemento = '<p>Não informado</p>';
+                contComplemento = 'Não informado';
             }
 
             Complemento.innerHTML = contComplemento;
@@ -487,7 +487,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados && dados.Enderecos_Cep) {
                 contCep += formatarCEP(dados.Enderecos_Cep);
             } else {
-                contCep = '<p>Não informado</p>';
+                contCep = 'Não informado';
             }
 
             Cep.innerHTML = contCep;
@@ -501,7 +501,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados && dados.Enderecos_Bairro) {
                 contBairro += dados.Enderecos_Bairro;
             } else {
-                contBairro = '<p>Não informado</p>';
+                contBairro = 'Não informado';
             }
 
             Bairro.innerHTML = contBairro;
@@ -514,7 +514,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados && dados.Enderecos_Cidade) {
                 contCidade += dados.Enderecos_Cidade;
             } else {
-                contCidade = '<p>Não informado</p>';
+                contCidade = 'Não informado';
             }
 
             Cidade.innerHTML = contCidade;
@@ -527,7 +527,7 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
             if (dados && dados.Enderecos_Uf) {
                 contUf += dados.Enderecos_Uf;
             } else {
-                contUf = '<p>Não informado</p>';
+                contUf = 'Não informado';
             }
 
             Uf.innerHTML = contUf;
@@ -541,7 +541,6 @@ $elemento = 'Funcionário'; //utilizado no texto de adicionar
                 imagem.src = '../ICON/perfil.svg';
             }
         }
-
     </script>
 
 </body>
