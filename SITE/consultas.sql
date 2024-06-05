@@ -140,3 +140,5 @@ update turma set turma_status = 0 where turma_vagas = 11 and turma_dias = 1456;
 update usuario set usuario_status = 0 where usuario_apelido = "Evelyn";
 
 select * from usuario;
+
+update turma set turma_horario_termino = "10:00:00" where turma_dias = 34;

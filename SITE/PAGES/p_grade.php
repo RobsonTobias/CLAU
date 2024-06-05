@@ -17,7 +17,7 @@ $usuarioId = $_SESSION['Usuario_id'];
 include '../conexao.php'; // Inclua seu arquivo de conexão com o banco de dados
 $sql = "SELECT turma.turma_cod, turma.turma_horario, turma.turma_horario_termino, turma.turma_dias
         FROM turma
-        WHERE turma.usuario_usuario_cd = $usuarioId";  // Filtra pelo ID do usuário logado
+        WHERE turma.usuario_usuario_cd = $usuarioId and turma_status = 1";  // Filtra pelo ID do usuário logado
 
 $resultado = mysqli_query($conn, $sql);
 if (!$resultado) {

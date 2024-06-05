@@ -40,7 +40,7 @@ if (isset($_POST['lancarNotas'])) {
 $sqlTurmas = "SELECT turma.turma_cod, turma.curso_cd, usuario.usuario_nome AS professor_responsavel
               FROM turma
               INNER JOIN usuario ON usuario.usuario_id = turma.usuario_usuario_cd
-              WHERE usuario.usuario_id = $usuarioId";
+              WHERE usuario.usuario_id = $usuarioId and turma_status = 1";
 
 $resultadoTurmas = mysqli_query($conn, $sqlTurmas);
 if (!$resultadoTurmas) {
