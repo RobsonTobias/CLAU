@@ -1,0 +1,12 @@
+.bi.bi-eye-fill.ativo-TRUE {
+    color: rgb(103, 184, 234);
+}
+
+.bi.bi-eye-fill.ativo-FALSE {
+    color: rgb(149, 149, 149);
+}
+
+.bi.bi-bell-fill,.btn.btn-link.dropdown-toggle{
+    color: #043140;
+    margin: 5px;
+}

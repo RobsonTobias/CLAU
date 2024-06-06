@@ -76,6 +76,7 @@
         </div>
 
         <div class="user">
+            <?php require_once '../COMPONENTS/notif/notif.php'; ?>
             <?php echo $dropdown; ?>
             <!-- Mostra o usuario, foto e menu dropdown -->
         </div>
