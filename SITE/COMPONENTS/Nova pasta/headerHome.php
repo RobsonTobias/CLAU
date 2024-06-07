@@ -46,7 +46,7 @@
 
     /* Estiliza informações do usuário no cabeçalho */
     .user {
-        display: absolute;
+        display: flex;
         align-items: center;
     }
 
@@ -76,7 +76,7 @@
         </div>
 
         <div class="user">
-            <?php include_once '../COMPONENTS/notif/notif.php'; ?>
+            <?php require_once '../COMPONENTS/notif/notif.php'; ?>
             <?php echo $dropdown; ?>
             <!-- Mostra o usuario, foto e menu dropdown -->
         </div>

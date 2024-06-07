@@ -62,13 +62,13 @@ $titulo = 'HOME'; //Título da página, que fica sobre a data
     </div>
     
     <main>
-        <a href="p_chamada.php" class="item"><img src="../ICON/chamada.svg" alt="Chamada_Diario">
+        <a href="c_chamada.php" class="item"><img src="../ICON/chamada.svg" alt="Chamada_Diario">
             <p>Chamadas e Diário de Classe</p>
         </a>
-        <a href="p_notas.php" class="item"><img src="../ICON/nota.svg" alt="Notas">
+        <a href="c_notas.php" class="item"><img src="../ICON/nota.svg" alt="Notas">
             <p>Notas</p>
         </a>
-        <a href="p_aluno.php" class="item"><img src="../ICON/aluno.svg" alt="Aluno">
+        <a href="c_alunos_relatorio.php" class="item"><img src="../ICON/aluno.svg" alt="Aluno">
             <p>Aluno</p>
         </a>
         <a href="c_turma.php" class="item"><img src="../ICON/turma.svg" alt="Turma">
@@ -77,8 +77,8 @@ $titulo = 'HOME'; //Título da página, que fica sobre a data
         <a href="c_planejamento.php" class="item"><img src="../ICON/planejamento.svg" alt="Planejamento">
             <p>Planejamento</p>
         </a>
-        <a href="p_prova.php" class="item"><img src="../ICON/prova.svg" alt="Provas e Atividades">
-            <p>Provas e Atividades</p>
+        <a href="c_frequencia.php" class="item"><img src="../ICON/prova.svg" alt="Provas e Atividades">
+            <p>Frequência</p>
         </a>
         <a href="c_grade.php" class="item"><img src="../ICON/grade.svg" alt="Grade_Horaria">
             <p>Grade Horária</p>

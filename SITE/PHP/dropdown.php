@@ -11,11 +11,12 @@ if (isset($_SESSION['Usuario_Nome']) && !empty($_SESSION['Usuario_Nome'])) {
 
     $dropdown ='
     <p>' . $Nome . '</p>
-    <div class="dropdown">
+    <div class="Mydropdown">
         <img src="' . $Foto . '" alt="Perfil" onclick="myFunction()" class="dropbtn">
         <div style="height:70px;width:70px; position:absolute" onclick="myFunction()" class="dropbtn hover"></div>
         <div id="myDropdown" class="dropdown-content">
             <a href="perfil.php">Perfil</a>
+            <!-- <a href="login2.php">Trocar Usuário</a>  PRECISA ADICIONAR A CONDIÇÃO DE APARECER QUANDO TIVER MAIS DE UM TIPO--> 
             <a href="../logout.php">Sair</a>
         </div>
     </div>

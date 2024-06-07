@@ -217,6 +217,15 @@ CREATE TABLE Login(
   FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
 ) ENGINE=InnoDB;
 
+CREATE TABLE notificacao (
+	id_notificacao INT AUTO_INCREMENT PRIMARY KEY,
+    descricao TEXT NOT NULL,
+    Usuario_id int,
+    lida VARCHAR(5) DEFAULT "FALSE",
+    criada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (Usuario_id) REFERENCES Usuario(Usuario_id)
+)ENGINE=InnoDB;
+
 -- Dados da tabela Tipo
 INSERT INTO Tipo (Tipo_Descricao)
 VALUES	('Master'),

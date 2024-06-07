@@ -3,27 +3,10 @@ if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
     session_start();
 }
-
-// Verifica se o parâmetro POST 'Tipo_Tipo_cd' está definido
-if (isset($_POST['Tipo_Tipo_cd']) && !empty($_POST['Tipo_Tipo_cd'])) {
-    // Valida e sanitiza o parâmetro POST
-    $tipo_tipo_cd = filter_input(INPUT_POST, 'Tipo_Tipo_cd', FILTER_VALIDATE_INT);
-    
-    if ($tipo_tipo_cd !== false && $tipo_tipo_cd > 0 && $tipo_tipo_cd <= 3) {
-        // Parâmetro válido, define a sessão
-        $_SESSION['Tipo_Tipo_cd'] = $tipo_tipo_cd;
-    } else {
-        // Parâmetro inválido, redireciona para logout ou outra página de erro
-        header("Location: ../logout.php");
-        exit();
-    }
-}
-
-// Verifica se o usuário tem a permissão correta para a página
-if (!isset($_SESSION['Tipo_Tipo_cd']) || $_SESSION['Tipo_Tipo_cd'] != 3) {
+if($_SESSION['Tipo_Tipo_cd'] != 2){
     header("Location: ../logout.php");
-    exit();
 }
+$titulo = 'PROFESSORES'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -41,7 +24,7 @@ if (!isset($_SESSION['Tipo_Tipo_cd']) || $_SESSION['Tipo_Tipo_cd'] != 3) {
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .home path{
+        .professores path{
             fill: #043140;
         }
     </style>
@@ -54,35 +37,18 @@ if (!isset($_SESSION['Tipo_Tipo_cd']) || $_SESSION['Tipo_Tipo_cd'] != 3) {
 <?php include('../PHP/redes.php');?>
 <?php include('../PHP/dropdown.php');?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>HOME</h1>
-                <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+<?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
     
     <main>
-        <a href="a_notas.php" class="item"><img src="../ICON/nota.svg" alt="Notas">
-            <p>Notas</p>
+        <a href="s_professores_cad.php" class="item"><img src="../ICON/cadastro_professor.svg" alt="Cadastro_Professores">
+            <p>Cadastro de Professores</p>
         </a>
-        <a href="a_aluno.php" class="item"><img src="../ICON/aluno.svg" alt="Aluno">
-            <p>Aluno</p>
-        </a>
-        <a href="a_turma.php" class="item"><img src="../ICON/turma.svg" alt="Turma">
-            <p>Turma</p>
+        <a href="s_professores_relatorio.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Professores">
+            <p>Relatório de Professores</p>
         </a>
     </main>
 

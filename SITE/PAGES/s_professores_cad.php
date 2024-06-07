@@ -6,6 +6,9 @@ if (session_status() == PHP_SESSION_NONE) {
 if($_SESSION['Tipo_Tipo_cd'] != 2){
     header("Location: ../logout.php");
 }
+require_once '../PHP/formatarInfo.php';
+
+$home = 's_professores.php'; //utilizado pelo botão voltar
 $titulo = 'CADASTRO DE PROFESSOR'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
@@ -188,8 +191,8 @@ $titulo = 'CADASTRO DE PROFESSOR'; //Título da página, que fica sobre a data
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/end.js"></script>
+    <script src="../JS/informacao.js"></script>
     <script>
-
         $(document).ready(function () {
             $("#form").on("submit", function (e) {
                 e.preventDefault(); // Impede o envio normal do formulário
@@ -215,83 +218,6 @@ $titulo = 'CADASTRO DE PROFESSOR'; //Título da página, que fica sobre a data
                 });
             });
         });
-
-        function limpar() {
-            // Adicione a lógica para limpar os campos do formulário aqui
-            document.getElementById('form').reset();
-
-        }
-        function exibirImagem() {
-            const input = document.getElementById('imagemInput');
-            const imagemExibida = document.getElementById('imagemExibida');
-
-            if (input.files && input.files[0]) {
-                const leitor = new FileReader();
-
-                leitor.onload = function (e) {
-                    imagemExibida.src = e.target.result;
-                };
-
-                leitor.readAsDataURL(input.files[0]);
-            }
-        }
-
-        const handleZipCode = (event) => {
-            let input = event.target;
-            input.value = zipCodeMask(input.value);
-        }
-
-        const zipCodeMask = (value) => {
-            if (!value) return "";
-            value = value.replace(/\D/g, "");
-            value = value.replace(/(\d{5})(\d)/, "$1-$2");
-            return value;
-        }
-
-        document.getElementById("cep").addEventListener("keyup", handleZipCode);
-
-        const handlePhone = (event) => {
-            let input = event.target
-            input.value = PhoneMask(input.value)
-        }
-
-        const PhoneMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{2})(\d)/, "($1) $2")
-            value = value.replace(/(\d)(\d{4})$/, "$1-$2")
-            return value
-        }
-
-        const handleCPF = (value) => {
-            let input = event.target
-            input.value = CPFMask(input.value)
-        }
-
-        const CPFMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d{2})/, "$1-$2")
-            return value
-        }
-
-        const handleRG = (value) => {
-
-            let input = event.target
-            input.value = RGMask(input.value)
-        }
-
-        const RGMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{2})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d{1})/, "$1-$2")
-
-            return value
-        }
     </script>
 </body>
 

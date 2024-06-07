@@ -1,5 +1,6 @@
 <?php
 include ('../conexao.php');
+require_once '../PHP/formatarInfo.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     // Se não houver sessão ativa, inicia a sessão
@@ -10,53 +11,7 @@ if ($_SESSION['Tipo_Tipo_cd'] != 1) {
 }
 $userId = $_SESSION['UsuarioSelecionado'];
 
-// Função para formatar CPF em PHP
-function formatarCPF($cpf) {
-    // Remove tudo que não for dígito
-    $cpf = preg_replace('/[^0-9]/', '', $cpf);
-    
-    // Formata o CPF
-    return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $cpf);
-}
 
-// Função para formatar RG em PHP
-function formatarRG($rg) {
-    // Remove tudo que não for dígito ou letra
-    $rg = preg_replace('/[^a-zA-Z0-9]/', '', $rg);
-    
-    // Formata o RG (exemplo: 12.345.678-9 ou AB-12.345.678)
-    if (strlen($rg) > 8) {
-        $rg = preg_replace('/^([a-zA-Z]{0,2})?(\d{2})(\d{3})(\d{3})([a-zA-Z0-9])?$/', '$1$2.$3.$4-$5', $rg);
-    } else {
-        $rg = preg_replace('/^(\d{2})(\d{3})(\d{3})([a-zA-Z0-9])?$/', '$1.$2.$3-$4', $rg);
-    }
-    
-    return $rg;
-}
-
-// Função para formatar celular em PHP
-function formatarCelular($celular) {
-    // Remove tudo que não for dígito
-    $celular = preg_replace('/[^0-9]/', '', $celular);
-    
-    // Formata o celular (exemplo: (11) 91234-5678)
-    if (strlen($celular) === 11) {
-        $celular = preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $celular);
-    } elseif (strlen($celular) === 10) {
-        $celular = preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $celular);
-    }
-    
-    return $celular;
-}
-
-// Função para formatar CEP em PHP
-function formatarCEP($cep) {
-    // Remove tudo que não for dígito
-    $cep = preg_replace('/[^0-9]/', '', $cep);
-    
-    // Formata o CEP (exemplo: 12345-678)
-    return preg_replace('/(\d{5})(\d{3})/', '$1-$2', $cep);
-}
 
 // Consulta para recuperar informações do usuário
 $sql = "SELECT * FROM Usuario
@@ -222,7 +177,7 @@ $titulo = 'ALTERAR FUNCIONÁRIO';
                             <label for="logradouro" class="logradouro">
                                 <p>LOGRADOURO</p>
                                 <input type="text" name="logradouro" id="logradouro"
-                                    value="<?php echo $row['Enderecos_Rua']; ?>">
+                                    value="<?php echo $row['Enderecos_Rua']; ?>" required>
                             </label>
                             <label for="numero" class="numero">
                                 <p>Nº<span>*</span></p>
@@ -234,7 +189,7 @@ $titulo = 'ALTERAR FUNCIONÁRIO';
                             <label for="bairro" class="bairro">
                                 <p>BAIRRO</p>
                                 <input type="text" id="bairro" name="bairro"
-                                    value="<?php echo $row['Enderecos_Bairro']; ?>">
+                                    value="<?php echo $row['Enderecos_Bairro']; ?>" required>
                             </label>
                             <label for="complemento" class="complemento">
                                 <p>COMPLEMENTO</p>
@@ -246,12 +201,12 @@ $titulo = 'ALTERAR FUNCIONÁRIO';
                             <label for="cidade" class="cidade">
                                 <p>CIDADE</p>
                                 <input type="text" id="cidade" name="cidade"
-                                    value="<?php echo $row['Enderecos_Cidade']; ?>">
+                                    value="<?php echo $row['Enderecos_Cidade']; ?>" required>
                             </label>
                             <label for="estado" class="estado">
                                 <p>ESTADO</p>
                                 <input type="text" id="estado" name="estado"
-                                    value="<?php echo $row['Enderecos_Uf']; ?>">
+                                    value="<?php echo $row['Enderecos_Uf']; ?>" required>
                             </label>
                         </div>
                     </div>
@@ -275,74 +230,8 @@ $titulo = 'ALTERAR FUNCIONÁRIO';
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/end.js"></script>
-    <script>
-        function exibirImagem() {
-            const input = document.getElementById('imagemInput');
-            const imagemExibida = document.getElementById('imagemExibida');
-
-            if (input.files && input.files[0]) {
-                const leitor = new FileReader();
-
-                leitor.onload = function (e) {
-                    imagemExibida.src = e.target.result;
-                };
-
-                leitor.readAsDataURL(input.files[0]);
-            }
-        }
-
-        const handleZipCode = (event) => {
-            let input = event.target
-            input.value = zipCodeMask(input.value)
-        }
-
-        const zipCodeMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{5})(\d)/, '$1-$2')
-            return value
-        }
-
-        const handlePhone = (event) => {
-            let input = event.target
-            input.value = PhoneMask(input.value)
-        }
-
-        const PhoneMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{2})(\d)/, "($1) $2")
-            value = value.replace(/(\d)(\d{4})$/, "$1-$2")
-            return value
-        }
-
-        const handleCPF = (event) => {
-            let input = event.target
-            input.value = CPFMask(input.value)
-        }
-
-        const CPFMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d{2})/, "$1-$2")
-
-            return value
-        }
-
-        const handleRG = (event) => {
-            let input = event.target
-            input.value = RGMask(input.value)
-        }
-
-        const RGMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/[^a-zA-Z0-9]/g, '')
-            value = value.replace(/^([a-zA-Z]{0,2})?(\d{2})(\d{3})(\d{3})([a-zA-Z0-9])?$/, "$1$2.$3.$4-$5")
-            return value
-        }
-    </script>
+    <script src="../JS/informacao.js"></script>
+    
 </body>
 
 </html>

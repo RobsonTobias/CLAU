@@ -1,5 +1,5 @@
 <?php
-$url_nLogin = "/CLAU-Escobar/SITE/" ;
+$url_nLogin = "/CLAU-Main/SITE/" ;
 $url_chamada = $_SERVER['REQUEST_URI'];
     if($url_nLogin!=$url_chamada){
         print
@@ -7,8 +7,8 @@ $url_chamada = $_SERVER['REQUEST_URI'];
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">';
     }
 ?>
-<link rel="stylesheet" href="../PHP/toats/toats.css">
-<script src="../PHP/toats/toats.js"></script>
+<link rel="stylesheet" href="../COMPONENTS/toats/toats.css">
+<script src="../COMPONENTS/toats/toats.js"></script>
 <?php 
     function toatsActive($tipo){
         if($tipo== "erro"){

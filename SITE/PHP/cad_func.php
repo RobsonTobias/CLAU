@@ -2,64 +2,20 @@
 
 include '../conexao.php';
 
-function validaCPF($cpf)
-{
-    $cpf = preg_replace('/\D/', '', $cpf);
-    if (strlen($cpf) != 11 || preg_match('/(\d)\1{10}/', $cpf)) {
-        return false;
-    }
-    for ($t = 9; $t < 11; $t++) {
-        for ($d = 0, $c = 0; $c < $t; $c++) {
-            $d += $cpf[$c] * (($t + 1) - $c);
-        }
-        $d = ((10 * $d) % 11) % 10;
-        if ($cpf[$c] != $d) {
-            return false;
-        }
-    }
-    return true;
-}
+require_once 'enviarEmail.php';
+require_once 'gerarLogin.php';
+require_once 'validaCPF.php';
 
-function obterPrimeirosSeisDigitosCpf($cpf) {
-    // Remove todos os caracteres não numéricos
-    $cpfSomenteNumeros = preg_replace('/\D/', '', $cpf);
-    
-    // Pega os primeiros 6 dígitos
-    $primeirosSeisDigitos = substr($cpfSomenteNumeros, 0, 6);
-    
-    return $primeirosSeisDigitos;
-}
-
-// Verifica se uma sessão já está ativa
 if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
     session_start();
-}
-
-// Função para gerar um login único
-function gerarLoginUnico($conn, $primeiroNome, $ultimoNome)
-{
-    $baseLogin = strtolower($primeiroNome . '.' . $ultimoNome);
-    $login = $baseLogin;
-    $contador = 1;
-
-    while (true) {
-        $queryLogin = "SELECT Usuario_id FROM Usuario WHERE Usuario_Login = '$login'";
-        $resultLogin = $conn->query($queryLogin);
-        if ($resultLogin->num_rows == 0) {
-            break;
-        }
-        $login = $baseLogin . $contador;
-        $contador++;
-    }
-
-    return $login;
 }
 
 // Verificar se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $erroMsg = '';
     $cadastroSucesso = false;
+
+    $apelido = $conn->real_escape_string($_POST['apelido']); // Substitua 'login' pelo nome do campo de login no seu formulário
 
     $nomeCompleto = $conn->real_escape_string($_POST['nome']);
     $partesNome = explode(' ', $nomeCompleto);
@@ -69,8 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Gerar login único
     $login = gerarLoginUnico($conn, $primeiroNome, $ultimoNome);
 
+    // Verificar se o login já existe
+    $queryLogin = "SELECT Usuario_id FROM Usuario WHERE Usuario_Login = '$login'";
+    $resultLogin = $conn->query($queryLogin);
+    if ($resultLogin && $resultLogin->num_rows > 0) {
+        $erroMsg .= "O login já está em uso.";
+    }
+
     $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
-    $senha = obterPrimeirosSeisDigitosCpf($cpf);
+    $senha = password_hash(substr($cpf,0,6), PASSWORD_DEFAULT);
     $queryCpf = "SELECT * FROM Usuario WHERE Usuario_Cpf = '$cpf'";
     $resultCpf = $conn->query($queryCpf);
     if ($resultCpf && $resultCpf->num_rows > 0) {
@@ -153,7 +116,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (!$erroMsg && $uploadOk) {
             $nome = $conn->real_escape_string($_POST['nome']);
-            $apelido = $conn->real_escape_string($_POST['apelido']);
             $sexo = $conn->real_escape_string($_POST['sexo']);
             $rg = preg_replace('/[^0-9]/', '', $_POST['rg']);
             $nascimento = $conn->real_escape_string($_POST['nascimento']);
@@ -171,6 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $ultimoUsuario = $conn->insert_id;
                     $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 2)";
                     if ($conn->query($registro) === TRUE) {
+                        enviarEmailCadastro($email,$nome, $login);
                         echo "Cadastro realizado com sucesso!";
                         $cadastroSucesso = true;
                         header("Location: ../PAGES/m_funcionario_cad.php");

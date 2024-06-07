@@ -6,7 +6,7 @@ $(document).on("click", ".bi-eye-fill", function() {
     var id = $(this).data("id");
     var lida = $(this).data("lida");
   
-$.post("../PHP/notif/atualizar.php", { id: id, lida: lida })
+$.post("../COMPONENTS/notif/atualizar.php", { id: id, lida: lida })
       .done(function(response) {
         console.log(response);
 })

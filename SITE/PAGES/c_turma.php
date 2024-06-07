@@ -104,7 +104,7 @@ $titulo = 'RELATÓRIO DE TURMAS'; //Título da página, que fica sobre a data
                             echo "<td>" . $row['Turma_Vagas'] . "</td>";
                             echo "<td>" . $row['Turma_Dias'] . "</td>";
                             echo "<td>" . date('d/m/Y', strtotime($row['Turma_Inicio'])) . "</td>";
-                            echo "<td><a href='s_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='button-link'>Detalhes</a></td>";
+                            echo "<td><a href='c_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='button-link'>Detalhes</a></td>";
                             echo "</tr>";
                         }
                     } else {

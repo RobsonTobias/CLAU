@@ -10,6 +10,8 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
 }
 $userId = $_SESSION['UsuarioSelecionado'];
 
+require_once '../PHP/formatarInfo.php';
+
 // Consulta para recuperar informações do usuário
 $sql = "SELECT * FROM Usuario
     INNER JOIN Enderecos on Enderecos.Enderecos_id = Usuario.Enderecos_Enderecos_cd
@@ -24,6 +26,7 @@ if ($result->num_rows > 0) {
 } else {
     echo "Usuário não encontrado";
 }
+$home = 's_professores.php';
 $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
@@ -105,12 +108,12 @@ $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
                             <label for="cpf" class="cpf">
                                 <p>CPF<span>*</span></p>
                                 <input type="text" id="cpf" name="cpf" required maxlength="13"
-                                    onkeyup="handleCPF(event)" value="<?php echo $row['Usuario_Cpf']; ?>">
+                                    onkeyup="handleCPF(event)" value="<?php echo formatarCPF($row['Usuario_Cpf']); ?>">
                             </label>
                             <label for="rg" class="rg">
                                 <p>RG<span>*</span></p>
                                 <input type="text" id="rg" name="rg" maxlength="12" required
-                                    value="<?php echo $row['Usuario_Rg']; ?>" onkeyup="handleRG(event)">
+                                    value="<?php echo formatarRG($row['Usuario_Rg']); ?>" onkeyup="handleRG(event)">
                             </label>
                             <label for="nascimento" class="nascimento">
                                 <p>DATA NASCIMENTO<span>*</span></p>
@@ -141,13 +144,13 @@ $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
                             <label for="celular" class="celular">
                                 <p>CELULAR<span>*</span></p>
                                 <input type="tel" id="celular" name="celular" maxlength="15" required
-                                    placeholder="11 99999-9999" value="<?php echo $row['Usuario_Fone']; ?>"
+                                    placeholder="11 99999-9999" value="<?php echo formatarCelular($row['Usuario_Fone']); ?>"
                                     onkeyup="handlePhone(event)">
                             </label>
                             <label for="recado" class="recado">
                                 <p>TELEFONE RECADO</p>
                                 <input type="tel" id="recado" name="recado" maxlength="15" placeholder="11 99999-9999"
-                                    value="<?php echo $row['Usuario_Fone_Recado']; ?>" onkeyup="handlePhone(event)">
+                                    value="<?php echo formatarCelular($row['Usuario_Fone_Recado']); ?>" onkeyup="handlePhone(event)">
                             </label>
                         </div>
                         <div>
@@ -168,12 +171,12 @@ $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
                             <label for="cep" class="cep">
                                 <p>CEP<span>*</span></p>
                                 <input type="text" id="cep" name="cep" required maxlength="9" placeholder="Digite o CEP"
-                                    value="<?php echo $row['Enderecos_Cep']; ?>" onkeyup="handleZipCode(event)">
+                                    value="<?php echo formatarCEP($row['Enderecos_Cep']); ?>" onkeyup="handleZipCode(event)">
                             </label>
                             <label for="logradouro" class="logradouro">
                                 <p>LOGRADOURO</p>
                                 <input type="text" name="logradouro" id="logradouro"
-                                    value="<?php echo $row['Enderecos_Rua']; ?>" readonly>
+                                    value="<?php echo $row['Enderecos_Rua']; ?>" required>
                             </label>
                             <label for="numero" class="numero">
                                 <p>Nº<span>*</span></p>
@@ -185,7 +188,7 @@ $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
                             <label for="bairro" class="bairro">
                                 <p>BAIRRO</p>
                                 <input type="text" id="bairro" name="bairro"
-                                    value="<?php echo $row['Enderecos_Bairro']; ?>" readonly>
+                                    value="<?php echo $row['Enderecos_Bairro']; ?>" required>
                             </label>
                             <label for="complemento" class="complemento">
                                 <p>COMPLEMENTO</p>
@@ -197,12 +200,12 @@ $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
                             <label for="cidade" class="cidade">
                                 <p>CIDADE</p>
                                 <input type="text" id="cidade" name="cidade"
-                                    value="<?php echo $row['Enderecos_Cidade']; ?>" readonly>
+                                    value="<?php echo $row['Enderecos_Cidade']; ?>" required>
                             </label>
                             <label for="estado" class="estado">
                                 <p>ESTADO</p>
                                 <input type="text" id="estado" name="estado" value="<?php echo $row['Enderecos_Uf']; ?>"
-                                    readonly>
+                                required>
                             </label>
                         </div>
                     </div>
@@ -226,6 +229,7 @@ $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/end.js"></script>
+    <script src="../JS/informacao.js"></script>
     <script>
         $(document).ready(function () {
             $("#form").on("submit", function (e) {
@@ -240,7 +244,7 @@ $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
                     success: function (response) {
                         if (response.includes("Dados do usuário atualizados com sucesso")) {
                             alert("Dados do usuário atualizados com sucesso"); // Exibe um alerta de sucesso
-                            window.location.href = '../PAGES/s_professores_relatorio.php';
+                            window.location.href = '../PAGES/s_professores.php';
                         } else {
                             alert(response); // Exibe outros alertas retornados pelo servidor
                         }
@@ -251,78 +255,6 @@ $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
                 });
             });
         });
-
-        function exibirImagem() {
-            const input = document.getElementById('imagemInput');
-            const imagemExibida = document.getElementById('imagemExibida');
-
-            if (input.files && input.files[0]) {
-                const leitor = new FileReader();
-
-                leitor.onload = function (e) {
-                    imagemExibida.src = e.target.result;
-                };
-
-                leitor.readAsDataURL(input.files[0]);
-            }
-        }
-
-        const handleZipCode = (event) => {
-            let input = event.target
-            input.value = zipCodeMask(input.value)
-        }
-
-        const zipCodeMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{5})(\d)/, '$1-$2')
-            return value
-        }
-
-        const handlePhone = (event) => {
-            let input = event.target
-            input.value = PhoneMask(input.value)
-        }
-
-        const PhoneMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{2})(\d)/, "($1) $2")
-            value = value.replace(/(\d)(\d{4})$/, "$1-$2")
-            return value
-        }
-
-        const handleCPF = (value) => {
-
-            let input = event.target
-            input.value = CPFMask(input.value)
-        }
-
-        const CPFMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d{2})/, "$1-$2")
-
-            return value
-        }
-
-        const handleRG = (value) => {
-
-            let input = event.target
-            input.value = RGMask(input.value)
-        }
-
-        const RGMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{2})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d{1})/, "$1-$2")
-
-            return value
-        }
     </script>
 </body>
 
