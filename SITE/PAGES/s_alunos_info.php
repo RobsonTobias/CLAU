@@ -4,7 +4,7 @@ include ('../conexao.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-if($_SESSION['Tipo_Tipo_cd'] != 2){
+if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
 
@@ -40,6 +40,8 @@ $stmtOcorrencias->bind_param("i", $userId);
 $stmtOcorrencias->execute();
 $resultOcorrencias = $stmtOcorrencias->get_result();
 
+require_once '../PHP/formatarInfo.php';
+$home = 's_alunos.php'; //utilizado pelo botão voltar
 $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
@@ -65,8 +67,8 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
             fill: #043140;
         }
 
-        .idade {
-            margin-left: 63px;
+        main {
+            align-items: center;
         }
 
         .barra-frequencia-container {
@@ -146,7 +148,7 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
                     <p>Informações Pessoais</p>
                     <input type="hidden" name="usuario_id" value="<?php echo $userId; ?>">
                     <a href="s_alunos_editar.php">
-                    <button class="editar" type="button" >EDITAR INFORMAÇÃO</button>
+                        <button class="editar" type="button">EDITAR INFORMAÇÃO</button>
                     </a>
                 </div>
                 <div class="infofuncionario">
@@ -155,24 +157,26 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
                             <img id="imagemExibida" src="<?php echo $row['Usuario_Foto']; ?>" alt="foto">
                         </div>
                         <div class="info-func">
-                            <div class="modal1">Nome: <div class="texto">
-                                    <?php echo $row['Usuario_Nome']; ?>
+                            <div class="linha">
+                                <div class="col1 modal1">Nome: <div class="texto">
+                                        <?php echo $row['Usuario_Nome']; ?>
+                                    </div>
+                                </div>
+                                <div class="col2 modal1">Matrícula:
+                                    <div class="texto" id="modalUf">
+                                        <?php echo $row['Usuario_Matricula']; ?>
+                                    </div>
                                 </div>
                             </div>
                             <div class="linha">
                                 <div class="col1 modal1">Nascimento: <div class="texto" id="modalNascimento">
                                         <?php $nascimento = new DateTime($row['Usuario_Nascimento']);
-                                        echo $nascimento->format('d/m/Y'); ?>
+                                        echo $nascimento->format('d-m-Y'); ?>
                                     </div>
                                 </div>
                                 <div class="col2 modal1 idade" for="idade">Idade:
                                     <div class="texto" id="modalIdade">
                                         <?php echo $row['Idade'] . " anos"; ?>
-                                    </div>
-                                </div>
-                                <div class="col3 colc modal1">Matrícula:
-                                    <div class="texto" id="modalUf">
-                                        <?php echo $row['Usuario_Matricula']; ?>
                                     </div>
                                 </div>
                             </div>
@@ -286,7 +290,8 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
                     <p>Informações Acadêmicas</p>
                     <button class="editar editarSituacao" id="editarSalvar" type="button"
                         onclick="window.location.href = 's_alunos_turma_cad.php'">
-                        NOVA TURMA </button>
+                        NOVA TURMA 
+                    </button>
                 </div>
                 <?php
                 // Supondo que $resultTurmas é o resultado da sua consulta ao banco de dados
@@ -295,52 +300,58 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
                         $alunoTurmaId = $rowTurma["Aluno_Turma_id"];
                         $cursoId = $rowTurma["Curso_id"];
                         // Início do bloco HTML para as informações de cada turma
-                        echo '<div class="infofuncionario clicavel" onclick="mostrarDetalhes(this)" data-turma-cod="' . htmlspecialchars($rowTurma['Turma_Cod'], ENT_QUOTES, 'UTF-8') . '">';
-                        echo '    <div class="cola modal1 ocorrencia">Curso:';
-                        echo '        <div class="texto">';
-                        echo $rowTurma['Curso_Nome'];
-                        echo '        </div>';
-                        echo '    </div>';
-                        echo '    <div class="linha">';
-                        echo '        <div class="col1 cola modal1">Turma:';
-                        echo '            <div class="texto">';
-                        echo $rowTurma['Turma_Cod'];
-                        echo '            </div>';
-                        echo '        </div>';
-                        echo '        <div class="col2 colb modal1">Professor:';
-                        echo '            <div class="texto" id="modalCidade">';
-                        echo $rowTurma['Professor'];
-                        echo '            </div>';
-                        echo '        </div>';
-                        echo '    </div>';
-                        echo '    <div class="linha">';
-                        echo '        <div class="col1 cola modal1">Horário:';
-                        echo '            <div class="texto" id="modalCidade">';
-                        $horarioInicio = date('H:i', strtotime($rowTurma['Turma_Horario']));
-                        $horarioTermino = date('H:i', strtotime($rowTurma['Turma_Horario_Termino']));
-                        echo $horarioInicio . ' - ' . $horarioTermino;
-                        echo '            </div>';
-                        echo '        </div>';
-                        echo '        <div class="col2 colb modal1">Situação:';
-                        echo '            <div class="select texto" id="situacaoSelect" >';
-                        echo '              <label><input class="texto" type="radio" name="situacao" value="Ativo" ' . ($rowTurma['Aluno_Turma_Status'] === '1' ? 'checked' : '') . '> Ativo</label>';
-                        echo '              <label><input class="texto" type="radio" name="situacao" value="Inativo" ' . ($rowTurma['Aluno_Turma_Status'] === '0' ? 'checked' : '') . '> Inativo</label>';
-                        echo '             </div>';
-                        echo '        </div>';
-                        echo '    </div>';
-                        echo '    <div class="linha">';
-                        echo '        <div class="col1 cola modal1">Frequência:';
-                        echo '            <div class="texto">';
-                        echo $rowTurma['Frequencia'] . '%'; // Aqui usamos o valor da frequência da consulta
-                        echo '            </div>&nbsp;&nbsp;';
-                        echo '            <div class="barra-frequencia-container">';
-                        echo '                <div class="barra-frequencia" style="width: ' . $rowTurma['Frequencia'] . '%;">';
-                        echo '                </div>';
-                        echo '            </div>';
-                        echo '        </div>';
-                        echo '    </div>';
-                        echo '</div>';
-                        // Fim do bloco HTML
+                        ?>
+                        <div class="infofuncionario clicavel" onclick="mostrarDetalhes(this)"
+                            data-turma-cod="<?php echo htmlspecialchars($rowTurma['Turma_Cod'], ENT_QUOTES, 'UTF-8'); ?>"
+                            data-curso-id=" <?php $rowTurma['Curso_id']; ?>">
+                            <div class="cola modal1 ocorrencia">Curso:
+                                <div class="texto"> <?php echo $rowTurma['Curso_Nome']; ?> </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 cola modal1">Turma:
+                                    <div class="texto"> <?php echo $rowTurma['Turma_Cod']; ?> </div>
+                                </div>
+                                <div class="col2 colb modal1">Professor:
+                                    <div class="texto" id="modalCidade"> <?php echo $rowTurma['Professor']; ?> </div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 cola modal1">Horário:
+                                    <div class="texto" id="modalCidade">
+                                        <?php
+                                        $horarioInicio = date('H:i', strtotime($rowTurma['Turma_Horario']));
+                                        $horarioTermino = date('H:i', strtotime($rowTurma['Turma_Horario_Termino']));
+                                        echo $horarioInicio . ' - ' . $horarioTermino;
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col2 colb modal1">Situação:
+                                    <div class="select texto" id="situacaoSelect">
+                                        <label>
+                                            <input class="texto" type="radio" name="situacao" value="Ativo" <?php echo ($rowTurma['Aluno_Turma_Status'] === '1' ? 'checked' : ''); ?>>
+                                            Ativo
+                                        </label>
+                                        <label>
+                                            <input class="texto" type="radio" name="situacao" value="Inativo" <?php echo ($rowTurma['Aluno_Turma_Status'] === '0' ? 'checked' : ''); ?>>
+                                            Inativo
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="linha">
+                                <div class="col1 cola modal1">Frequência:
+                                    <div class="texto" style="width: 10%;">
+                                        <?php echo $rowTurma['Frequencia']; ?>%
+                                    </div>&nbsp;&nbsp;
+                                    <div class="barra-frequencia-container">
+                                        <div class="barra-frequencia" style="width: <?php echo $rowTurma['Frequencia']; ?>%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
                     }
                 } else {
                     echo "<div>Nenhuma turma encontrada para este aluno.</div>";
@@ -351,9 +362,9 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
             <div class="informacao">
                 <div class="titulo">
                     <p>Troca de Turma</p>
-                    <button class="editar editarSituacao" id="editarSalvarTurma" type="button"
-                        onclick="editarTurma()">TROCAR
-                        TURMA</button>
+                    <button class="editar editarSituacao" id="editarSalvarTurma" type="button" >
+                        TROCAR TURMA
+                    </button>
                 </div>
                 <div class="infofuncionario">
                     <div class="linha ocorrencia">
@@ -400,133 +411,128 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
     <script src="../PHP/sidebar/menu.js"></script>
     <script>
 
-        function salvarSituacao() {
-            // Obtém a nova situação a partir do botão de rádio selecionado no modal1
-            var situacaoNova = document.querySelector('input[name="situacao"]:checked').value;
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('editarSalvarTurma').addEventListener('click', function (event) {
+                event.preventDefault();
+                editarTurma();
+            });
 
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "../PHP/alt_aluno_situacao.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Assumindo que a resposta do servidor seja a nova situação do aluno ("Ativo" ou "Inativo")
-                    var resposta = xhr.responseText.trim(); // Supondo que a resposta seja simplesmente "Ativo" ou "Inativo"
+            function editarTurma() {
+                var turmaTexto = document.getElementById('turmaTexto');
+                var turmaDestinoSelect = document.getElementById('turmaDestinoSelect');
+                var botaoTurma = document.getElementById('editarSalvarTurma');
+                var turmaAtual = document.getElementById('turmaAtual').textContent.trim();
 
-                    // Atualiza o texto que mostra a situação do aluno na página
-                    var situacaoTexto = document.querySelector('#situacaoTexto'); // Certifique-se de que este elemento exista
-                    if (situacaoTexto) {
-                        situacaoTexto.innerText = resposta;
-                    }
-
-                    // location.reload(); // Descomente esta linha se quiser recarregar a página inteira após a mudança
+                if (!turmaAtual || turmaAtual === '--') {
+                    alert('Por favor, selecione uma turma atual antes de continuar.');
+                    return;
                 }
-            };
-            xhr.send("situacao=" + encodeURIComponent(situacaoNova) + "&aluno_turma_id=" + encodeURIComponent(alunoTurmaId)); // Substitua `alunoTurmaId` pelo ID correto
-        }
 
+                if (botaoTurma.innerText.trim() === "TROCAR TURMA") {
+                    turmaTexto.style.display = 'none';
+                    turmaDestinoSelect.style.display = 'block';
+                    var selectElement = document.getElementById('turmaDestino');
+                    selectElement.style.display = 'block';
 
-        function editarTurma() {
-            var turmaTexto = document.getElementById('turmaTexto');
-            var turmaDestinoSelect = document.getElementById('turmaDestinoSelect');
-            var botaoTurma = document.getElementById('editarSalvarTurma'); // Referência ao botão por ID
-
-            if (botaoTurma.innerText === "TROCAR TURMA") {
-                // Entrando no modo de Edição
-                turmaTexto.style.display = 'none';
-                turmaDestinoSelect.style.display = 'block'; // Garante que o select seja exibido
-                turmaDestino.style.display = '';
-                botaoTurma.innerText = "SALVAR";
-
-                // Ajustes de estilo para o modo de edição
-                botaoTurma.style.backgroundColor = "#6EC77D"; // Verde
-                botaoTurma.style.color = "#0D4817"; // Verde escuro
-                botaoTurma.style.width = "90px";
-            } else {
-                // Se já estiver no modo de edição, procede para salvar a nova turma
-                salvarTurma();
-            }
-        }
-
-        function salvarTurma() {
-            var turmaNova = document.getElementById('turmaDestino').value;
-
-            // Verifica se o valor da turma nova não está vazio
-            if (turmaNova.trim() === '') {
-                alert('Por favor, selecione uma turma.');
-                return;
-            }
-
-            var turma = new XMLHttpRequest();
-            turma.open("POST", "../PHP/alt_aluno_turma.php", true); // Certifique-se que o caminho está correto
-            turma.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            turma.onreadystatechange = function () {
-                if (turma.status >= 200 && turma.status < 300) {
-                    console.log("Resposta do servidor:", turma.responseText);
-                    // Sucesso no salvamento, atualiza o texto e esconde o select
-                    var turmaTexto = document.getElementById('turmaTexto');
-                    var turmaDestinoSelect = document.getElementById('turmaDestinoSelect');
-                    var botaoTurma = document.getElementById('editarSalvarTurma');
-
-                    turmaTexto.innerText = turmaNova; // Atualiza com a nova turma
-                    turmaTexto.style.display = 'block';
-                    turmaDestinoSelect.style.display = 'none'; // Esconde o select
-                    botaoTurma.innerText = "TROCAR TURMA";
-
-                    // Reverte os estilos do botão para o estado inicial
-                    botaoTurma.style.backgroundColor = "";
-                    botaoTurma.style.color = "";
-                    botaoTurma.style.width = "";
-                    location.reload(); // Recarrega a página para atualizar as informações exibidas
+                    botaoTurma.innerText = "SALVAR";
+                    botaoTurma.style.backgroundColor = "#6EC77D";
+                    botaoTurma.style.color = "#0D4817";
+                    botaoTurma.style.width = "90px";
                 } else {
-                    console.error("Falha na requisição:", turma.statusText);
+                    salvarTurma();
                 }
-            };
-            turma.onerror = function () {
-                console.error("Erro na requisição.");
-            };
-            turma.send("turma=" + encodeURIComponent(turmaNova) + "&aluno_turma_id=" + encodeURIComponent(alunoTurmaId));
-        }
+            }
 
-        var selectedUserId = <?php echo json_encode($userId); ?>; // Atribui o valor PHP à variável JavaScript
-        var alunoTurmaId = <?php echo json_encode($alunoTurmaId); ?>;// Variável global com a ID da Turma do Aluno logado
+            function salvarTurma() {
+                var turmaNova = document.getElementById('turmaDestino').value;
+                if (turmaNova.trim() === '') {
+                    alert('Por favor, selecione uma turma.');
+                    return;
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../PHP/alt_aluno_turma.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        console.log("Resposta do servidor:", xhr.responseText);
+                        var turmaTexto = document.getElementById('turmaTexto');
+                        var turmaDestinoSelect = document.getElementById('turmaDestinoSelect');
+                        var botaoTurma = document.getElementById('editarSalvarTurma');
+                        turmaTexto.innerText = turmaNova;
+                        turmaTexto.style.display = 'block';
+                        turmaDestinoSelect.style.display = 'none';
+                        botaoTurma.innerText = "TROCAR TURMA";
+                        botaoTurma.style.backgroundColor = "";
+                        botaoTurma.style.color = "";
+                        botaoTurma.style.width = "";
+                        location.reload();
+                    } else if (xhr.readyState === 4) {
+                        console.error("Falha na requisição:", xhr.statusText);
+                        alert("Falha ao salvar a turma. Por favor, tente novamente.");
+                    }
+                };
+                xhr.onerror = function () {
+                    console.error("Erro na requisição.");
+                    alert("Erro na requisição. Por favor, tente novamente.");
+                };
+                xhr.send("turma=" + encodeURIComponent(turmaNova) + "&aluno_turma_id=" + encodeURIComponent(alunoTurmaId));
+            }
+
+            // Inicializar variáveis de usuário
+            var selectedUserId = <?php echo json_encode($userId); ?>;
+            var alunoTurmaId = <?php echo json_encode($alunoTurmaId); ?>;
+
+            // Adicionar evento para radio buttons de situação
+            var situacaoOriginal;
+            document.querySelectorAll('input[name="situacao"]').forEach(radio => {
+                radio.addEventListener('change', function () {
+                    situacaoOriginal = document.querySelector('input[name="situacao"]:checked').value;
+                    mostrarModalConfirmacao();
+                });
+            });
+
+            document.getElementById('cancelarMudanca').addEventListener('click', function () {
+                esconderModalConfirmacao();
+                document.querySelectorAll('input[name="situacao"]').forEach(radio => {
+                    radio.checked = radio.value === situacaoOriginal;
+                });
+            });
+
+            document.getElementById('confirmarMudanca').addEventListener('click', function () {
+                salvarSituacao();
+                esconderModalConfirmacao();
+            });
+
+            function mostrarModalConfirmacao() {
+                document.getElementById('modalConfirmacao').style.display = 'flex';
+            }
+
+            function esconderModalConfirmacao() {
+                document.getElementById('modalConfirmacao').style.display = 'none';
+                location.reload();
+            }
+
+            function salvarSituacao() {
+                var situacaoNova = document.querySelector('input[name="situacao"]:checked').value;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../PHP/alt_aluno_situacao.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var resposta = xhr.responseText.trim();
+                        var situacaoTexto = document.querySelector('#situacaoTexto');
+                        if (situacaoTexto) {
+                            situacaoTexto.innerText = resposta;
+                        }
+                        location.reload();
+                    }
+                };
+                xhr.send("situacao=" + encodeURIComponent(situacaoNova) + "&aluno_turma_id=" + encodeURIComponent(alunoTurmaId));
+            }
+        });
 
     </script>
-
-    <script>
-        var situacaoOriginal; // Variável para armazenar a situação atual antes da mudança
-
-        document.querySelectorAll('input[name="situacao"]').forEach(radio => {
-            radio.addEventListener('change', function () {
-                // Armazena a situação atual antes de qualquer mudança
-                situacaoOriginal = document.querySelector('input[name="situacao"]:checked').value;
-                mostrarModalConfirmacao();
-            });
-        });
-
-        document.getElementById('cancelarMudanca').addEventListener('click', function () {
-            esconderModalConfirmacao();
-            // Restaura a seleção do botão de rádio para a situação original
-            document.querySelectorAll(`input[name="situacao"]`).forEach(radio => {
-                radio.checked = radio.value === situacaoOriginal;
-            });
-        });
-
-        document.getElementById('confirmarMudanca').addEventListener('click', function () {
-            salvarSituacao(); // A função que salva a nova situação
-            esconderModalConfirmacao();
-        });
-
-        function mostrarModalConfirmacao() {
-            document.getElementById('modalConfirmacao').style.display = 'flex';
-        }
-
-        function esconderModalConfirmacao() {
-            document.getElementById('modalConfirmacao').style.display = 'none';
-            // Recarrega a página imediatamente após cancelar
-            location.reload();
-        }
-    </script>
-
 
 </body>
 

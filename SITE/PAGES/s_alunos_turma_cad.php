@@ -27,15 +27,9 @@ $dataNascimento = new DateTime($row['Usuario_Nascimento']);
 $hoje = new DateTime('now');
 $idade = $hoje->diff($dataNascimento)->y; //Calcula a idade
 $nascimentoFormatado = $dataNascimento->format('d-m-Y'); //Formatar a data de Nascimento
-$cpf = $row['Usuario_Cpf'];
-$cpfFormatado = substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2); //Formata o CPF
-$rg = $row['Usuario_Rg'];
-$rgFormatado = substr($rg, 0, 2) . '.' . substr($rg, 2, 3) . '.' . substr($rg, 5, 3) . '-' . substr($rg, 8, 1); //Formata o RG
-$fone = $row['Usuario_Fone'];
-$foneFormatado = '(' . substr($fone, 0, 2) . ') ' . substr($fone, 2, 5) . '-' . substr($fone, 7, 4); //Formata o Fone
 
 require_once '../PHP/formatarInfo.php';
-$home = 's_alunos.php'; //utilizado pelo botão voltar
+$home = 's_alunos_info.php'; //utilizado pelo botão voltar
 $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
@@ -173,6 +167,9 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
             border-radius: 5px;
             padding-right: 15px;
         }
+        .pesquisa{
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -190,7 +187,7 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
     </div>
 
     <main>
-        <div style="display:flex; flex-direction: column; margin-left: 200px;">
+        <div style="display:flex; flex-direction: column;">
             <div class="informacao">
                 <div class="titulo">
                     <p>Informações Pessoais</p>
@@ -205,16 +202,18 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
                             </div>
                             <div class="linha">
                                 <div class="col1 modal1">Nascimento: <div class="texto">
-                                        <?php echo $nascimentoFormatado; ?></div>
+                                        <?php $nascimento = new DateTime($row['Usuario_Nascimento']);
+                                        echo $nascimento->format('d-m-Y'); ?>
+                                    </div>
                                 </div>
                                 <div class="col2 modal1" for="idade">Idade: <div class="texto"><?php echo $idade; ?>
                                         anos</div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal1">CPF: <div class="texto"><?php echo $cpfFormatado; ?></div>
+                                <div class="col1 modal1">CPF: <div class="texto" id="modalCpf"><?php echo $row['Usuario_Cpf']; ?></div>
                                 </div>
-                                <div class="col2 modal1">RG: <div class="texto"><?php echo $rgFormatado; ?></div>
+                                <div class="col2 modal1">RG: <div class="texto" id="modalRg"><?php echo $row['Usuario_Rg']; ?></div>
                                 </div>
                             </div>
                             <div class="linha">
@@ -231,7 +230,7 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal1">Celular: <div class="texto"><?php echo $foneFormatado; ?></div>
+                                <div class="col1 modal1">Celular: <div class="texto" id="modalCelular"><?php echo $row['Usuario_Fone']; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -444,7 +443,7 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
                 success: function (response) {
                     if (response.includes("Cadastro realizado com sucesso!")) {
                         alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
-                        window.location.replace("s_alunos_relatorio.php"); // Redireciona para a nova página
+                        window.location.replace("s_alunos_info.php"); // Redireciona para a nova página
 
                     } else {
                         alert(response); // Exibe outros alertas retornados pelo servidor
@@ -489,8 +488,111 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
                 }
             });
         }
+    </script>
+    <script>
+        function exibirDetalhesTurma(dados) {
+            //Variavel Curso
+            var curso = document.getElementById('modalCurso');
+            var contCurso = '';
+
+            if (dados) {
+                contCurso += dados.Curso;
+            } else {
+                contCurso = '<p>Não informado</p>';
+            }
+
+            curso.innerHTML = contCurso;
+            curso.style.display = 'block';
+
+            //Variavel Horário
+            var horario = document.getElementById('modalHorario');
+            var contHorario = '';
+
+            if (dados && dados.Turma_Horario) {
+                // Assumindo que dados.Turma_Horario esteja no formato "HH:MM:SS" ou "HH:MM"
+                var partesDoHorario = dados.Turma_Horario.split(':'); // Divide a string pelo caractere ':'
+                if (partesDoHorario.length >= 2) {
+                    // Reconstrói a string para ter apenas horas e minutos
+                    contHorario = partesDoHorario[0] + ':' + partesDoHorario[1];
+                } else {
+                    // Se não for possível dividir corretamente, mantém o horário original
+                    contHorario = dados.Turma_Horario;
+                }
+            } else {
+                contHorario = '<p>Não informado</p>';
+            }
+
+            horario.innerHTML = contHorario;
+            horario.style.display = 'block';
+            
+            //Variavel Dia
+            var dia = document.getElementById('modalDia');
+            var contDia = '';
+
+            if (dados) {
+                contDia += dados.Turma_Dias;
+            } else {
+                contDia = '<p>Não informado</p>';
+            }
+
+            dia.innerHTML = contDia;
+            dia.style.display = 'block';
+
+            //Variavel Código Turma
+            var codigo = document.getElementById('modalCodigo');
+            var contCodigo = '';
+
+            if (dados) {
+                contCodigo += dados.Turma_Cod;
+            } else {
+                contCodigo = '<p>Não informado</p>';
+            }
+
+            codigo.innerHTML = contCodigo;
+            codigo.style.display = 'block';
+
+            //Variavel Professor
+            var professor = document.getElementById('modalProfessor');
+            var contProfessor = '';
+
+            if (dados) {
+                contProfessor += dados.professor;
+            } else {
+                contProfessor = '<p>Não informado</p>';
+            }
+
+            professor.innerHTML = contProfessor;
+            professor.style.display = 'block';
+
+            //Variavel Máximo de alunos
+            var maxAluno = document.getElementById('modalMax');
+            var contMaxAluno = '';
+
+            if (dados) {
+                contMaxAluno += dados.Turma_Vagas;
+            } else {
+                contMaxAluno = '<p>Não informado</p>';
+            }
+
+            maxAluno.innerHTML = contMaxAluno;
+            maxAluno.style.display = 'block';
+
+            //Variavel Observações
+            var obs = document.getElementById('modalObs');
+            var contObs = '';
+
+            if (dados) {
+                contObs += dados.Turma_Obs;
+            } else {
+                contObs = '<p>Não informado</p>';
+            }
+
+            obs.innerHTML = contObs;
+            obs.style.display = 'block';
+        }
 
     </script>
+
 </body>
 
 </html>
