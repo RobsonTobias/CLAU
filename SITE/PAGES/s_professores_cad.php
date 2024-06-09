@@ -7,7 +7,6 @@ if($_SESSION['Tipo_Tipo_cd'] != 2){
     header("Location: ../logout.php");
 }
 require_once '../PHP/formatarInfo.php';
-
 $home = 's_professores.php'; //utilizado pelo botão voltar
 $titulo = 'CADASTRO DE PROFESSOR'; //Título da página, que fica sobre a data
 ?>

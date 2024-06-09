@@ -34,6 +34,8 @@ $rgFormatado = substr($rg, 0, 2) . '.' . substr($rg, 2, 3) . '.' . substr($rg, 5
 $fone = $row['Usuario_Fone'];
 $foneFormatado = '(' . substr($fone, 0, 2) . ') ' . substr($fone, 2, 5) . '-' . substr($fone, 7, 4); //Formata o Fone
 
+require_once '../PHP/formatarInfo.php';
+$home = 's_alunos.php'; //utilizado pelo botão voltar
 $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
@@ -372,6 +374,7 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
     <script src="../JS/dropdown.js"></script>
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
+    <script src="../JS/exibirDetalhes.js"></script>
 
     <script>
         document.getElementById('searchInput').addEventListener('keyup', function (event) {
@@ -488,111 +491,6 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
         }
 
     </script>
-
-    <script>
-        function exibirDetalhesTurma(dados) {
-            //Variavel Curso
-            var curso = document.getElementById('modalCurso');
-            var contCurso = '';
-
-            if (dados) {
-                contCurso += dados.Curso;
-            } else {
-                contCurso = '<p>Não informado</p>';
-            }
-
-            curso.innerHTML = contCurso;
-            curso.style.display = 'block';
-
-            //Variavel Horário
-            var horario = document.getElementById('modalHorario');
-            var contHorario = '';
-
-            if (dados && dados.Turma_Horario) {
-                // Assumindo que dados.Turma_Horario esteja no formato "HH:MM:SS" ou "HH:MM"
-                var partesDoHorario = dados.Turma_Horario.split(':'); // Divide a string pelo caractere ':'
-                if (partesDoHorario.length >= 2) {
-                    // Reconstrói a string para ter apenas horas e minutos
-                    contHorario = partesDoHorario[0] + ':' + partesDoHorario[1];
-                } else {
-                    // Se não for possível dividir corretamente, mantém o horário original
-                    contHorario = dados.Turma_Horario;
-                }
-            } else {
-                contHorario = '<p>Não informado</p>';
-            }
-
-            horario.innerHTML = contHorario;
-            horario.style.display = 'block';
-
-            //Variavel Dia
-            var dia = document.getElementById('modalDia');
-            var contDia = '';
-
-            if (dados) {
-                contDia += dados.Turma_Dias;
-            } else {
-                contDia = '<p>Não informado</p>';
-            }
-
-            dia.innerHTML = contDia;
-            dia.style.display = 'block';
-
-            //Variavel Código Turma
-            var codigo = document.getElementById('modalCodigo');
-            var contCodigo = '';
-
-            if (dados) {
-                contCodigo += dados.Turma_Cod;
-            } else {
-                contCodigo = '<p>Não informado</p>';
-            }
-
-            codigo.innerHTML = contCodigo;
-            codigo.style.display = 'block';
-
-            //Variavel Professor
-            var professor = document.getElementById('modalProfessor');
-            var contProfessor = '';
-
-            if (dados) {
-                contProfessor += dados.professor;
-            } else {
-                contProfessor = '<p>Não informado</p>';
-            }
-
-            professor.innerHTML = contProfessor;
-            professor.style.display = 'block';
-
-            //Variavel Máximo de alunos
-            var maxAluno = document.getElementById('modalMax');
-            var contMaxAluno = '';
-
-            if (dados) {
-                contMaxAluno += dados.Turma_Vagas;
-            } else {
-                contMaxAluno = '<p>Não informado</p>';
-            }
-
-            maxAluno.innerHTML = contMaxAluno;
-            maxAluno.style.display = 'block';
-
-            //Variavel Observações
-            var obs = document.getElementById('modalObs');
-            var contObs = '';
-
-            if (dados) {
-                contObs += dados.Turma_Obs;
-            } else {
-                contObs = '<p>Não informado</p>';
-            }
-
-            obs.innerHTML = contObs;
-            obs.style.display = 'block';
-        }
-
-    </script>
-
 </body>
 
 </html>

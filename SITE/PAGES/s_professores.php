@@ -207,9 +207,7 @@ $elemento = 'Professor'; //utilizado no texto de adicionar
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/exibirDetalhes.js"></script>
 
-    <script src="../JS/pesquisa.js">
-
-    </script>
+    <script src="../JS/pesquisa.js"></script>
 
     <script>
         var selectedUserId; // Variável global para armazenar o ID do usuário selecionado

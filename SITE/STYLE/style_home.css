@@ -183,6 +183,11 @@ main{
     text-decoration: none;
     display: block;
 }
+
+.dropdown-content a:hover{
+    background-color: #313131;
+    color: #ddd;
+}
   
 .dropdown a:hover {background-color: #ddd;}
   
