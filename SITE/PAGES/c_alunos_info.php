@@ -4,7 +4,7 @@ include ('../conexao.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-if ($_SESSION['Tipo_Tipo_cd'] != 2) {
+if ($_SESSION['Tipo_Tipo_cd'] != 5) {
     header("Location: ../logout.php");
 }
 
@@ -44,7 +44,6 @@ require_once '../PHP/formatarInfo.php';
 $home = 's_alunos.php'; //utilizado pelo botão voltar
 $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -115,23 +114,11 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
     <script>
         function mostrarDetalhes(elemento) {
             var turmaCod = elemento.getAttribute('data-turma-cod');
-            var cursoId = elemento.getAttribute('data-curso-id').trim();
             document.getElementById('turmaAtual').textContent = turmaCod;
-            
-            // Envia cursoId via AJAX
-            $.ajax({
-                type: 'POST',
-                url: '../PHP/busca_turmas.php',
-                data: { curso_id: cursoId },
-                success: function(response) {
-                    console.log("Curso ID enviado com sucesso:", cursoId);
-                },
-                error: function() {
-                    console.error("Erro ao enviar Curso ID.");
-                }
-            });
         }
     </script>
+
+
 
     <?php include ('../PHP/data.php'); ?>
     <?php include ('../PHP/sidebar/menu.php'); ?>
@@ -303,7 +290,7 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
                     <p>Informações Acadêmicas</p>
                     <button class="editar editarSituacao" id="editarSalvar" type="button"
                         onclick="window.location.href = 's_alunos_turma_cad.php'">
-                        NOVA TURMA
+                        NOVA TURMA 
                     </button>
                 </div>
                 <?php
@@ -311,11 +298,12 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
                 if ($resultTurmas->num_rows > 0) {
                     while ($rowTurma = $resultTurmas->fetch_assoc()) {
                         $alunoTurmaId = $rowTurma["Aluno_Turma_id"];
+                        $cursoId = $rowTurma["Curso_id"];
                         // Início do bloco HTML para as informações de cada turma
                         ?>
                         <div class="infofuncionario clicavel" onclick="mostrarDetalhes(this)"
                             data-turma-cod="<?php echo htmlspecialchars($rowTurma['Turma_Cod'], ENT_QUOTES, 'UTF-8'); ?>"
-                            data-curso-id="<?php echo $rowTurma['Curso_id']; ?>">
+                            data-curso-id=" <?php $rowTurma['Curso_id']; ?>">
                             <div class="cola modal1 ocorrencia">Curso:
                                 <div class="texto"> <?php echo $rowTurma['Curso_Nome']; ?> </div>
                             </div>
@@ -374,7 +362,7 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
             <div class="informacao">
                 <div class="titulo">
                     <p>Troca de Turma</p>
-                    <button class="editar editarSituacao" id="editarSalvarTurma" type="button">
+                    <button class="editar editarSituacao" id="editarSalvarTurma" type="button" >
                         TROCAR TURMA
                     </button>
                 </div>
@@ -391,8 +379,6 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
                             <div class="select" id="turmaDestinoSelect">
                                 <select name="turmaDestino" id="turmaDestino" style="display:none;">
                                     <?php
-                                    $cursoId = $_SESSION['curso_id'] ?? null;
-                                    echo "<script> alert('$cursoId'); </script>";
                                     // Consulta SQL para obter as turmas do curso especificado
                                     $sqlTurma = "SELECT Turma_Cod FROM Turma WHERE Curso_cd = $cursoId";
                                     $resultTurma = $conn->query($sqlTurma);

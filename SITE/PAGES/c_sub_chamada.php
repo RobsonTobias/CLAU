@@ -62,29 +62,11 @@ $titulo = 'HOME'; //Título da página, que fica sobre a data
     </div>
     
     <main>
-        <a href="c_sub_chamada.php" class="item"><img src="../ICON/chamada.svg" alt="Chamada_Diario">
-            <p>Chamadas e Diário de Classe</p>
+        <a href="c_chamada.php" class="item"><img src="../ICON/chamada.svg" alt="Chamada_Diario">
+            <p>Lançar chamada</p>
         </a>
-        <a href="c_notas.php" class="item"><img src="../ICON/nota.svg" alt="Notas">
-            <p>Notas</p>
-        </a>
-        <a href="c_alunos_relatorio.php" class="item"><img src="../ICON/aluno.svg" alt="Aluno">
-            <p>Aluno</p>
-        </a>
-        <a href="c_turma.php" class="item"><img src="../ICON/turma.svg" alt="Turma">
-            <p>Turma</p>
-        </a>
-        <a href="c_planejamento.php" class="item"><img src="../ICON/planejamento.svg" alt="Planejamento">
-            <p>Planejamento</p>
-        </a>
-        <a href="c_frequencia.php" class="item"><img src="../ICON/prova.svg" alt="Provas e Atividades">
-            <p>Frequência</p>
-        </a>
-        <a href="c_grade.php" class="item"><img src="../ICON/grade.svg" alt="Grade_Horaria">
-            <p>Grade Horária</p>
-        </a>
-        <a href="p_calendario.php" class="item"><img src="../ICON/calendario.svg" alt="Calendario">
-            <p>Calendário</p>
+        <a href="c_correcao_chamada.php" class="item"><img src="../ICON/nota.svg" alt="Notas">
+            <p>Correção de chamadas</p>
         </a>
     </main>
 
