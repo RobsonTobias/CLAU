@@ -1,12 +1,22 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+include ('../conexao.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['curso_id'])) {
-    $_SESSION['curso_id'] = $_POST['curso_id'];
-    echo "Curso ID armazenado na sessão.";
+if (isset($_POST['curso_id'])) {
+    $cursoId = $_POST['curso_id'];
+    $sqlTurma = "SELECT Turma_Cod FROM Turma WHERE Curso_cd = ?";
+    $stmtCurso = $conn->prepare($sqlTurma);
+    $stmtCurso->bind_param("i", $cursoId);
+    $stmtCurso->execute();
+    $resultTurma = $stmtCurso->get_result();
+
+    if ($resultTurma->num_rows > 0) {
+        while ($rowCurso = $resultTurma->fetch_assoc()) {
+            echo "<option value='" . $rowCurso["Turma_Cod"] . "'>" . $rowCurso["Turma_Cod"] . "</option>";
+        }
+    } else {
+        echo "<option>Nenhuma Turma encontrada!</option>";
+    }
 } else {
-    echo "Curso ID não fornecido.";
+    echo "<option>Curso não selecionado!</option>";
 }
 ?>

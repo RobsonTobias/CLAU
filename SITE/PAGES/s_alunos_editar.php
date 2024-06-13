@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
 } else {
     echo "Usuário não encontrado";
 }
-
+$home = 's_alunos.php'; //utilizado pelo botão voltar
 $titulo = 'EDITAR INFORMAÇÕES DE ALUNO'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
@@ -208,7 +208,7 @@ $titulo = 'EDITAR INFORMAÇÕES DE ALUNO'; //Título da página, que fica sobre 
                             <label for="logradouro" class="logradouro">
                                 <p>LOGRADOURO</p>
                                 <input type="text" name="logradouro" id="logradouro"
-                                    value="<?php echo $row['Enderecos_Rua']; ?>" readonly>
+                                    value="<?php echo $row['Enderecos_Rua']; ?>" required>
                             </label>
                             <label for="numero" class="numero">
                                 <p>Nº<span>*</span></p>
@@ -220,7 +220,7 @@ $titulo = 'EDITAR INFORMAÇÕES DE ALUNO'; //Título da página, que fica sobre 
                             <label for="bairro" class="bairro">
                                 <p>BAIRRO</p>
                                 <input type="text" id="bairro" name="bairro"
-                                    value="<?php echo $row['Enderecos_Bairro']; ?>" readonly>
+                                    value="<?php echo $row['Enderecos_Bairro']; ?>" required>
                             </label>
                             <label for="complemento" class="complemento">
                                 <p>COMPLEMENTO</p>

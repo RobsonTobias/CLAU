@@ -117,14 +117,21 @@ function exibirDetalhesUsuario(dados) {
     var Sexo = document.getElementById('modalSexo');
     var contSexo = '';
 
-    if (dados) {
-        contSexo += dados.Usuario_Sexo;
+    if (dados && dados.Usuario_Sexo) {
+        if (dados.Usuario_Sexo === 'M') {
+            contSexo = 'Masculino';
+        } else if (dados.Usuario_Sexo === 'F') {
+            contSexo = 'Feminino';
+        } else {
+            contSexo = 'Não informado';
+        }
     } else {
         contSexo = 'Não informado';
     }
 
     Sexo.innerHTML = contSexo;
     Sexo.style.display = 'block';
+
 
     //Variavel E-mail
     var Email = document.getElementById('modalEmail');

@@ -8,7 +8,7 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
-$userId = $_GET['userId'];
+$userId = $_POST['userId'];
 
 // Consulta para obter detalhes do usuário
 $sql = "SELECT * FROM Usuario 

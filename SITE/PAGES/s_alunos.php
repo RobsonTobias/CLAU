@@ -8,6 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 if ($_SESSION['Tipo_Tipo_cd'] != 2) {
 	header("Location: ../logout.php");
 }
+require_once '../PHP/formatarInfo.php';
 $home = 's_home.php'; //utilizado pelo botão voltar
 $titulo = 'RELATÓRIO DE ALUNOS'; //Título da página, que fica sobre a data
 $paginaDestino = 's_alunos_cad.php'; //utilizado para redirecionar para a página de cadastro
@@ -130,7 +131,8 @@ $elemento = 'Aluno'; //utilizado no texto de adicionar
 								</div>
 							</div>
 							<div class="linha">
-								<div class="col1 modal1">Sexo: <div class="texto" id="modalSexo"></div>
+								<div class="col1 modal1">Sexo:
+									<div class="texto" id="modalSexo"></div>
 								</div>
 								<div class="col2 modal1">E-mail: <div class="texto" id="modalEmail"></div>
 								</div>
@@ -193,7 +195,7 @@ $elemento = 'Aluno'; //utilizado no texto de adicionar
 
 			$.ajax({
 				url: '../PHP/det_func.php',
-				type: 'GET',
+				type: 'POST',
 				data: { userId: selectedUserId }, // Deve ser selectedUserId, não userId
 				success: function (response) {
 					// Aqui você vai lidar com a resposta
@@ -207,7 +209,7 @@ $elemento = 'Aluno'; //utilizado no texto de adicionar
 
 		function informacao() {
 			if (selectedUserId) {
-				window.location.href = "s_alunos_info.php?userId=" + selectedUserId;
+				window.location.href = "s_alunos_info.php";
 			} else {
 				alert("Por favor, selecione um aluno.");
 			}
