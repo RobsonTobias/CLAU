@@ -1,0 +1,53 @@
+.card {
+    background-color: #E7E7E7;
+    border-radius: 20px;
+    box-shadow: 0 0 5px 1px #00000040;
+}
+
+.sombra {
+    box-shadow: 0 0 5px 1px #00000040;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+.row {
+    gap: 0;
+    margin: 0;
+}
+
+#imagemExibida {
+    border: #949494 5px solid;
+    width: 90%;
+    aspect-ratio: 1/1;
+}
+
+.texto {
+    color: #068888;
+}
+
+.info {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#modalObs {
+    background-color: #D9D9D9;
+    border: #949494 1px solid;
+}
+
+.table-striped tbody tr {
+    background-color: #B0B0B0;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #baddf7;
+}
+
+#cadastro{
+    background-color: #D9D9D9;
+}
+span{
+    color: red;
+}

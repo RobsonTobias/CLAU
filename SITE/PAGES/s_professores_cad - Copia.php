@@ -1,63 +1,53 @@
 <?php
-require_once '../COMPONENTS/head.php';
-require_once '../PHP/function.php';
-
-if ($_SESSION['Tipo_Tipo_cd'] != 2) {
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+if($_SESSION['Tipo_Tipo_cd'] != 2){
     header("Location: ../logout.php");
 }
 require_once '../PHP/formatarInfo.php';
 $home = 's_professores.php'; //utilizado pelo botão voltar
 $titulo = 'CADASTRO DE PROFESSOR'; //Título da página, que fica sobre a data
-$elemento = 'Professor';
 ?>
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<style>
-    .professores path {
-        fill: #043140;
-    }
-    input{
-        border: 0;
-        color: white;
-        height: 1.7rem;
-        padding-inline: 10px;
-        background-color: #949494;
-        width: 100%;
-    }
-    #form .texto{
-        margin-left: 10px;
-    }
-</style>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAU - Sistema de Gestão Escolar</title>
+    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
+    <link rel="stylesheet" href="../STYLE/botao.css" />
+    <link rel="stylesheet" href="../STYLE/data.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../STYLE/style_home.css">
+    <link rel="stylesheet" href="../STYLE/cadastro.css">
+    <link rel="icon" href="../ICON/C.svg" type="image/svg">
+    <style>
+        .professores path {
+            fill: #043140;
+        }
+    </style>
+</head>
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <?php include('../PHP/data.php'); ?>
+    <?php include('../PHP/sidebar/menu.php'); ?>
+    <?php include('../PHP/redes.php'); ?>
+    <?php include('../PHP/dropdown.php'); ?>
+
     <?php require_once '../COMPONENTS/header.php' ?>
 
-    <div class="container-fluid">
-        <div class="d-flex justify-content-center mt-3" style="margin-left: 76px;">
-            <div class="card col-sm-6">
-                <div class="card-body p-2">
-                    <h5 class="m-0">Informações do <?php echo $elemento; ?></h5>
-                </div>
-                <form action="" id="form" class="form" method="post" enctype="multipart/form-data">
-                    <div id="cadastro" class="card sombra p-2">
-                        <div class="row">
-                            <div class="col-sm-8 p-0">
-                                <div class="texto">NOME COMPLETO<span>*</span></div>
-                                <input type="text" id="nome" name="nome" class="rounded-pill" required>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="texto">APELIDO<span>*</span></div>
-                                <input type="text" name="apelido" id="apelido" class="rounded-pill" required>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-
+    <div>
+        <?php echo $sidebarHTML; ?>
+        <!--  Mostrar o menu lateral -->
     </div>
+
     <main>
         <div class="geral">
             <p>Informações do Professor</p>

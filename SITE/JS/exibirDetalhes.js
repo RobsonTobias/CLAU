@@ -1,3 +1,4 @@
+
 function exibirDetalhesUsuario(dados) {
     //Variavel Nome
     var nome = document.getElementById('modalNome');
