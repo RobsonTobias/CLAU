@@ -1,11 +1,11 @@
-<div class="col-sm-4">
+<div class="col-sm-5">
     <div class="card">
         <div class="card-body">
             <div class="btn-group d-flex justify-content-between align-items-center">
                 <div class="col-sm">
                     <h5>Pesquisar:</h5>
                 </div>
-                <div class="col-sm-6"><?php require_once '../COMPONENTS/add2.php'; ?></div>
+                <div><?php require_once '../COMPONENTS/add2.php'; ?></div>
                 <!-- Alterar o nome do componente depois -->
             </div>
             <input class="form-control" type="text" id="searchInput" placeholder="Digite um nome para pesquisar">

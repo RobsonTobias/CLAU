@@ -1,19 +1,19 @@
-  <?php
+<?php
 
-  include '../conexao.php';
+include '../conexao.php';
 
-  if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
-    session_start();
+if (session_status() == PHP_SESSION_NONE) {
+  // Se não houver sessão ativa, inicia a sessão
+  session_start();
 }
 
-  if (isset($_SESSION['Usuario_Nome']) && isset($_SESSION['Tipo_Tipo_cd'])) {
-    $nomeUsuario = $_SESSION['Usuario_Nome'];
-    $permissao = $_SESSION['Tipo_Tipo_cd'];
-  
+if (isset($_SESSION['Usuario_Nome']) && isset($_SESSION['Tipo_Tipo_cd'])) {
+  $nomeUsuario = $_SESSION['Usuario_Nome'];
+  $permissao = $_SESSION['Tipo_Tipo_cd'];
+
   // -- DIRETOR - MASTER --
-  if ($permissao == 1) { 
-    $sidebarHTML ='
+  if ($permissao == 1) {
+    $sidebarHTML = '
   <div class="sidebar close">
     <div class="logo-details">
       <img src="../PHP/sidebar/image/C-BRANCO.svg" alt="Logo-C" class="logo-mini">
@@ -64,11 +64,12 @@
       </div>
     </ul>
 </div>
-';}
+';
+  }
 
-// -- SECRETARIA - ADMINISTRAÇÃO --
-elseif ($permissao == 2) { 
-  $sidebarHTML ='
+  // -- SECRETARIA - ADMINISTRAÇÃO --
+  elseif ($permissao == 2) {
+    $sidebarHTML = '
 <div class="sidebar close">
   <div class="logo-details">
     <img src="../PHP/sidebar/image/C-BRANCO.svg" alt="Logo-C" class="logo-mini">
@@ -92,6 +93,16 @@ elseif ($permissao == 2) {
           <path d="M74 61.5C76.1217 61.5 78.1566 60.6361 79.6569 59.0983C81.1571 57.5605 82 55.4748 82 53.3V8.2C82 6.02522 81.1571 3.93952 79.6569 2.40172C78.1566 0.863926 76.1217 0 74 0H31.84C33.24 2.501 34 5.33 34 8.2H74V53.3H38V61.5M54 20.5V28.7H30V82H22V57.4H14V82H6V49.2H0V28.7C0 26.5252 0.842854 24.4395 2.34315 22.9017C3.84344 21.3639 5.87827 20.5 8 20.5H54ZM26 8.2C26 10.3748 25.1571 12.4605 23.6569 13.9983C22.1566 15.5361 20.1217 16.4 18 16.4C15.8783 16.4 13.8434 15.5361 12.3431 13.9983C10.8429 12.4605 10 10.3748 10 8.2C10 6.02522 10.8429 3.93952 12.3431 2.40172C13.8434 0.863926 15.8783 0 18 0C20.1217 0 22.1566 0.863926 23.6569 2.40172C25.1571 3.93952 26 6.02522 26 8.2Z" fill="white"/>
         </svg>
         <span class="link_name">PROFESSORES</span>
+      </a>
+    </li>
+
+    <li class="coordenacao">
+      <a href="../PAGES/s_coordenador.php">
+        <svg width="80" height="59" viewBox="0 0 80 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19.3455 32.7636C22.8364 32.8364 26.0727 34.5818 28.2545 37.6364C29.593 39.4996 31.3572 41.0161 33.4002 42.0597C35.4432 43.1034 37.7059 43.6439 40 43.6364C44.6909 43.6364 49.0909 41.3818 51.7455 37.6C53.9273 34.5455 57.1636 32.8 60.6545 32.7273C58.0364 28.2909 47.5636 25.4545 40 25.4545C32.4727 25.4545 21.9636 28.2909 19.3455 32.7636ZM10.9091 32.7273C16.9455 32.7273 21.8182 27.8545 21.8182 21.8182C21.8182 15.7818 16.9455 10.9091 10.9091 10.9091C4.87273 10.9091 0 15.7818 0 21.8182C0 27.8545 4.87273 32.7273 10.9091 32.7273ZM69.0909 32.7273C75.1273 32.7273 80 27.8545 80 21.8182C80 15.7818 75.1273 10.9091 69.0909 10.9091C63.0545 10.9091 58.1818 15.7818 58.1818 21.8182C58.1818 27.8545 63.0545 32.7273 69.0909 32.7273ZM40 21.8182C46.0364 21.8182 50.9091 16.9455 50.9091 10.9091C50.9091 4.87273 46.0364 0 40 0C33.9636 0 29.0909 4.87273 29.0909 10.9091C29.0909 16.9455 33.9636 21.8182 40 21.8182Z" fill="white"/>
+<path d="M72.7273 36.3636H60.8364C58.0364 36.3636 55.9273 38 54.7273 39.7091C54.5818 39.9273 49.7818 47.2727 40 47.2727C34.8 47.2727 28.9818 44.9455 25.2727 39.7091C23.8545 37.7091 21.6364 36.3636 19.1636 36.3636H7.27273C3.27273 36.3636 0 39.6364 0 43.6364V58.1818H25.4545V49.9636C29.6364 52.8727 34.6909 54.5455 40 54.5455C45.3091 54.5455 50.3636 52.8727 54.5455 49.9636V58.1818H80V43.6364C80 39.6364 76.7273 36.3636 72.7273 36.3636Z" fill="white"/>
+</svg>
+        <span class="link_name">COORDENADORES</span>
       </a>
     </li>
 
@@ -136,11 +147,12 @@ elseif ($permissao == 2) {
     </div>
   </ul>
 </div>
-';}
+';
+  }
 
-// -- ALUNO --
-elseif($permissao == 3){
-  $sidebarHTML ='
+  // -- ALUNO --
+  elseif ($permissao == 3) {
+    $sidebarHTML = '
   <div class="sidebar close">
     <div class="logo-details">
       <img src="../PHP/sidebar/image/C-BRANCO.svg" alt="Logo-C" class="logo-mini">
@@ -202,11 +214,11 @@ elseif($permissao == 3){
     </ul>
 </div>
 ';
-}
- 
-// -- PROFESSOR --
-elseif($permissao == 4){
-  $sidebarHTML ='
+  }
+
+  // -- PROFESSOR --
+  elseif ($permissao == 4) {
+    $sidebarHTML = '
   <div class="sidebar close">
     <div class="logo-details">
       <img src="../PHP/sidebar/image/C-BRANCO.svg" alt="Logo-C" class="logo-mini">
@@ -306,11 +318,11 @@ elseif($permissao == 4){
     </ul>
 </div>
 ';
-}
+  }
 
-// -- COORDENAÇÃO --
-elseif($permissao == 5){ 
-  $sidebarHTML ='
+  // -- COORDENAÇÃO --
+  elseif ($permissao == 5) {
+    $sidebarHTML = '
   <div class="sidebar close">
     <div class="logo-details">
       <img src="../PHP/sidebar/image/C-BRANCO.svg" alt="Logo-C" class="logo-mini">
@@ -410,7 +422,8 @@ elseif($permissao == 5){
     </ul>
 </div>
 ';
-}}else {
+  }
+} else {
   // Se a variável de sessão não estiver definida, redirecione para a página de login ou exiba uma mensagem de erro
   header("Location: ../index.php");
 }

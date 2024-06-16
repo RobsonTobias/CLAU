@@ -6,13 +6,13 @@ if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
 require_once '../PHP/formatarInfo.php';
-$home = 's_alunos.php'; //utilizado pelo botão voltar
-$titulo = 'CADASTRO DE ALUNOS'; //Título da página, que fica sobre a data
-$elemento = 'Aluno';
+$home = 's_coordenador.php'; //utilizado pelo botão voltar
+$titulo = 'CADASTRO DE COORDENADOR'; //Título da página, que fica sobre a data
+$elemento = 'Coordenador'; // Item que é utilizado para adicionar no Informações e condição do responsável
 ?>
 
 <style>
-    .aluno path {
+    .coordenacao path {
         fill: #043140;
     }
 </style>
@@ -32,8 +32,8 @@ $elemento = 'Aluno';
                     <?php require_once '../COMPONENTS/cadastroInfoUsuario.php'; ?>
                     <?php require_once '../COMPONENTS/cadastroEndereco.php'; ?>
                     <div id="botao" class="d-flex justify-content-end">
-                        <button class="cadastrar" type="submit">CADASTRAR</button> &nbsp &nbsp
-                        <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
+                            <button class="cadastrar" type="submit">CADASTRAR</button> &nbsp &nbsp
+                            <button class="limpar" type="button" onclick="limpar()">LIMPAR</button>
                     </div>
                 </form>
                 <br>
@@ -42,7 +42,7 @@ $elemento = 'Aluno';
     </div>
 
     <div class="buttons">
-        <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes; ?>
     </div>
 
     <script src="../JS/dropdown.js"></script>
@@ -51,7 +51,6 @@ $elemento = 'Aluno';
     <script src="../JS/end.js"></script>
     <script src="../JS/informacao.js"></script>
     <script>
-
         $(document).ready(function () {
             $("#form").on("submit", function (e) {
                 e.preventDefault(); // Impede o envio normal do formulário
@@ -59,7 +58,7 @@ $elemento = 'Aluno';
                 var formData = new FormData(this);
 
                 $.ajax({
-                    url: '../PHP/cad_aluno.php',
+                    url: '../PHP/cad_coordenador.php',
                     type: 'POST',
                     data: formData,
                     success: function (response) {
@@ -67,7 +66,6 @@ $elemento = 'Aluno';
                             $('#form').trigger("reset"); // Limpa o formulário
                             $('#imagemExibida').attr('src', '../ICON/perfil.svg');
                             alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
-                            window.location.href = "s_alunos_turma_cad.php"; // Redireciona para a nova página
                         } else {
                             alert(response); // Exibe outros alertas retornados pelo servidor
                         }

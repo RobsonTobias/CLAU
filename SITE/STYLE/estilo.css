@@ -45,9 +45,53 @@ h5 {
     background-color: #baddf7;
 }
 
-#cadastro{
+#cadastro {
     background-color: #D9D9D9;
 }
-span{
+
+#form span {
     color: red;
+}
+
+input,
+select,
+textarea {
+    border: 0;
+    color: white;
+    height: 1.7rem;
+    padding-inline: 10px;
+    background-color: #949494;
+    width: 100%;
+}
+
+#form .texto {
+    margin-left: 10px;
+}
+
+#form .row {
+    margin-bottom: 10px;
+}
+
+#form textarea {
+    border-radius: 13.5px;
+    height: 80px;
+    resize: none;
+}
+
+#botao .cadastrar {
+    background-color: #6EC77D;
+    color: #0D4817;
+    border-radius: 15px;
+    border: none;
+    font-weight: bold;
+    padding: 2px 10px;
+}
+
+#botao .limpar {
+    background-color: #fd84847e;
+    color: #FF0000;
+    border-radius: 15px;
+    border: none;
+    font-weight: bold;
+    padding: 2px 10px;
 }

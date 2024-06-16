@@ -128,24 +128,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf', '$rg', '$nascimento', '$estadocivil', '$celular', '$telrecado', '$login', '$senha', '$obs', '$enderecosCd', '$usuariocd', '$caminhoCompleto')";
                 if ($conn->query($sql) === TRUE) {
                     $ultimoUsuario = $conn->insert_id;
-                    $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 4)";
+                    $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 5)";
                     if ($conn->query($registro) === TRUE) {
-                        if ($coordenador) {
-                            $registroCoordenador = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 5)";
-                            if ($conn->query($registroCoordenador) === TRUE) {
-                                enviarEmailCadastro($email, $nome, $login);
-                                echo "Cadastro realizado com sucesso!";
-                                $cadastroSucesso = true;
-                            } else {
-                                $erroMsg .= "Erro ao inserir no registro de coordenador: " . $conn->error;
-                            }
-                        } else {
-                            enviarEmailCadastro($email, $nome, $login);
-                            echo "Cadastro realizado com sucesso!";
-                            $cadastroSucesso = true;
-                        }
+                        enviarEmailCadastro($email, $nome, $login);
+                        echo "Cadastro realizado com sucesso como Coordenador!";
+                        $cadastroSucesso = true;
                     } else {
-                        $erroMsg .= "Erro ao inserir no registro de professor: " . $conn->error;
+                        $erroMsg .= "Erro ao inserir no registro de coordenador: " . $conn->error;
                     }
                 } else {
                     $erroMsg .= "Erro ao inserir usuário: " . $conn->error;

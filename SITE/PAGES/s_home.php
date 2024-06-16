@@ -65,6 +65,9 @@ $titulo = 'HOME'; //Título da página, que fica sobre a data
         <a href="s_professores.php" class="item"><img src="../ICON/professores.svg" alt="Professores">
             <p>Professores</p>
         </a>
+        <a href="s_coordenador.php" class="item"><img src="../ICON/coordenacao.svg" alt="Coordenador">
+            <p>Coordenadores</p>
+        </a>
         <a href="s_alunos.php" class="item"><img src="../ICON/aluno.svg" alt="Alunos">
             <p>Alunos</p>
         </a>

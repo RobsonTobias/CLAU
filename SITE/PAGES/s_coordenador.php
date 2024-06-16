@@ -6,16 +6,16 @@ if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
 $home = 's_home.php'; //utilizado pelo botão voltar
-$titulo = 'RELATÓRIO DE PROFESSORES'; //Título da página, que fica sobre a data
-$paginaDestino = 's_professores_cad.php'; //utilizado para redirecionar para a página de cadastro
-$elemento = 'Professor'; //utilizado no texto de adicionar
-$tipoUsuario = 4;
+$titulo = 'RELATÓRIO DE COORDENADORES'; //Título da página, que fica sobre a data
+$paginaDestino = 's_coordenador_cad.php'; //utilizado para redirecionar para a página de cadastro
+$elemento = 'Coordenador'; //utilizado no texto de adicionar
+$tipoUsuario = 5;
 $informacao = 'EDITAR INFORMAÇÕES';
 require_once '../PHP/formatarInfo.php';
 ?>
 
 <style>
-    .professores path {
+    .coordenacao path {
         fill: #043140;
     }
 </style>
