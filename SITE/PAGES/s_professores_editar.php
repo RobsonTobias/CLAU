@@ -1,224 +1,58 @@
 <?php
-include ('../conexao.php');
+require_once '../COMPONENTS/head.php';
+require_once '../PHP/function.php';
 
-if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
-    session_start();
-}
-if($_SESSION['Tipo_Tipo_cd'] != 2){
+if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
 $userId = $_SESSION['UsuarioSelecionado'];
-
-require_once '../PHP/formatarInfo.php';
-
-// Consulta para recuperar informações do usuário
-$sql = "SELECT * FROM Usuario
-    INNER JOIN Enderecos on Enderecos.Enderecos_id = Usuario.Enderecos_Enderecos_cd
-    WHERE Usuario_id = $userId";
-$result = $conn->query($sql);
-
-// Verificar se o usuário existe
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $estadocivil = $row['Usuario_EstadoCivil'];
-    $_SESSION['imagemOriginal'] = $row['Usuario_Foto'];
-} else {
-    echo "Usuário não encontrado";
-}
+$elemento = 'Professor'; //utilizado no texto de adicionar
 $home = 's_professores.php';
 $titulo = 'ALTERAR PROFESSOR'; //Título da página, que fica sobre a data
+require_once '../PHP/formatarInfo.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
-    <link rel="stylesheet" href="../STYLE/botao.css" />
-    <link rel="stylesheet" href="../STYLE/data.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../STYLE/style_home.css">
-    <link rel="stylesheet" href="../STYLE/cadastro.css">
-    <link rel="stylesheet" href="../STYLE/alterar.css">
-    <link rel="icon" href="../ICON/C.svg" type="image/svg">
-    <style>
-        .professores path {
-            fill: #043140;
-        }
-    </style>
-</head>
+<style>
+    .professores path {
+        fill: #043140;
+    }
+</style>
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php include ('../PHP/data.php'); ?>
-    <?php include ('../PHP/sidebar/menu.php'); ?>
-    <?php include ('../PHP/redes.php'); ?>
-    <?php include ('../PHP/dropdown.php'); ?>
-
     <?php require_once '../COMPONENTS/header.php' ?>
 
-    <div>
-        <?php echo $sidebarHTML; ?>
-        <!--  Mostrar o menu lateral -->
-    </div>
-
-    <main>
-        <div class="geral">
-            <p>Informações do Professor</p>
-            <form action="../PHP/alt_professor.php" id="form" class="form" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="usuario_id" value="<?php echo $userId; ?>">
-                <div class="info">
-                    <div class="dados">
-                        <div class="linha">
-                            <label for="nome" class="nome">
-                                <p>NOME COMPLETO <span>*</span></p>
-                                <input type="text" id="nome" name="nome" value="<?php echo $row['Usuario_Nome']; ?>"
-                                    required>
-                            </label>
-                            <label for="apelido" class="apelido">
-                                <p>PRIMEIRO NOME / APELIDO<span>*</span></p>
-                                <input type="text" name="apelido" id="apelido"
-                                    value="<?php echo $row['Usuario_Apelido']; ?>" required>
-                            </label>
-                        </div>
-                        <div class="linha">
-                            <label for="email" class="email">
-                                <p>E-MAIL<span>*</span></p>
-                                <input type="email" id="email" name="email" value="<?php echo $row['Usuario_Email']; ?>"
-                                    required>
-                            </label>
-                            <label for="sexo" class="sexo">
-                                <p>SEXO<span>*</span></p>
-                                <div class="select">
-                                    <select name="sexo" id="sexo">
-                                        <option value="Masculino" <?php echo ($row['Usuario_Sexo'] == 'M') ? 'selected' : ''; ?>>Masculino</option>
-                                        <option value="Feminino" <?php echo ($row['Usuario_Sexo'] == 'F') ? 'selected' : ''; ?>>Feminino</option>
-                                    </select>
-
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center mt-3 mb-3" style="margin-left: 76px;">
+            <div class="card col-sm-10">
+                <div class="card-body p-2">
+                    <h5 class="m-0">Informações do <?php echo $elemento; ?></h5>
+                </div>
+                <form id="form" class="form" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="usuario_id" value="<?php echo $userId; ?>">
+                    <?php
+                    $listar = ListarInfoUsuario($userId);
+                    if ($listar !== null) {
+                        while ($l = $listar->fetch_array()) {
+                            ?>
+                            <?php require_once '../COMPONENTS/alterarInfoUsuario.php'; ?>
+                            <?php require_once '../COMPONENTS/alterarEndereco.php'; ?>
+                            <div id="botao" class="d-flex justify-content-between">
+                                <div class="d-flex row align-items-center">
+                                    <div class="texto">Adicionar Professor como Coordenador?</div>
+                                    <input type="checkbox" name="coordenador" id="coordenador" class="rounded-pill"
+                                        style="width:1rem; margin-left: 10px;">
                                 </div>
-                            </label>
-                        </div>
-                        <div class="linha">
-                            <label for="cpf" class="cpf">
-                                <p>CPF<span>*</span></p>
-                                <input type="text" id="cpf" name="cpf" required maxlength="13"
-                                    onkeyup="handleCPF(event)" value="<?php echo formatarCPF($row['Usuario_Cpf']); ?>">
-                            </label>
-                            <label for="rg" class="rg">
-                                <p>RG<span>*</span></p>
-                                <input type="text" id="rg" name="rg" maxlength="12" required
-                                    value="<?php echo formatarRG($row['Usuario_Rg']); ?>" onkeyup="handleRG(event)">
-                            </label>
-                            <label for="nascimento" class="nascimento">
-                                <p>DATA NASCIMENTO<span>*</span></p>
-                                <input type="date" id="nascimento" name="nascimento"
-                                    value="<?php echo $row['Usuario_Nascimento']; ?>" required>
-                            </label>
-                        </div>
-                        <div class="linha">
-                            <label for="civil" class="civil">
-                                <p>ESTADO CIVIL<span>*</span></p>
-                                <div class="select2">
-                                    <select name="civil" id="civil">
-                                        <option value="solteiro" <?php if ($estadocivil == 'solteiro')
-                                            echo 'selected'; ?>>Solteiro</option>
-                                        <option value="casado" <?php if ($estadocivil == 'casado')
-                                            echo 'selected'; ?>>
-                                            Casado</option>
-                                        <option value="separado" <?php if ($estadocivil == 'separado')
-                                            echo 'selected'; ?>>Separado</option>
-                                        <option value="divorciado" <?php if ($estadocivil == 'divorciado')
-                                            echo 'selected'; ?>>Divorciado</option>
-                                        <option value="viuvo" <?php if ($estadocivil == 'viuvo')
-                                            echo 'selected'; ?>>Viúvo
-                                        </option>
-                                    </select>
+                                <div>
+                                    <button class="cadastrar" type="submit">SALVAR</button>
                                 </div>
-                            </label>
-                            <label for="celular" class="celular">
-                                <p>CELULAR<span>*</span></p>
-                                <input type="tel" id="celular" name="celular" maxlength="15" required
-                                    placeholder="11 99999-9999" value="<?php echo formatarCelular($row['Usuario_Fone']); ?>"
-                                    onkeyup="handlePhone(event)">
-                            </label>
-                            <label for="recado" class="recado">
-                                <p>TELEFONE RECADO</p>
-                                <input type="tel" id="recado" name="recado" maxlength="15" placeholder="11 99999-9999"
-                                    value="<?php echo formatarCelular($row['Usuario_Fone_Recado']); ?>" onkeyup="handlePhone(event)">
-                            </label>
-                        </div>
-                        <div>
-                            <label for="obs" class="obs">
-                                <textarea name="obs" id="obs"><?php echo $row['Usuario_Obs']; ?></textarea>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="foto">
-                        <img id="imagemExibida" src="<?php echo $row['Usuario_Foto']; ?>" alt="foto">
-                        <label for="imagemInput">ALTERAR FOTO</label>
-                        <input type="file" id="imagemInput" name="imagem" accept="image/*" onchange="exibirImagem()">
-                    </div>
-                </div>
-                <div class="endereco">
-                    <div class="dados">
-                        <div class="linha">
-                            <label for="cep" class="cep">
-                                <p>CEP<span>*</span></p>
-                                <input type="text" id="cep" name="cep" required maxlength="9" placeholder="Digite o CEP"
-                                    value="<?php echo formatarCEP($row['Enderecos_Cep']); ?>" onkeyup="handleZipCode(event)">
-                            </label>
-                            <label for="logradouro" class="logradouro">
-                                <p>LOGRADOURO</p>
-                                <input type="text" name="logradouro" id="logradouro"
-                                    value="<?php echo $row['Enderecos_Rua']; ?>" required>
-                            </label>
-                            <label for="numero" class="numero">
-                                <p>Nº<span>*</span></p>
-                                <input type="text" name="numero" id="numero"
-                                    value="<?php echo $row['Enderecos_Numero']; ?>" required>
-                            </label>
-                        </div>
-                        <div class="linha">
-                            <label for="bairro" class="bairro">
-                                <p>BAIRRO</p>
-                                <input type="text" id="bairro" name="bairro"
-                                    value="<?php echo $row['Enderecos_Bairro']; ?>" required>
-                            </label>
-                            <label for="complemento" class="complemento">
-                                <p>COMPLEMENTO</p>
-                                <input type="text" id="complemento" name="complemento"
-                                    value="<?php echo $row['Enderecos_Complemento']; ?>">
-                            </label>
-                        </div>
-                        <div class="linha">
-                            <label for="cidade" class="cidade">
-                                <p>CIDADE</p>
-                                <input type="text" id="cidade" name="cidade"
-                                    value="<?php echo $row['Enderecos_Cidade']; ?>" required>
-                            </label>
-                            <label for="estado" class="estado">
-                                <p>ESTADO</p>
-                                <input type="text" id="estado" name="estado" value="<?php echo $row['Enderecos_Uf']; ?>"
-                                required>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="icone">
-                        <img src="../ICON/endereco.svg" alt="endereco">
-                    </div>
-                </div>
-                <div class="botao func">
-                    <button class="cadastrar" type="submit" onclick="cadastrar()">SALVAR</button>
-                </div>
-            </form>
+                            </div>
+                        <?php }
+                    } ?>
+                </form>
+                <br>
+            </div>
         </div>
-    </main>
+    </div>
 
     <div class="buttons">
         <?php echo $redes; ?>

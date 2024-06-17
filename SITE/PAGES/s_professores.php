@@ -9,8 +9,8 @@ $home = 's_home.php'; //utilizado pelo botão voltar
 $titulo = 'RELATÓRIO DE PROFESSORES'; //Título da página, que fica sobre a data
 $paginaDestino = 's_professores_cad.php'; //utilizado para redirecionar para a página de cadastro
 $elemento = 'Professor'; //utilizado no texto de adicionar
-$tipoUsuario = 4;
-$informacao = 'EDITAR INFORMAÇÕES';
+$tipoUsuario = 4; // utilizado para o ListaUsuario
+$informacao = 'EDITAR INFORMAÇÕES'; // utilizado no botão
 require_once '../PHP/formatarInfo.php';
 ?>
 
