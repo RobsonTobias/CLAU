@@ -33,14 +33,35 @@ require_once '../PHP/formatarInfo.php';
                     $listar = ListarInfoUsuario($userId);
                     if ($listar !== null) {
                         while ($l = $listar->fetch_array()) {
+                            // Armazenar valores originais na sessão
+                            $_SESSION['original'] = [
+                                'nome' => $l['Usuario_Nome'],
+                                'apelido' => $l['Usuario_Apelido'],
+                                'email' => $l['Usuario_Email'],
+                                'sexo' => $l['Usuario_Sexo'],
+                                'cpf' => $l['Usuario_Cpf'],
+                                'rg' => $l['Usuario_Rg'],
+                                'nascimento' => $l['Usuario_Nascimento'],
+                                'civil' => $l['Usuario_EstadoCivil'],
+                                'celular' => $l['Usuario_Fone'],
+                                'recado' => $l['Usuario_Fone_Recado'],
+                                'obs' => $l['Usuario_Obs'],
+                                'imagem' => $l['Usuario_Foto'],
+                                'cep' => $l['Enderecos_Cep'],
+                                'logradouro' => $l['Enderecos_Rua'],
+                                'numero' => $l['Enderecos_Numero'],
+                                'bairro' => $l['Enderecos_Bairro'],
+                                'complemento' => $l['Enderecos_Complemento'],
+                                'cidade' => $l['Enderecos_Cidade'],
+                                'estado' => $l['Enderecos_Uf']
+                            ];
                             ?>
                             <?php require_once '../COMPONENTS/alterarInfoUsuario.php'; ?>
                             <?php require_once '../COMPONENTS/alterarEndereco.php'; ?>
                             <div id="botao" class="d-flex justify-content-between">
                                 <div class="d-flex row align-items-center">
                                     <div class="texto">Adicionar Professor como Coordenador?</div>
-                                    <input type="checkbox" name="coordenador" id="coordenador" class="rounded-pill"
-                                        style="width:1rem; margin-left: 10px;">
+                                    <input type="checkbox" name="coordenador" id="coordenador" class="rounded-pill" style="width:1rem; margin-left: 10px;" <?php echo Coordenador($userId) ? 'checked' : ''; ?>>
                                 </div>
                                 <div>
                                     <button class="cadastrar" type="submit">SALVAR</button>
