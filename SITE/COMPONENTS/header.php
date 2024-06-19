@@ -81,7 +81,7 @@
         </div>
 
         <div class="user">
-            <?php include_once '../COMPONENTS/notif/notif.php'; ?>
+            <?php include_once '../COMPONENTS/notif.php'; ?>
             <?php echo $dropdown; ?>
             <!-- Mostra o usuario, foto e menu dropdown -->
         </div>

@@ -68,21 +68,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirecionar para a página desejada após o login
         if ($permissao == 1) {
-            header("location: PAGES/m_home.php?tipo=success");
+            header("location: PAGES/m_home.php");
         } elseif ($permissao == 2) {
-            header("location: PAGES/s_home.php?tipo=success");
+            header("location: PAGES/s_home.php");
         } elseif ($permissao == 3) {
-            header("Location: PAGES/a_home.php?tipo=success");
+            header("Location: PAGES/a_home.php");
         } elseif ($permissao == 4) {
-            header("location: PAGES/p_home.php?tipo=success");
+            header("location: PAGES/p_home.php");
         } elseif ($permissao == 5) {
-            header("location: PAGES/c_home.php?tipo=success");
+            header("location: PAGES/c_home.php");
         } else{
             echo 'Permissão não concedida';
         }
     } else {
         // Credenciais incorretas, redireciona para a página de index.
-        header("Location:index.php?tipo=erro");
+        header("Location:index.php");
     }
 }
 ?>

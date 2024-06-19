@@ -65,6 +65,10 @@
         height: 1px;
     }
 </style>
+<?php include ('../PHP/data.php'); ?>
+<?php include ('../PHP/sidebar/menu.php'); ?>
+<?php include ('../PHP/redes.php'); ?>
+<?php include ('../PHP/dropdown.php'); ?>
 <header>
     <div class="title">
         <div class="nomedata closed">
@@ -76,10 +80,13 @@
         </div>
 
         <div class="user">
-            <?php include_once '../COMPONENTS/notif/notif.php'; ?>
+            <?php include_once '../COMPONENTS/notif.php'; ?>
             <?php echo $dropdown; ?>
             <!-- Mostra o usuario, foto e menu dropdown -->
         </div>
     </div>
     <hr>
 </header>
+<div>
+    <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
+</div>

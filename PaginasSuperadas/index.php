@@ -1,4 +1,3 @@
-<?php include_once 'COMPONENTS/toats.php' ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -29,11 +28,7 @@
                             <input type="password" id="password" name="password" class="input__field" required>
                             <img alt="Eye Icon" title="Eye Icon" src="ICON/eye.svg" class="input__icon">
                     </label>
-                    <?php
-                        if (isset($_GET['tipo']) && $_GET['tipo'] == 'erro') {
-                            echo "<p class='erro'>Usuário ou senha incorretos.</p>";
-                        }
-                    ?>
+                    
                     
                     <a href="#" class="ancora esquecer" id="senha">Esqueceu sua senha</a>
                     <input type="submit" value="Login" class="btn primeiro-btn home">
@@ -73,15 +68,8 @@
             </div>
         </div>
     </div>
-    <div class="local-custom-toast-left">
-        <?php 
-            if (isset($_GET["tipo"])){
-                $tipo = $_GET['tipo'];
-                echo toatsActive($tipo);
-            }
-        ?>
-    </div>
     
+
     <script src="JS/botao.js"></script>
     <script src="JS/app.js"></script>
     <script src="JS/script.js"></script>
