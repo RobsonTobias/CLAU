@@ -35,4 +35,14 @@ function Coordenador($userId)
     $row = $res->fetch_assoc();
     return $row['resultado'] == 1;
 }
+
+function ListarCurso(){
+    $sql = "SELECT Curso_id, Curso_Nome, Curso_Sigla FROM Curso";
+    $res = $GLOBALS['conn']->query($sql);
+    if ($res->num_rows > 0) {
+        return $res;
+    } else {
+        echo 'Nenhum curso encontrado!';
+    }
+}
 ?>

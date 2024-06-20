@@ -201,7 +201,10 @@ function exibirDetalhesUsuario(dados) {
     var contObs = '';
 
     if (dados) {
-        contObs += dados.Usuario_Obs;
+        if(dados.Usuario_Obs !== null) 
+            contObs += dados.Usuario_Obs;
+        else
+            contObs = 'Não informado';
     } else {
         contObs = 'Não informado';
     }

@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 if($_SESSION['Tipo_Tipo_cd'] != 2){
     header("Location: ../logout.php");
 }
-$titulo = 'TURMAS'; //Título da página, que fica sobre a data
+$titulo = 'CURSOS'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -24,7 +24,7 @@ $titulo = 'TURMAS'; //Título da página, que fica sobre a data
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .turma path{
+        .curso path{
             fill: #043140;
         }
     </style>
@@ -32,18 +32,23 @@ $titulo = 'TURMAS'; //Título da página, que fica sobre a data
 
 <body>
 
-
+<?php include('../PHP/data.php');?>
+<?php include('../PHP/sidebar/menu.php');?>
+<?php include('../PHP/redes.php');?>
+<?php include('../PHP/dropdown.php');?>
 
 <?php require_once '../COMPONENTS/header.php' ?>
 
-   
+    <div>
+        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
+    </div>
     
     <main>
-        <a href="s_turma_cad.php" class="item"><img src="../ICON/cadastro_turma.svg" alt="Cadastro_Turmas">
-            <p>Cadastro de Turmas</p>
+        <a href="s_curso_cad.php" class="item"><img src="../ICON/cadastro_curso.svg" alt="Cadastro_Curso">
+            <p>Cadastro de Cursos</p>
         </a>
-        <a href="s_turma_consulta.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Turmas">
-            <p>Relatório de Turmas</p>
+        <a href="s_curso_consulta.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Cursos">
+            <p>Relatório de Cursos</p>
         </a>
     </main>
 

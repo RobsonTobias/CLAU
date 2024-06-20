@@ -6,6 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 if($_SESSION['Tipo_Tipo_cd'] != 2){
     header("Location: ../logout.php");
 }
+$home = 's_curso.php';
 $titulo = 'CADASTRO DE CURSO'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
@@ -83,17 +84,8 @@ $titulo = 'CADASTRO DE CURSO'; //Título da página, que fica sobre a data
 </head>
 
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php include ('../PHP/data.php'); ?>
-    <?php include ('../PHP/sidebar/menu.php'); ?>
-    <?php include ('../PHP/redes.php'); ?>
-    <?php include ('../PHP/dropdown.php'); ?>
-
-    <?php require_once '../COMPONENTS/header.php' ?>
-
-    <div>
-        <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
-    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<?php require_once '../COMPONENTS/header.php' ?>
 
     <main>
         <!-- <a class="back-link" href="s_curso_consulta.php"> < </a> -->

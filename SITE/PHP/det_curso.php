@@ -1,45 +1,36 @@
 <?php
-header('Content-Type: application/json');
+include ('../conexao.php');
 
-include '../conexao.php';
-
-// Checar conexão
-if ($conn->connect_error) {
-    echo json_encode(["error" => "Conexão falhou: " . $conn->connect_error]);
-    exit;
-}
-
-$userId = $_GET['userId'];
-
-// Consulta para obter detalhes do curso
-$sql = "SELECT Curso.Curso_Nome, Curso.Curso_Sigla, Curso.Curso_Status, Modulo.Modulo_Nome 
-        FROM Curso 
-        LEFT JOIN Modulo_Curso ON Modulo_Curso.Curso_Curso_cd = Curso.Curso_id  
-        LEFT JOIN Modulo ON Modulo.Modulo_id = Modulo_Curso.Modulo_id
-        WHERE Curso.Curso_id = ?;";
-$stmt = $conn->prepare($sql);
-
-if ($stmt === false) {
-    echo json_encode(["error" => "Erro na preparação: " . $conn->error]);
-    exit;
-}
-
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-
-$result = $stmt->get_result();
-$data = [];
-
-while ($row = $result->fetch_assoc()) {
-    $data[] = $row;
-}
-
-if (empty($data)) {
-    echo json_encode(["error" => "Nenhum dado encontrado para este curso."]);
+if (isset($_GET['cursoId'])) {
+    $cursoId = intval($_GET['cursoId']);
+    
+    $sqlCurso = "SELECT * FROM curso WHERE Curso_id = $cursoId";
+    $resultadoCurso = $conn->query($sqlCurso);
+    
+    if ($resultadoCurso && $resultadoCurso->num_rows > 0) {
+        $curso = $resultadoCurso->fetch_assoc();
+        
+        $sqlModulos = "SELECT mc.*, m.Modulo_Nome FROM modulo_curso mc
+                       JOIN modulo m ON mc.Modulo_Modulo_cd = m.Modulo_id
+                       WHERE mc.Curso_Curso_cd = $cursoId";
+        $resultadoModulos = $conn->query($sqlModulos);
+        
+        $modulos = array();
+        
+        if ($resultadoModulos && $resultadoModulos->num_rows > 0) {
+            while ($row = $resultadoModulos->fetch_assoc()) {
+                $modulos[] = $row;
+            }
+        }
+        
+        $curso['modulos'] = $modulos;
+        
+        header('Content-Type: application/json');
+        echo json_encode($curso);
+    } else {
+        echo json_encode(array('error' => 'Nenhum curso encontrado.'));
+    }
 } else {
-    echo json_encode($data);
+    echo json_encode(array('error' => 'ID do curso não fornecido.'));
 }
-
-$stmt->close();
-$conn->close();
 ?>
