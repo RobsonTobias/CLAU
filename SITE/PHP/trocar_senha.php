@@ -46,10 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->fetch();
 
         // Verifica se a senha antiga está correta
-        if ($senha_antiga == $senha_bd) { // Comparação direta
+        if (password_verify($senha_antiga, $senha_bd)) {
+            // Hash da nova senha
+            $nova_senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
+
             // Atualiza a senha no banco de dados
             $stmt = $conn->prepare("UPDATE Usuario SET Usuario_Senha = ? WHERE Usuario_id = ?");
-            $stmt->bind_param("si", $nova_senha, $usuarioId); // Não é necessário hash para o VARCHAR
+            $stmt->bind_param("si", $nova_senha_hash, $usuarioId);
             $stmt->execute();
 
             // Verifica se a senha foi atualizada com sucesso
@@ -59,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Erro ao atualizar a senha.";
             }
         } else {
-            echo "Senha antiga incorreta. A senha digitada foi: $senha_antiga. A senha armazenada no banco é: $senha_bd";
+            echo "Senha antiga incorreta.";
         }
     } else {
         echo "Usuário não encontrado.";

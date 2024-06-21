@@ -142,6 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         } else {
                             enviarEmailCadastro($email, $nome, $login);
                             echo "Cadastro realizado com sucesso!";
+                            
                             $cadastroSucesso = true;
                         }
                     } else {

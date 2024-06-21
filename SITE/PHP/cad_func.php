@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
+    //$cpf = validaCPF($cpf); // DESCOMENTAR ESSA LINHA PARA VALIDAR CPF
     $senha = password_hash(substr($cpf,0,6), PASSWORD_DEFAULT);
     $queryCpf = "SELECT * FROM Usuario WHERE Usuario_Cpf = '$cpf'";
     $resultCpf = $conn->query($queryCpf);
