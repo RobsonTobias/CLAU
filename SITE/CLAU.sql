@@ -190,7 +190,7 @@ CREATE TABLE Aulas (
 ) ENGINE=InnoDB;
 
 create table Ocorrencia(
-	Ocorrencia_id int not null,
+	Ocorrencia_id int not null AUTO_INCREMENT,
 	Aluno_Turma_cd INT NOT NULL,
 	Mensagem TEXT not null,
     Usuario_Usuario_cd int not null,

@@ -1,9 +1,7 @@
 <?php
-include ('../conexao.php');
+require_once '../COMPONENTS/head.php';
+require_once '../PHP/function.php';
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
@@ -40,96 +38,80 @@ $stmtOcorrencias->bind_param("i", $userId);
 $stmtOcorrencias->execute();
 $resultOcorrencias = $stmtOcorrencias->get_result();
 
-require_once '../PHP/formatarInfo.php';
 $home = 's_alunos.php'; //utilizado pelo botão voltar
 $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
+$informacao = 'EDITAR INFORMAÇÕES'; // utilizado no botão
+require_once '../PHP/formatarInfo.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+<style>
+    .aluno path {
+        fill: #043140;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
-    <link rel="stylesheet" href="../STYLE/botao.css" />
-    <link rel="stylesheet" href="../STYLE/data.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../STYLE/style_home.css">
-    <link rel="stylesheet" href="../STYLE/relatorio.css">
-    <link rel="icon" href="../ICON/C.svg" type="image/svg">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .aluno path {
-            fill: #043140;
-        }
+    main {
+        align-items: center;
+    }
 
-        main {
-            align-items: center;
-        }
+    .barra-frequencia-container {
+        background-color: #233939;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 100%;
+    }
 
-        .barra-frequencia-container {
-            background-color: #233939;
-            border-radius: 10px;
-            overflow: hidden;
-            width: 100%;
-        }
+    .barra-frequencia {
+        height: 20px;
+        background-color: #4CAF50;
+        text-align: center;
+        line-height: 20px;
+        color: white;
+        border-radius: 10px;
+        /* Arredonda apenas os cantos esquerdos */
+    }
 
-        .barra-frequencia {
-            height: 20px;
-            background-color: #4CAF50;
-            text-align: center;
-            line-height: 20px;
-            color: white;
-            border-radius: 10px;
-            /* Arredonda apenas os cantos esquerdos */
-        }
+    #ocorrencias {
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+    }
 
-        #ocorrencias {
-            gap: 10px;
-            display: flex;
-            flex-direction: column;
-        }
+    .margin {
+        margin-top: 1px;
+    }
 
-        .margin {
-            margin-top: 1px;
-        }
+    .scroll-div-vertical {
+        height: 350px;
+        overflow-y: auto;
+    }
 
-        .scroll-div-vertical {
-            height: 350px;
-            overflow-y: auto;
-        }
-
-        .clicavel {
-            cursor: pointer;
-        }
+    .clicavel {
+        cursor: pointer;
+    }
 
 
 
-        .centralizar {
-            justify-content: center;
-            margin-left: 50px;
-        }
+    .centralizar {
+        justify-content: center;
+        margin-left: 50px;
+    }
 
-        .informacao2 {
-            background-color: #E7E7E7;
-            border-radius: 20px;
-            box-shadow: 0 0 5px 1px #00000040;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            min-width: 50%;
-        }
-    </style>
-</head>
+    .informacao2 {
+        background-color: #E7E7E7;
+        border-radius: 20px;
+        box-shadow: 0 0 5px 1px #00000040;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        min-width: 50%;
+    }
+</style>
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <?php require_once '../COMPONENTS/header.php' ?>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var globalCursoId = null;
@@ -238,285 +220,39 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
 
             // Delegação de eventos para garantir que os eventos de clique sejam anexados a cada nova turma dinamicamente
             document.body.addEventListener('click', function (event) {
-                if (event.target.closest('.infofuncionario.clicavel')) {
-                    mostrarDetalhes(event.target.closest('.infofuncionario.clicavel'));
+                if (event.target.closest('.turma.clicavel')) {
+                    mostrarDetalhes(event.target.closest('.turma.clicavel'));
                 }
             });
         });
 
     </script>
 
-    <?php include ('../PHP/data.php'); ?>
-    <?php include ('../PHP/sidebar/menu.php'); ?>
-    <?php include ('../PHP/redes.php'); ?>
-    <?php include ('../PHP/dropdown.php'); ?>
-
     <div id="modalConfirmacao"
         style="display:none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1050; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 20px; border-radius: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <div class="d-flex flex-column align-items-center"
+            style="background: white; padding: 20px; border-radius: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
             <p>Tem certeza de que deseja alterar a situação do aluno?</p>
-            <button id="confirmarMudanca" style="margin-right: 10px;">Sim</button>
-            <button id="cancelarMudanca">Não</button>
+            <div>
+                <button class="btn btn-success" id="confirmarMudanca">Sim</button>
+                <button class="btn btn-danger" id="cancelarMudanca">Não</button>
+            </div>
         </div>
     </div>
 
-    <?php require_once '../COMPONENTS/header.php' ?>
 
-    <div>
-        <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
+    <div class="container-fluid">
+        <div class="d-flex row form-group justify-content-center mt-3" style="margin-left: 76px;">
+            <div class="col-sm-5">
+                <?php require_once '../COMPONENTS/infoAluno.php'; ?>
+                <?php require_once '../COMPONENTS/infoAcademico.php'; ?>
+            </div>
+            <div class="col-sm-5">
+                <?php require_once '../COMPONENTS/ocorrencias.php'; ?>
+                <?php require_once '../COMPONENTS/trocarTurma.php'; ?>
+            </div>
+        </div>
     </div>
-
-    <main class="coluna">
-        <div class="row centralizar">
-            <!-- Dados do aluno, igual ao da página de relatório do aluno -->
-            <div class="informacao">
-                <div class="titulo">
-                    <p>Informações Pessoais</p>
-                    <input type="hidden" name="usuario_id" value="<?php echo $userId; ?>">
-                    <a href="s_alunos_editar.php">
-                        <button class="editar" type="button">EDITAR INFORMAÇÃO</button>
-                    </a>
-                </div>
-                <div class="infofuncionario">
-                    <div class="func">
-                        <div class="foto">
-                            <img id="imagemExibida" src="<?php echo $row['Usuario_Foto']; ?>" alt="foto">
-                        </div>
-                        <div class="info-func">
-                            <div class="linha">
-                                <div class="col1 modal1">Nome: <div class="texto">
-                                        <?php echo $row['Usuario_Nome']; ?>
-                                    </div>
-                                </div>
-                                <div class="col2 modal1">Matrícula:
-                                    <div class="texto" id="modalUf">
-                                        <?php echo $row['Usuario_Matricula']; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 modal1">Nascimento: <div class="texto" id="modalNascimento">
-                                        <?php $nascimento = new DateTime($row['Usuario_Nascimento']);
-                                        echo $nascimento->format('d-m-Y'); ?>
-                                    </div>
-                                </div>
-                                <div class="col2 modal1 idade" for="idade">Idade:
-                                    <div class="texto" id="modalIdade">
-                                        <?php echo $row['Idade'] . " anos"; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 modal1">CPF: <div class="texto" id="modalCpf">
-                                        <?php echo $row['Usuario_Cpf']; ?>
-                                    </div>
-                                </div>
-                                <div class="col2 modal1">RG: <div class="texto" id="modalRg">
-                                        <?php echo $row['Usuario_Rg']; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 modal1">Sexo: <div class="texto" id="modalSexo">
-                                        <?php if ($row['Usuario_Sexo'] === 'M') {
-                                            echo 'Masculino';
-                                        } else {
-                                            echo 'Feminino';
-                                        } ?>
-                                    </div>
-                                </div>
-                                <div class="col2 modal1">E-mail: <div class="texto" id="modalEmail">
-                                        <?php echo $row['Usuario_Email']; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 modal1">Celular: <div class="texto" id="modalCelular">
-                                        <?php echo $row['Usuario_Fone']; ?>
-                                    </div>
-                                </div>
-                                <div class="col2 modal1">Data de Ingresso: <div class="texto" id="modalIngresso">
-                                        <?php echo $row['Registro_Data']; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="obs-func">
-                        <p id="modalObs">
-                            <?php echo $row['Usuario_Obs']; ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="endereco">
-                    <p>Endereço</p>
-                    <div class="linha">
-                        <div class="col1 cola modal1">Logradouro: <div class="texto" id="modalLogradouro">
-                                <?php echo $row['Enderecos_Rua']; ?>
-                            </div>
-                        </div>
-                        <div class="col2 colb modal1">Nº: <div class="texto" id="modalNumero">
-                                <?php echo $row['Enderecos_Numero']; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="linha">
-                        <div class="col1 cola modal1">Complemento: <div class="texto" id="modalComplemento">
-                                <?php echo $row['Enderecos_Complemento']; ?>
-                            </div>
-                        </div>
-                        <div class="col2 colb modal1">CEP: <div class="texto" id="modalCep">
-                                <?php echo $row['Enderecos_Cep']; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="linha">
-                        <div class="col1 cola modal1">Bairro: <div class="texto" id="modalBairro">
-                                <?php echo $row['Enderecos_Bairro']; ?>
-                            </div>
-                        </div>
-                        <div class="col2 colb modal1">Cidade: <div class="texto" id="modalCidade">
-                                <?php echo $row['Enderecos_Cidade']; ?>
-                            </div>
-                        </div>
-                        <div class="col3 colc modal1">UF: <div class="texto" id="modalUf">
-                                <?php echo $row['Enderecos_Uf']; ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="informacao2 coluna2">
-                <div class="titulo">
-                    <p>Ocorrências</p>
-                </div>
-                <div id="ocorrencias" class="scroll-div-vertical">
-                    <?php
-                    if ($resultOcorrencias->num_rows > 0) {
-                        while ($rowOcorrencia = $resultOcorrencias->fetch_assoc()) {
-                            $dataOcorrencia = new DateTime($rowOcorrencia['Ocorrencia_Registro']);
-                            // Exibir os detalhes de cada ocorrência
-                            echo "<div class='infofuncionario margin'>";
-                            echo "<div class='col1 cola modal1 ocorrencia'>Data: <div class='texto'>" . $dataOcorrencia->format('d/m/Y') . "</div></div>";
-                            echo "<div class='cola ocorrencia'>" . $rowOcorrencia['Mensagem'] . "</div>";
-                            echo "</div>";
-                        }
-                    } else {
-                        echo "<div>Nenhuma ocorrência registrada para este aluno.</div>";
-                    }
-                    ?>
-                </div>
-            </div>
-
-        </div>
-        </div>
-        <div class="row centralizar">
-            <div class="informacao">
-                <div class="titulo">
-                    <p>Informações Acadêmicas</p>
-                    <button class="editar editarSituacao" id="editarSalvar" type="button"
-                        onclick="window.location.href = 's_alunos_turma_cad.php'">
-                        NOVA TURMA
-                    </button>
-                </div>
-                <?php
-                // Supondo que $resultTurmas é o resultado da sua consulta ao banco de dados
-                if ($resultTurmas->num_rows > 0) {
-                    while ($rowTurma = $resultTurmas->fetch_assoc()) {
-                        $alunoTurmaId = $rowTurma["Aluno_Turma_id"];
-                        // Início do bloco HTML para as informações de cada turma
-                        ?>
-                        <div class="infofuncionario clicavel" onclick="mostrarDetalhes(this)"
-                            data-turma-cod="<?php echo htmlspecialchars($rowTurma['Turma_Cod'], ENT_QUOTES, 'UTF-8'); ?>"
-                            data-curso-id="<?php echo $rowTurma['Curso_id']; ?>"
-                            data-aluno-turma-id="<?php echo $rowTurma['Aluno_Turma_id']; ?>">
-                            <div class="cola modal1 ocorrencia">Curso:
-                                <div class="texto"> <?php echo $rowTurma['Curso_Nome']; ?> </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 cola modal1">Turma:
-                                    <div class="texto"> <?php echo $rowTurma['Turma_Cod']; ?> </div>
-                                </div>
-                                <div class="col2 colb modal1">Professor:
-                                    <div class="texto" id="modalCidade"> <?php echo $rowTurma['Professor']; ?> </div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 cola modal1">Horário:
-                                    <div class="texto" id="modalCidade">
-                                        <?php
-                                        $horarioInicio = date('H:i', strtotime($rowTurma['Turma_Horario']));
-                                        $horarioTermino = date('H:i', strtotime($rowTurma['Turma_Horario_Termino']));
-                                        echo $horarioInicio . ' - ' . $horarioTermino;
-                                        ?>
-                                    </div>
-                                </div>
-                                <div class="col2 colb modal1">Situação:
-                                    <div class="select texto situacaoSelect">
-                                        <label>
-                                            <input class="texto situacaoRadio" type="radio"
-                                                name="situacao_<?php echo $rowTurma['Aluno_Turma_id']; ?>" value="Ativo" <?php echo ($rowTurma['Aluno_Turma_Status'] === '1' ? 'checked' : ''); ?>>
-                                            Ativo
-                                        </label>
-                                        <label>
-                                            <input class="texto situacaoRadio" type="radio"
-                                                name="situacao_<?php echo $rowTurma['Aluno_Turma_id']; ?>" value="Inativo" <?php echo ($rowTurma['Aluno_Turma_Status'] === '0' ? 'checked' : ''); ?>>
-                                            Inativo
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="linha">
-                                <div class="col1 cola modal1">Frequência:
-                                    <div class="texto" style="width: 10%;">
-                                        <?php echo $rowTurma['Frequencia']; ?>%
-                                    </div>&nbsp;&nbsp;
-                                    <div class="barra-frequencia-container">
-                                        <div class="barra-frequencia" style="width: <?php echo $rowTurma['Frequencia']; ?>%;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <?php
-                    }
-                } else {
-                    echo "<div>Nenhuma turma encontrada para este aluno.</div>";
-                }
-                ?>
-
-            </div>
-            <div class="informacao2 coluna2">
-                <div class="titulo">
-                    <p>Troca de Turma</p>
-                    <button class="editar editarSituacao" id="editarSalvarTurma" type="button">
-                        TROCAR TURMA
-                    </button>
-                </div>
-                <div class="infofuncionario">
-                    <div class="linha ocorrencia">
-                        <div class="col1 cola modal1">Turma Atual:
-                            <div class="texto" id="turmaAtual">
-                            </div>
-                        </div>
-                        <div class="col2 colb modal1">Turma Destino:
-                            <div class="texto" id="turmaTexto">
-                                --
-                            </div>
-                            <div class="select" id="turmaDestinoSelect" style="display:none;">
-                                <select name="turmaDestino" id="turmaDestino">
-                                    <!-- As opções serão preenchidas dinamicamente pelo JavaScript -->
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
 
     <div class="buttons">
         <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
@@ -525,14 +261,14 @@ $titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
     <script src="../JS/dropdown.js"></script>
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
-    
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
             // Adicionar evento para radio buttons de situação
             document.querySelectorAll('.situacaoRadio').forEach(radio => {
                 radio.addEventListener('change', function () {
-                    var alunoTurmaId = this.closest('.infofuncionario').getAttribute('data-aluno-turma-id');
+                    var alunoTurmaId = this.closest('.turma').getAttribute('data-aluno-turma-id');
                     var situacaoOriginal = document.querySelector('input[name="situacao_' + alunoTurmaId + '"]:checked').value;
                     mostrarModalConfirmacao(alunoTurmaId, situacaoOriginal);
                 });
