@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nomeArquivo = basename($_FILES["imagem"]["name"]);
     $caminhoCompleto = $nomeArquivo ? $pastaDestino . $nomeArquivo : $_SESSION['imagemOriginal'];
     $uploadOk = true;
+    $caminhoCompleto = $_SESSION['original']['imagem'];
 
     if (!empty($nomeArquivo)) {
         $caminhoCompleto = $pastaDestino . $nomeArquivo;
@@ -43,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Manter a imagem original se nenhuma nova imagem for fornecida
-        $caminhoCompleto = $_SESSION['imagemOriginal'];
+        $caminhoCompleto = $_SESSION['original']['imagem'];
     }
 
     // Verificar se houve alterações nos campos

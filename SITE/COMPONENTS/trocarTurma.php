@@ -8,7 +8,7 @@
         </div>
         <div class="card-body bg-white sombra mb-3">
             <div class="row">
-                <div class="col-sm-10 p-0">
+                <div class="col-sm p-0">
                     <div class="row">
                         <div class="col-sm row p-0">
                             <div class="texto">Turma Atual:</div>

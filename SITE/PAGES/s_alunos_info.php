@@ -243,11 +243,11 @@ require_once '../PHP/formatarInfo.php';
 
     <div class="container-fluid">
         <div class="d-flex row form-group justify-content-center mt-3" style="margin-left: 76px;">
-            <div class="col-sm-5">
+            <div class="col-sm-6">
                 <?php require_once '../COMPONENTS/infoAluno.php'; ?>
                 <?php require_once '../COMPONENTS/infoAcademico.php'; ?>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-6">
                 <?php require_once '../COMPONENTS/ocorrencias.php'; ?>
                 <?php require_once '../COMPONENTS/trocarTurma.php'; ?>
             </div>

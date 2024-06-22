@@ -103,7 +103,7 @@
     <div class="col-sm-2 p-0 d-flex flex-column align-items-center">
         <img id="imagemExibida" src="<?php echo $l['Usuario_Foto']; ?>" alt="foto" class="rounded-circle">
         <br>
-        <label for="imagemInput" class="btn btn-sm rounded-pill font-weight-bold m-0"
+        <label id="alterarFotoBtn" for="imagemInput" class="btn btn-sm rounded-pill font-weight-bold m-0"
             style="cursor: pointer; color:#A08000; background-color:#FDE276;">
             ALTERAR FOTO
         </label>

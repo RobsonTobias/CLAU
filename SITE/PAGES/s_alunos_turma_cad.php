@@ -1,10 +1,7 @@
 <?php
-include ('../conexao.php');
+require_once '../COMPONENTS/head.php';
+require_once '../PHP/function.php';
 
-if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
-    session_start();
-}
 if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
@@ -28,167 +25,155 @@ $hoje = new DateTime('now');
 $idade = $hoje->diff($dataNascimento)->y; //Calcula a idade
 $nascimentoFormatado = $dataNascimento->format('d-m-Y'); //Formatar a data de Nascimento
 
-require_once '../PHP/formatarInfo.php';
 $home = 's_alunos_info.php'; //utilizado pelo botão voltar
 $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a data
+require_once '../PHP/formatarInfo.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
-    <link rel="stylesheet" href="../STYLE/botao.css" />
-    <link rel="stylesheet" href="../STYLE/data.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../STYLE/style_home.css">
-    <link rel="stylesheet" href="../STYLE/relatorio.css">
-    <link rel="icon" href="../ICON/C.svg" type="image/svg">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .aluno path {
-            fill: #043140;
-        }
+<style>
+    .aluno path {
+        fill: #043140;
+    }
 
-        p {
-            color: #068888;
-            font-size: 16px;
-            font-weight: bold;
-        }
+    /* p {
+        color: #068888;
+        font-size: 16px;
+        font-weight: bold;
+    }
 
-        .infoturma {
-            background-color: #E7E7E7;
-            border-radius: 20px;
-            box-shadow: 0 0 5px 1px #00000040;
-            padding: 15px;
-            gap: 15px;
-        }
+    .infoturma {
+        background-color: #E7E7E7;
+        border-radius: 20px;
+        box-shadow: 0 0 5px 1px #00000040;
+        padding: 15px;
+        gap: 15px;
+    }
 
-        .infoturma p {
-            font-size: 22px;
-            font-weight: bold;
-            color: #233939;
-        }
+    .infoturma p {
+        font-size: 22px;
+        font-weight: bold;
+        color: #233939;
+    }
 
-        .campo {
-            display: flex;
-            flex-direction: column;
-            margin: 10px;
-        }
+    .campo {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+    }
 
-        .campo p {
-            color: #068888;
-            font-size: 16px;
-            font-weight: bold;
-        }
+    .campo p {
+        color: #068888;
+        font-size: 16px;
+        font-weight: bold;
+    }
 
-        .geral {
-            background-color: #D9D9D9;
-            border-radius: 15px;
-            box-shadow: 0 0 5px 1px #00000040;
-            padding-bottom: 5px;
-        }
+    .geral {
+        background-color: #D9D9D9;
+        border-radius: 15px;
+        box-shadow: 0 0 5px 1px #00000040;
+        padding-bottom: 5px;
+    }
 
-        .info {
-            background-color: #949494;
-            border-radius: 15px;
-            height: 30px;
-        }
+    .info {
+        background-color: #949494;
+        border-radius: 15px;
+        height: 30px;
+    }
 
-        .infohorario {
-            width: 210px;
-        }
+    .infohorario {
+        width: 210px;
+    }
 
-        .infodia,
-        .infocodigo {
-            width: 200px;
-        }
+    .infodia,
+    .infocodigo {
+        width: 200px;
+    }
 
-        .infoprof {
-            width: 430px;
-        }
+    .infoprof {
+        width: 430px;
+    }
 
-        .infomaxaluno {
-            width: 200px;
-        }
+    .infomaxaluno {
+        width: 200px;
+    }
 
-        .tituloturma {
-            margin-left: 10px;
-        }
+    .tituloturma {
+        margin-left: 10px;
+    }
 
-        .botao button {
-            cursor: pointer;
-        }
+    .botao button {
+        cursor: pointer;
+    }
 
-        .func {
-            margin-top: 15px;
-        }
+    .func {
+        margin-top: 15px;
+    }
 
-        .botao {
-            display: flex;
-            align-items: end;
-            justify-content: end;
-        }
+    .botao {
+        display: flex;
+        align-items: end;
+        justify-content: end;
+    }
 
-        .cadastrar {
-            background-color: #6EC77D;
-            color: #0D4817;
-            width: 150px;
-            height: 30px;
-            border-radius: 15px;
-            border: none;
-            font-weight: bold;
-        }
+    .cadastrar {
+        background-color: #6EC77D;
+        color: #0D4817;
+        width: 150px;
+        height: 30px;
+        border-radius: 15px;
+        border: none;
+        font-weight: bold;
+    }
 
-        .render {
-            margin-left: 15px;
-            margin-top: -25px;
-            color: #ffffff;
-        }
+    .render {
+        margin-left: 15px;
+        margin-top: -25px;
+        color: #ffffff;
+    }
 
-        .centralizar {
-            text-align: center;
-            padding-left: 0px;
-        }
+    .centralizar {
+        text-align: center;
+        padding-left: 0px;
+    }
 
-        select {
-            background-color: #4D4D4D;
-            color: #F4F4F4;
-            font-size: 15px;
-            padding: 3px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            margin-top: 3px;
-            border-radius: 5px;
-            padding-right: 15px;
-        }
-        .pesquisa{
-            width: 100%;
-        }
-    </style>
-</head>
+    select {
+        background-color: #4D4D4D;
+        color: #F4F4F4;
+        font-size: 15px;
+        padding: 3px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        margin-top: 3px;
+        border-radius: 5px;
+        padding-right: 15px;
+    }
+
+    .pesquisa {
+        width: 100%;
+    } */
+</style>
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php include ('../PHP/data.php'); ?>
-    <?php include ('../PHP/sidebar/menu.php'); ?>
-    <?php include ('../PHP/redes.php'); ?>
-    <?php include ('../PHP/dropdown.php'); ?>
-
     <?php require_once '../COMPONENTS/header.php' ?>
 
-    <div>
-        <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
+    <div class="container-fluid">
+        <div class="d-flex row form-group justify-content-center mt-3" style="margin-left: 76px;">
+            <div class="col-sm-6">
+                <?php require_once '../COMPONENTS/infoAluno2.php'; ?>
+                <?php require_once '../COMPONENTS/infoTurma.php'; ?>
+            </div>
+            <div class="col-sm-6">
+                <?php require_once '../COMPONENTS/pesquisaTurma.php'; ?>
+
+            </div>
+        </div>
     </div>
 
-    <main>
-        <div style="display:flex; flex-direction: column;">
-            <div class="informacao">
+
+    <div class="container-fluid">
+        <div class="d-flex row form-group justify-content-center mt-3" style="margin-left: 76px;">
+            <div class="col-sm-6">
                 <div class="titulo">
                     <p>Informações Pessoais</p>
                 </div>
@@ -211,9 +196,11 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal1">CPF: <div class="texto" id="modalCpf"><?php echo $row['Usuario_Cpf']; ?></div>
+                                <div class="col1 modal1">CPF: <div class="texto" id="modalCpf">
+                                        <?php echo $row['Usuario_Cpf']; ?></div>
                                 </div>
-                                <div class="col2 modal1">RG: <div class="texto" id="modalRg"><?php echo $row['Usuario_Rg']; ?></div>
+                                <div class="col2 modal1">RG: <div class="texto" id="modalRg">
+                                        <?php echo $row['Usuario_Rg']; ?></div>
                                 </div>
                             </div>
                             <div class="linha">
@@ -230,7 +217,8 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal1">Celular: <div class="texto" id="modalCelular"><?php echo $row['Usuario_Fone']; ?></div>
+                                <div class="col1 modal1">Celular: <div class="texto" id="modalCelular">
+                                        <?php echo $row['Usuario_Fone']; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -364,7 +352,7 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
             </table>
         </div>
 
-    </main>
+    </div>
 
     <div class="buttons">
         <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
@@ -396,6 +384,11 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
     </script>
 
     <script>
+        window.onload = function () {
+            if (performance.navigation.type !== performance.navigation.TYPE_RELOAD) {
+                window.location.reload();
+            }
+        };
         document.addEventListener('DOMContentLoaded', function () {
             const filtroCurso = document.getElementById('filtroCurso');
             const filtroProfessor = document.getElementById('filtroProfessor');
@@ -443,7 +436,7 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
                 success: function (response) {
                     if (response.includes("Cadastro realizado com sucesso!")) {
                         alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
-                        window.location.replace("s_alunos_info.php"); // Redireciona para a nova página
+                        window.location.replace("s_alunos.php"); // Redireciona para a nova página
 
                     } else {
                         alert(response); // Exibe outros alertas retornados pelo servidor
@@ -524,7 +517,7 @@ $titulo = 'CADASTRO DE ALUNO NA TURMA'; //Título da página, que fica sobre a d
 
             horario.innerHTML = contHorario;
             horario.style.display = 'block';
-            
+
             //Variavel Dia
             var dia = document.getElementById('modalDia');
             var contDia = '';

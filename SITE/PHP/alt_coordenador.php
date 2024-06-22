@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Manter a imagem original se nenhuma nova imagem for fornecida
-        $caminhoCompleto = $_SESSION['imagemOriginal'];
+        $caminhoCompleto = $_SESSION['original']['imagem'];
     }
 
     // Verificar se houve alterações nos campos
