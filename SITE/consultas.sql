@@ -26,7 +26,7 @@ select * from turma;
 delete from turma where turma_vagas =  21;
 
 select * from curso;
-
+select * from modulo_curso;
 UPDATE turma
 SET Turma_Horario_Termino = "12:00:00"
 WHERE Turma_Cod = "INF2024003";
@@ -124,9 +124,21 @@ use clau;
 
 select * from turma;
 
-select * from notificacao;
+	SELECT Curso.Curso_Nome, Curso.Curso_Sigla, Curso.Curso_Status, Modulo.Modulo_Nome 
+	FROM Curso 
+	INNER JOIN Modulo_Curso ON Modulo_Curso.Curso_Curso_cd = Curso.Curso_id  
+	INNER JOIN Modulo ON Modulo.Modulo_id = Modulo_Curso.Modulo_Curso_id
+	WHERE Curso.Curso_id = 1;  -- Substitua 1 pelo ID de um curso conhecido
 
-SELECT n.descricao, n.lida
-FROM notificacao n
-INNER JOIN Usuario u ON n.Usuario_id = u.Usuario_id
-WHERE u.Usuario_Nome = "Laura Cunha Dias";
+
+delete from turma where turma_vagas = 21 and curso_cd = 2;
+
+select * from turma;
+SET SQL_SAFE_UPDATES=0;
+update turma set turma_status = 0 where turma_vagas = 11 and turma_dias = 1456;
+
+update usuario set usuario_status = 0 where usuario_apelido = "Evelyn";
+
+select * from usuario;
+
+update turma set turma_horario_termino = "10:00:00" where turma_dias = 34;

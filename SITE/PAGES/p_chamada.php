@@ -5,6 +5,9 @@ if (!isset($_SESSION['Usuario_id'])) {
     header("Location: index.html");
     exit();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 4){
+    header("Location: ../logout.php");
+}
 
 $usuarioId = $_SESSION['Usuario_id'];
 include '../conexao.php';
@@ -45,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $resultadoModulos = mysqli_query($conn, $sqlModulos);
 
 // Consulta SQL para obter as turmas
-$sqlTurmas = "SELECT turma_cod FROM turma WHERE usuario_usuario_cd = '$usuarioId'";
+$sqlTurmas = "SELECT turma_cod FROM turma WHERE turma_status = 1 and usuario_usuario_cd = '$usuarioId'";
 $resultadoTurmas = mysqli_query($conn, $sqlTurmas);
 
 // Consulta para obter os alunos se a turma e o módulo foram selecionados
@@ -63,12 +66,16 @@ include '../PHP/data.php';
 include '../PHP/sidebar/menu.php';
 include '../PHP/redes.php';
 include '../PHP/dropdown.php';
+
+$titulo = 'LISTA DE CHAMADA E DIÁRIO DE CLASSE'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -87,21 +94,7 @@ include '../PHP/dropdown.php';
 </head>
 
 <body>
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>LISTA DE CHAMADA E DIÁRIO DE CLASSE</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar a data atual -->
-                </div>
-            </div>
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuário, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
-    
+<?php require_once '../COMPONENTS/header.php' ?>
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
     </div>

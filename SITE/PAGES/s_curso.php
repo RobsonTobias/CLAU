@@ -1,68 +1,120 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
-    <link rel="stylesheet" href="../STYLE/botao.css" />
-    <link rel="stylesheet" href="../STYLE/data.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../STYLE/style_home.css">
-    <link rel="icon" href="../ICON/C.svg" type="image/svg">
-    <style>
-        .curso path{
-            fill: #043140;
-        }
-    </style>
-</head>
+<?php
+require_once '../COMPONENTS/head.php';
+require_once '../PHP/function.php';
+
+if ($_SESSION['Tipo_Tipo_cd'] != 2) {
+    header("Location: ../logout.php");
+}
+$home = 's_home.php';
+$titulo = 'RELATÓRIO DE CURSOS';
+$paginaDestino = 's_curso_cad.php';
+$elemento = 'Curso';
+?>
+
+<style>
+    .curso path {
+        fill: #043140;
+    }
+    .campoModulo label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+
+
+</style>
 
 <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
-<?php include('../PHP/data.php');?>
-<?php include('../PHP/sidebar/menu.php');?>
-<?php include('../PHP/redes.php');?>
-<?php include('../PHP/dropdown.php');?>
-
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>CURSOS</h1>
-                <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
+    <div class="container-fluid">
+        <div class="d-flex form-group justify-content-center mt-3" style="margin-left: 76px;">
+            <?php require_once '../COMPONENTS/pesquisaCurso.php'; ?>
+            <?php require_once '../COMPONENTS/infoCurso.php'; ?>
         </div>
-        <hr>
-    </header>
-
-    <div>
-        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
     </div>
-    
-    <main>
-        <a href="s_curso_cad.php" class="item"><img src="../ICON/cadastro_curso.svg" alt="Cadastro_Curso">
-            <p>Cadastro de Cursos</p>
-        </a>
-        <a href="s_curso_consulta.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Cursos">
-            <p>Relatório de Cursos</p>
-        </a>
-    </main>
 
     <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes; ?>
     </div>
 
     <script src="../JS/dropdown.js"></script>
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
+
+    <script>
+        function mostrarDetalhes(cursoId) {
+            $.ajax({
+                url: '../PHP/det_curso.php',
+                type: 'GET',
+                data: { cursoId: cursoId },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.error) {
+                        console.error("Erro ao obter dados do curso:", response.error);
+                        alert(response.error);
+                    } else {
+                        exibirDetalhesCurso(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erro ao obter dados do curso:", error);
+                    alert("Erro ao obter dados do curso.");
+                }
+            });
+        }
+
+        function exibirDetalhesCurso(curso) {
+            if (curso) {
+                document.getElementById('modalNome').value = curso.Curso_Nome || 'Não informado';
+                document.getElementById('sigla').value = curso.Curso_Sigla || 'Não informado';
+                document.getElementById('carga_horaria').value = curso.Curso_Carga_horaria || '';
+                document.getElementById('duracao').value = curso.Curso_Duracao || '';
+                document.getElementById('pre_requisito').value = curso.Curso_PreRequisito || 'Não informado';
+                document.getElementById('descricao').value = curso.Curso_Desc || 'Não informado';
+
+                var camposModulos = document.getElementById('camposModulos');
+                camposModulos.innerHTML = '';
+
+                if (curso.modulos && curso.modulos.length > 0) {
+                    curso.modulos.forEach(function (modulo) {
+                        var campoModulo = document.createElement('div');
+                        campoModulo.className = 'campoModulo';
+                        var label = document.createElement('label');
+                        label.innerHTML = '<div class="texto">Módulo</div>';
+                        var input = document.createElement('input');
+                        input.type = 'text';
+                        input.name = 'modulos[]';
+                        input.className = 'rounded-pill';
+                        input.value = modulo.Modulo_Nome || 'Não informado';
+                        label.appendChild(input);
+                        campoModulo.appendChild(label);
+                        camposModulos.appendChild(campoModulo);
+                    });
+                } else {
+                    var campoModulo = document.createElement('div');
+                    campoModulo.className = 'campoModulo';
+                    var label = document.createElement('label');
+                    label.innerHTML = '<div class="texto">Módulo</div>';
+                    var input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = 'modulos[]';
+                    input.className = 'rounded-pill';
+                    input.value = 'Não informado';
+                    label.appendChild(input);
+                    campoModulo.appendChild(label);
+                    camposModulos.appendChild(campoModulo);
+                }
+            } else {
+                alert('Nenhum dado encontrado para este curso.');
+            }
+        }
+
+
+    </script>
 </body>
 
 </html>

@@ -1,9 +1,21 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+if($_SESSION['Tipo_Tipo_cd'] != 2){
+    header("Location: ../logout.php");
+}
+$titulo = 'RELATÓRIO DE TURMAS'; //Título da página, que fica sobre a data
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -16,35 +28,53 @@
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
         .turma path {
-            fill: #043140;
+            fill: #004765;
         }
 
         .turmas-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        font-family: Arial, sans-serif; /* Fonte mais moderna e legível */
+    }
 
-        .turmas-table th,
-        .turmas-table td {
-            padding: 12px;
-            /* Ajuste o espaçamento interno */
-            text-align: left;
-            border: 1px solid #ddd;
-            /* Adicione bordas às células */
-        }
+    .turmas-table th, .turmas-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0; /* Bordas mais sutis */
+    }
 
-        .turmas-table th {
-            background-color: #009155;
-            /* Cor de fundo para os cabeçalhos */
-            color: #fff;
-            /* Cor do texto nos cabeçalhos */
-        }
+    .turmas-table th {
+        background-color: #0ae092; /* Cor de fundo neutra para os cabeçalhos */
+        color: #333; /* Cor de texto mais suave */
+        font-weight: normal;
+        text-transform: uppercase; /* Letras maiúsculas aumentam a legibilidade */
+    }
 
-        .turmas-table tbody tr:hover {
-            background-color: #f5f5f5;
-            /* Cor de fundo das linhas ao passar o cursor */
-        }
+    .turmas-table tbody tr:hover {
+        background-color: #f1f1f1; /* Hover com uma cor mais discreta */
+    }
+
+    /* Adicionando uma sombra sutil nas células do cabeçalho */
+    .turmas-table th {
+        box-shadow: inset 0 -1px 0 0 #e0e0e0;
+    }
+
+    /* Estilização do link como botão */
+    .button-link {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .button-link:hover {
+        background-color: #45a049;
+    }
     </style>
 </head>
 
@@ -67,21 +97,7 @@
     }
     ?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>RELATÓRIO DE TURMAS</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+<?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
@@ -104,7 +120,7 @@
                 <tbody>
                     <?php
                     // Consulta SQL para obter todas as turmas
-                    $query = "SELECT * FROM Turma";
+                    $query = "SELECT * FROM Turma where turma_status = 1";
 
                     // Executar a consulta
                     $result = mysqli_query($conn, $query);

@@ -1,8 +1,21 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+if($_SESSION['Tipo_Tipo_cd'] != 5){
+    header("Location: ../logout.php");
+}
+
+$titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -89,21 +102,9 @@
     }
 ?>
 
-<header>
-    <div class="title">
-        <div class="nomedata closed">
-            <h1>DETALHES DA TURMA</h1>
-            <div class="php">
-                <?php echo $date;?><!--  Mostrar o data atual -->
-            </div>
-        </div>
+<?php require_once '../COMPONENTS/header.php' ?>
 
-        <div class="user">
-            <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
-        </div>
-    </div>
-    <hr>
-    <style>
+<style>
         .course-details {
             max-width: 1000px;
             margin: 20px auto;
@@ -144,8 +145,6 @@
             background-color: #035A70;
         }
     </style>
-</header>
-
 <div>
     <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
 </div>

@@ -20,6 +20,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nomeUsuario = $row['Usuario_Apelido'];
         $UsuarioId = $row['Usuario_id'];
         $usuariofoto = $row['Usuario_Foto'];
+        //$mudarSenha = $row['Mudar_Senha'];
+
+        // Adicionar entrada na tabela Login
+        $sqlLogin = "INSERT INTO Login (Usuario_Usuario_cd) VALUES ('$UsuarioId')";
+        mysqli_query($conn, $sqlLogin);
+
+        // Verificar se é necessário mudar a senha
+        // if ($mudarSenha) {
+        //     // Redirecionar para a página de mudança de senha
+        //     $_SESSION['Usuario_id'] = $UsuarioId;
+        //     header("Location: modal-senha.php?changePassword=true");
+        //     exit;
+        // }
 
         // Consulta para obter o valor de Tipo_Tipo_cd da tabela Registro_Usuario
         $sqlRegistroUsuario = "SELECT * FROM Registro_Usuario WHERE Usuario_Usuario_cd = '$UsuarioId'";
@@ -39,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['Usuario_id'] = $UsuarioId; // Armazena o Id do usuário na sessão
             $_SESSION['Usuario_Foto'] = $usuariofoto;
             $_SESSION['Tipo_Tipo_cd'] = '';
-            header("Location: PAGES/login2.php?tipo=success");
+            header("Location: PAGES/login2.php");
         } else { 
             // Trate qualquer erro ao obter o valor de Tipo_Tipo_cd aqui
             // Por exemplo, você pode definir $permissao como um valor padrão ou redirecionar para uma página de erro
@@ -63,13 +76,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif ($permissao == 4) {
             header("location: PAGES/p_home.php?tipo=success");
         } elseif ($permissao == 5) {
-            header("location: PAGES/c_home.php?");
+            header("location: PAGES/c_home.php?tipo=success");
         } else{
             echo 'Permissão não concedida';
         }
     } else {
-        // Credenciais incorretas, redireciona para a página de index
-        header("Location: index.php?tipo=erro");
+        // Credenciais incorretas, redireciona para a página de index.
+        header("Location:index.php?tipo=erro");
     }
 }
 ?>

@@ -5,6 +5,12 @@ if (session_status() == PHP_SESSION_NONE) {
 	// Se não houver sessão ativa, inicia a sessão
 	session_start();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 5){
+    header("Location: ../logout.php");
+}
+$idProfessor = $_SESSION['Usuario_id'];
+//echo $idProfessor;
+$titulo = 'RELATÓRIO DE ALUNOS'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -12,6 +18,8 @@ if (session_status() == PHP_SESSION_NONE) {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 	<title>CLAU - Sistema de Gestão Escolar</title>
 	<link rel="stylesheet" href="../PHP/sidebar/menu.css">
 	<link rel="stylesheet" href="../STYLE/botao.css" />
@@ -42,21 +50,7 @@ if (session_status() == PHP_SESSION_NONE) {
 	<?php include ('../PHP/redes.php'); ?>
 	<?php include ('../PHP/dropdown.php'); ?>
 
-	<header>
-		<div class="title">
-			<div class="nomedata closed">
-				<h1>RELATÓRIO DE ALUNOS</h1>
-				<div class="php">
-					<?php echo $date; ?><!--  Mostrar o data atual -->
-				</div>
-			</div>
-
-			<div class="user">
-				<?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-			</div>
-		</div>
-		<hr>
-	</header>
+	<?php require_once '../COMPONENTS/header.php' ?>
 
 	<div>
 		<?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
@@ -72,9 +66,10 @@ if (session_status() == PHP_SESSION_NONE) {
 					<th>MATRÍCULA</th>
 				</tr>
 				<?php
-				$sql = "SELECT * FROM Usuario
-                INNER JOIN Registro_Usuario ON Usuario.Usuario_id = Registro_Usuario.Usuario_Usuario_cd
-                Where Registro_Usuario.Tipo_Tipo_cd = 3;";
+				$sql = "select * from usuario
+				join Aluno_turma on Usuario.Usuario_id = Aluno_turma.Usuario_Usuario_cd
+				JOIN Turma ON aluno_turma.Turma_Turma_Cod = turma.Turma_Cod
+				group by usuario_id;";
 
 				$contador = 0;
 				$resultado = $conn->query($sql);
@@ -105,31 +100,30 @@ if (session_status() == PHP_SESSION_NONE) {
 							<img id="imagemExibida" src="../ICON/perfil.svg" alt="foto">
 						</div>
 						<div class="info-func">
-							<div class="modal">Nome:
-								<div class="texto" id="modalNome"></div>
+							<div class="modal1">Nome: <div class="texto" id="modalNome"></div>
 							</div>
 							<div class="linha">
-								<div class="col1 modal">Nascimento: <div class="texto" id="modalNascimento"></div>
+								<div class="col1 modal1">Nascimento: <div class="texto" id="modalNascimento"></div>
 								</div>
-								<div class="col2 modal" for="idade">Idade: <div class="texto" id="modalIdade"></div>
-								</div>
-							</div>
-							<div class="linha">
-								<div class="col1 modal">CPF: <div class="texto" id="modalCpf"></div>
-								</div>
-								<div class="col2 modal">RG: <div class="texto" id="modalRg"></div>
+								<div class="col2 modal1" for="idade">Idade: <div class="texto" id="modalIdade"></div>
 								</div>
 							</div>
 							<div class="linha">
-								<div class="col1 modal">Sexo: <div class="texto" id="modalSexo"></div>
+								<div class="col1 modal1">CPF: <div class="texto" id="modalCpf"></div>
 								</div>
-								<div class="col2 modal">E-mail: <div class="texto" id="modalEmail"></div>
+								<div class="col2 modal1">RG: <div class="texto" id="modalRg"></div>
 								</div>
 							</div>
 							<div class="linha">
-								<div class="col1 modal">Celular: <div class="texto" id="modalCelular"></div>
+								<div class="col1 modal1">Sexo: <div class="texto" id="modalSexo"></div>
 								</div>
-								<div class="col2 modal">Data de Ingresso: <div class="texto" id="modalIngresso"></div>
+								<div class="col2 modal1">E-mail: <div class="texto" id="modalEmail"></div>
+								</div>
+							</div>
+							<div class="linha">
+								<div class="col1 modal1">Celular: <div class="texto" id="modalCelular"></div>
+								</div>
+								<div class="col2 modal1">Data de Ingresso: <div class="texto" id="modalIngresso"></div>
 								</div>
 							</div>
 						</div>
@@ -141,23 +135,23 @@ if (session_status() == PHP_SESSION_NONE) {
 				<div class="endereco">
 					<p>Endereço</p>
 					<div class="linha">
-						<div class="col1 cola modal">Logradouro: <div class="texto" id="modalLogradouro"></div>
+						<div class="col1 cola modal1">Logradouro: <div class="texto" id="modalLogradouro"></div>
 						</div>
-						<div class="col2 colb modal">Nº: <div class="texto" id="modalNumero"></div>
-						</div>
-					</div>
-					<div class="linha">
-						<div class="col1 cola modal">Complemento: <div class="texto" id="modalComplemento"></div>
-						</div>
-						<div class="col2 colb modal">CEP: <div class="texto" id="modalCep"></div>
+						<div class="col2 colb modal1">Nº: <div class="texto" id="modalNumero"></div>
 						</div>
 					</div>
 					<div class="linha">
-						<div class="col1 cola modal">Bairro: <div class="texto" id="modalBairro"></div>
+						<div class="col1 cola modal1">Complemento: <div class="texto" id="modalComplemento"></div>
 						</div>
-						<div class="col2 colb modal">Cidade: <div class="texto" id="modalCidade"></div>
+						<div class="col2 colb modal1">CEP: <div class="texto" id="modalCep"></div>
 						</div>
-						<div class="col3 colc modal">UF: <div class="texto" id="modalUf"></div>
+					</div>
+					<div class="linha">
+						<div class="col1 cola modal1">Bairro: <div class="texto" id="modalBairro"></div>
+						</div>
+						<div class="col2 colb modal1">Cidade: <div class="texto" id="modalCidade"></div>
+						</div>
+						<div class="col3 colc modal1">UF: <div class="texto" id="modalUf"></div>
 						</div>
 					</div>
 				</div>
@@ -197,7 +191,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 		function informacao() {
 			if (selectedUserId) {
-				window.location.href = "s_alunos_info.php?userId=" + selectedUserId;
+				window.location.href = "c_alunos_info.php?userId=" + selectedUserId;
 			} else {
 				alert("Por favor, selecione um aluno.");
 			}

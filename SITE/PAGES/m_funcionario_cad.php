@@ -1,9 +1,24 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+if($_SESSION['Tipo_Tipo_cd'] != 1){
+    header("Location: ../logout.php");
+}
+require_once '../PHP/formatarInfo.php';
+
+$home = 'm_home.php';
+$titulo = 'CADASTRO DE FUNCIONÁRIO';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -29,23 +44,7 @@
     <?php include('../PHP/redes.php'); ?>
     <?php include('../PHP/dropdown.php'); ?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>CADASTRO DE FUNCIONÁRIOS</h1>
-                <div class="php">
-                    <?php echo $date; ?>
-                    <!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?>
-                <!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?>
@@ -146,7 +145,7 @@
                             </label>
                             <label for="logradouro" class="logradouro">
                                 <p>LOGRADOURO</p>
-                                <input type="text" name="logradouro" id="logradouro" readonly>
+                                <input type="text" name="logradouro" id="logradouro">
                             </label>
                             <label for="numero" class="numero">
                                 <p>Nº<span>*</span></p>
@@ -156,7 +155,7 @@
                         <div class="linha">
                             <label for="bairro" class="bairro">
                                 <p>BAIRRO</p>
-                                <input type="text" id="bairro" name="bairro" readonly>
+                                <input type="text" id="bairro" name="bairro">
                             </label>
                             <label for="complemento" class="complemento">
                                 <p>COMPLEMENTO</p>
@@ -166,11 +165,11 @@
                         <div class="linha">
                             <label for="cidade" class="cidade">
                                 <p>CIDADE</p>
-                                <input type="text" id="cidade" name="cidade" readonly>
+                                <input type="text" id="cidade" name="cidade">
                             </label>
                             <label for="estado" class="estado">
                                 <p>ESTADO</p>
-                                <input type="text" id="estado" name="estado" readonly>
+                                <input type="text" id="estado" name="estado">
                             </label>
                         </div>
                     </div>
@@ -195,84 +194,8 @@
     <script src="../JS/botao.js"></script>
     <script src="../PHP/sidebar/menu.js"></script>
     <script src="../JS/end.js"></script>
-    <script>
-        function limpar() {
-            // Adicione a lógica para limpar os campos do formulário aqui
-            document.getElementById('form').reset();
-            // Você pode adicionar mais lógica de limpeza conforme necessário
-        }
-        function exibirImagem() {
-            const input = document.getElementById('imagemInput');
-            const imagemExibida = document.getElementById('imagemExibida');
+    <script src="../JS/informacao.js"></script>
 
-            if (input.files && input.files[0]) {
-                const leitor = new FileReader();
-
-                leitor.onload = function (e) {
-                    imagemExibida.src = e.target.result;
-                };
-
-                leitor.readAsDataURL(input.files[0]);
-            }
-        }
-
-        const handleZipCode = (event) => {
-            let input = event.target
-            input.value = zipCodeMask(input.value)
-        }
-
-        const zipCodeMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{5})(\d)/, '$1-$2')
-            return value
-        }
-
-        const handlePhone = (event) => {
-            let input = event.target
-            input.value = PhoneMask(input.value)
-        }
-
-        const PhoneMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{2})(\d)/, "($1) $2")
-            value = value.replace(/(\d)(\d{4})$/, "$1-$2")
-            return value
-        }
-
-        const handleCPF = (value) => {
-
-            let input = event.target
-            input.value = CPFMask(input.value)
-        }
-
-        const CPFMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d{2})/, "$1-$2")
-
-            return value
-        }
-
-        const handleRG = (value) => {
-
-            let input = event.target
-            input.value = RGMask(input.value)
-        }
-
-        const RGMask = (value) => {
-            if (!value) return ""
-            value = value.replace(/\D/g, '')
-            value = value.replace(/(\d{2})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d)/, "$1.$2")
-            value = value.replace(/(\d{3})(\d{1})/, "$1-$2")
-
-            return value
-        }
-    </script>
 </body>
 
 </html>

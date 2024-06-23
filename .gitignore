@@ -1,0 +1,26 @@
+# Arquivos de compilação
+*.o
+*.out
+*.exe
+
+# Arquivos temporários
+*.tmp
+*.log
+
+# Arquivos de build e diretórios
+build/
+dist/
+node_modules/
+
+# Arquivos de configuração e segredos
+config.ini
+secrets.json
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db

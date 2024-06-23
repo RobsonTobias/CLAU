@@ -6,6 +6,9 @@ if (!isset($_SESSION['Usuario_id'])) {
     header("Location: index.html");
     exit();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 5){
+    header("Location: ../logout.php");
+}
 
 // Inclua seu arquivo de conexão com o banco de dados
 include '../conexao.php';
@@ -41,12 +44,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Professor_id'])) {
         $turmas[] = $linha;
     }
 }
+
+$titulo = 'GRADE HORÁRIA'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -122,16 +129,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Professor_id'])) {
     <?php include('../PHP/redes.php');?>
     <?php include('../PHP/dropdown.php');?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>GRADE HORÁRIA</h1>
-                <div class="php"><?php echo $date;?></div>
-            </div>
-            <div class="user"><?php echo $dropdown;?></div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
+    
     <div><?php echo $sidebarHTML;?></div>
     <form method="post" action="">
         <label for="Professor_id">Selecione um professor:</label>

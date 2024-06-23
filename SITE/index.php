@@ -1,7 +1,4 @@
-<?php
-    require_once 'PHP/toats/toats.php';
-?>
-
+<?php include_once 'COMPONENTS/toats.php' ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -15,7 +12,6 @@
     <link rel="stylesheet" href="STYLE/style1.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="icon" href="ICON/C.svg" type="image/svg">
-    <link rel="stylesheet" href="PHP/toats/toats.css">
 </head>
 
 <body class="senha">
@@ -28,7 +24,6 @@
                         <p style="padding-left: 15px;">Usuário</p>
                         <input type="text" id="usuario" name="usuario" required>
                     </label>
-
                     <label for="password" class="labels">
                         <p style="padding-left: 15px;">Senha</p>
                             <input type="password" id="password" name="password" class="input__field" required>
@@ -39,6 +34,7 @@
                             echo "<p class='erro'>Usuário ou senha incorretos.</p>";
                         }
                     ?>
+                    
                     <a href="#" class="ancora esquecer" id="senha">Esqueceu sua senha</a>
                     <input type="submit" value="Login" class="btn primeiro-btn home">
                 </form>
@@ -68,7 +64,6 @@
             <div class="segunda-coluna">
             </div>
         </div>
-        
         <div class="buttons">
             <button class="buttons__toggle"><div class="borda"><img src="ICON/fale.svg" alt="Fale_Conosco"></div></button>
             <div class="allbtns">
@@ -78,7 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="local-toat-left">
+    <div class="local-custom-toast-left">
         <?php 
             if (isset($_GET["tipo"])){
                 $tipo = $_GET['tipo'];
@@ -87,8 +82,6 @@
         ?>
     </div>
     
-    <script src="PHP/toats/toats.js"></script>
-
     <script src="JS/botao.js"></script>
     <script src="JS/app.js"></script>
     <script src="JS/script.js"></script>

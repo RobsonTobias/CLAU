@@ -1,8 +1,20 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+if($_SESSION['Tipo_Tipo_cd'] != 5){
+    header("Location: ../logout.php");
+}
+$titulo = 'RELATÓRIO DE TURMAS'; //Título da página, que fica sobre a data
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -62,16 +74,8 @@
     <?php include('../PHP/sidebar/menu.php');?>
     <?php include('../PHP/redes.php');?>
     <?php include('../PHP/dropdown.php');?>
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>RELATÓRIO DE TURMAS</h1>
-                <div class="php"><?php echo $date; ?></div>
-            </div>
-            <div class="user"><?php echo $dropdown; ?></div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
+    
     <div><?php echo $sidebarHTML; ?></div>
     <main>
         <div class="tabela-turmas">
@@ -102,7 +106,7 @@
                             echo "<td>" . $row['Turma_Vagas'] . "</td>";
                             echo "<td>" . $row['Turma_Dias'] . "</td>";
                             echo "<td>" . date('d/m/Y', strtotime($row['Turma_Inicio'])) . "</td>";
-                            echo "<td><a href='s_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='button-link'>Detalhes</a></td>";
+                            echo "<td><a href='c_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='button-link'>Detalhes</a></td>";
                             echo "</tr>";
                         }
                     } else {

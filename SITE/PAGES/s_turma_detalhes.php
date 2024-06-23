@@ -1,9 +1,21 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    // Se não houver sessão ativa, inicia a sessão
+    session_start();
+}
+if($_SESSION['Tipo_Tipo_cd'] != 2){
+    header("Location: ../logout.php");
+}
+$titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -116,21 +128,7 @@
     }
     ?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>DETALHES DA TURMA</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+<?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
@@ -181,36 +179,36 @@
             <div class="informacao">
                 <p>Informações Gerais</p>
                 <div class="infofuncionario">
-                    <div class="col1 modal">Curso: <div class="texto">
+                    <div class="col1 modal1">Curso: <div class="texto">
                             <?php echo $turma['Nome_Curso']; ?>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 modal">Turma: <div class="texto">
+                        <div class="col1 modal1">Turma: <div class="texto">
                                 <?php echo $turma['Turma_Cod']; ?>
                             </div>
                         </div>
-                        <div class="col2 modal">Professor: <div class="texto">
+                        <div class="col2 modal1">Professor: <div class="texto">
                                 <?php echo $turma['Nome_Professor']; ?>
                             </div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 modal">Início: <div class="texto">
+                        <div class="col1 modal1">Início: <div class="texto">
                                 <?php echo date('d/m/Y', strtotime($turma['Turma_Inicio'])); ?>
                             </div>
                         </div>
-                        <div class="col2 modal">Término: <div class="texto">
+                        <div class="col2 modal1">Término: <div class="texto">
                                 <?php echo date('d/m/Y', strtotime($turma['Turma_Termino'])); ?>
                             </div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 modal">Horário: <div class="texto">
+                        <div class="col1 modal1">Horário: <div class="texto">
                                 <?php echo $turma['Turma_Horario']; ?>h
                             </div>
                         </div>
-                        <div class="col2 modal">Dias de aula: <div class="texto">
+                        <div class="col2 modal1">Dias de aula: <div class="texto">
                                 <?php echo $dias_aula_turma_texto; ?>
                             </div>
                         </div>
@@ -224,17 +222,17 @@
                 <p>Informações Acadêmicas</p>
                 <div class="infofuncionario">
                     <div class="linha" style="margin-top: 0;">
-                        <div class="col1 modal">Alunos matriculados: <div class="texto">
+                        <div class="col1 modal1">Alunos matriculados: <div class="texto">
                                 <?php echo $turma['Turma_Horario']; ?>h
                             </div>
                         </div>
-                        <div class="col2 modal">Máximo de alunos: <div class="texto">
+                        <div class="col2 modal1">Máximo de alunos: <div class="texto">
                                 <?php echo $turma['Turma_Vagas']; ?>
                             </div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 modal">Frequência:
+                        <div class="col1 modal1">Frequência:
                             <div class="texto"> <?php $resultado_frequencia ?> % </div>&nbsp;&nbsp;
                             <div class="barra-frequencia-container">
                                 <div class="barra-frequencia" style="width:'<?php $resultado_frequencia ?>;%'">

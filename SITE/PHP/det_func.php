@@ -9,7 +9,6 @@ if ($conn->connect_error) {
 }
 
 $userId = $_GET['userId'];
-
 // Consulta para obter detalhes do usuário
 $sql = "SELECT * FROM Usuario 
 INNER JOIN Enderecos on Enderecos.Enderecos_id = Usuario.Enderecos_Enderecos_cd  

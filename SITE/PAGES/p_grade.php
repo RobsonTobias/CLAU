@@ -6,15 +6,18 @@ if (!isset($_SESSION['Usuario_id'])) {
     header("Location: index.html");
     exit();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 4){
+    header("Location: ../logout.php");
+}
 
 // Resgata o ID do usuário logado
 $usuarioId = $_SESSION['Usuario_id'];
 
 // Consulta SQL para obter as turmas do professor logado
-include '../conexao.php'; // Inclua seu arquivo de conexão com o banco de dados
+include '../conexao.php';
 $sql = "SELECT turma.turma_cod, turma.turma_horario, turma.turma_horario_termino, turma.turma_dias
         FROM turma
-        WHERE turma.usuario_usuario_cd = $usuarioId";  // Filtra pelo ID do usuário logado
+        WHERE turma.usuario_usuario_cd = $usuarioId and turma_status = 1";
 
 $resultado = mysqli_query($conn, $sql);
 if (!$resultado) {
@@ -23,11 +26,27 @@ if (!$resultado) {
 
 // Array para armazenar as turmas do professor
 $turmas = array();
-
-// Preenche o array com os dados das turmas
 while ($linha = mysqli_fetch_assoc($resultado)) {
     $turmas[] = $linha;
 }
+
+// Definindo um array com 20 cores pastéis
+$cores = array(
+    '#8c78ff', '#649bfa', '#97f7ad', '#f1fa93', '#4e87bf',
+    '#3a593d', '#F8BBD0', '#FFCCBC', '#C8E6C9', '#FFF9C4',
+    '#FFECB3', '#D1C4E9', '#B39DDB', '#E1BEE7', '#F48FB1',
+    '#FFAB91', '#FFCC80', '#FFE082', '#FFF176', '#AED581'
+);
+
+// Array para armazenar as cores das turmas
+$cores_turmas = array();
+
+// Associa uma cor pastel a cada turma
+foreach ($turmas as $index => $turma) {
+    $cores_turmas[$turma['turma_cod']] = $cores[$index % count($cores)];
+}
+
+$titulo = 'GRADE HORÁRIA';
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +54,8 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -46,9 +67,6 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
-        .grade path{
-            fill: #043140;
-        }
         table {
             border-collapse: collapse;
             width: 100%;
@@ -56,25 +74,14 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
         th, td {
             border: 1px solid #dddddd;
             text-align: center;
-            padding: 8px;
+            padding: 4px;
         }
         th {
             background-color:#61d4a8;
         }
-        /* Estilo para células com turma do professor */
-        .turmas {
-            background-color: #a5d6a7;
-            padding: 5px; /* Espaçamento interno para melhor visualização */
-        }
-
-        .horario {
-            border: 1px solid #ddd; /* Adicione uma borda para melhorar a aparência */
-            background-color: #fff; /* Cor de fundo padrão */
-        }
-
         .horario .vago {
-            background-color: #ff2222; /* Cor de fundo vermelha para horários vagos */
-            padding: 5px; /* Espaçamento interno para melhor visualização */
+            background-color: #f96e6e;
+            padding: 5px;
         }
     </style>
 </head>
@@ -84,24 +91,10 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
     <?php include('../PHP/redes.php');?>
     <?php include('../PHP/dropdown.php');?>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>GRADE HORÁRIA</h1>
-                <div class="php">
-                    <?php echo $date;?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown;?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
-        <?php echo $sidebarHTML;?><!--  Mostrar o menu lateral -->
+        <?php echo $sidebarHTML; ?>
     </div>
 
     <main>
@@ -130,18 +123,19 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
                 echo "<td>$hora</td>";
                 foreach ($dias_semana as $dia_numero => $dia_nome) {
                     echo "<td class='horario'>";
-                    // Verifica se há alguma turma do professor nesse horário e dia
                     $aula_encontrada = false;
                     foreach ($turmas as $turma) {
                         $diasAulaTurma = $turma['turma_dias'];
-                        $dias_turma = str_split($diasAulaTurma); // Converte a string para um array de caracteres
+                        $dias_turma = str_split($diasAulaTurma);
 
                         $dia_numero_turma = intval($dia_numero);
                         $turma_inicio = strtotime($turma['turma_horario']);
                         $turma_termino = strtotime($turma['turma_horario_termino']);
 
                         if (in_array($dia_numero_turma, $dias_turma) && $i >= date('H', $turma_inicio) && $i < date('H', $turma_termino)) {
-                            echo "<div class='turmas'>" . $turma['turma_cod'] . "</div>";
+                            $codigo_turma = $turma['turma_cod'];
+                            $cor_turma = $cores_turmas[$codigo_turma]; // Pega a cor associada à turma
+                            echo "<div style='background-color: {$cor_turma}; padding: 5px;'>" . $codigo_turma . "</div>";
                             $aula_encontrada = true;
                             break;
                         }
@@ -158,7 +152,7 @@ while ($linha = mysqli_fetch_assoc($resultado)) {
     </main>
 
     <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes; ?>
     </div>
 
     <script src="../JS/dropdown.js"></script>

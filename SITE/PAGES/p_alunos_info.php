@@ -4,6 +4,9 @@ include ('../conexao.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+if($_SESSION['Tipo_Tipo_cd'] != 4){
+    header("Location: ../logout.php");
+}
 
 $userId = $_SESSION['UsuarioSelecionado'] ?? null;
 if (!$userId) {
@@ -36,6 +39,8 @@ $stmtOcorrencias = $conn->prepare($sqlOcorrencias);
 $stmtOcorrencias->bind_param("i", $userId);
 $stmtOcorrencias->execute();
 $resultOcorrencias = $stmtOcorrencias->get_result();
+
+$titulo = 'INFORMAÇÃO DO ALUNO'; //Título da página, que fica sobre a data
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -43,6 +48,8 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
@@ -127,21 +134,7 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
         </div>
     </div>
 
-    <header>
-        <div class="title">
-            <div class="nomedata closed">
-                <h1>INFORMAÇÕES DO ALUNO</h1>
-                <div class="php">
-                    <?php echo $date; ?><!--  Mostrar o data atual -->
-                </div>
-            </div>
-
-            <div class="user">
-                <?php echo $dropdown; ?><!-- Mostra o usuario, foto e menu dropdown -->
-            </div>
-        </div>
-        <hr>
-    </header>
+    <?php require_once '../COMPONENTS/header.php' ?>
 
     <div>
         <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
@@ -161,17 +154,17 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                             <img id="imagemExibida" src="<?php echo $row['Usuario_Foto']; ?>" alt="foto">
                         </div>
                         <div class="info-func">
-                            <div class="modal">Nome: <div class="texto">
+                            <div class="modal1">Nome: <div class="texto">
                                     <?php echo $row['Usuario_Nome']; ?>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Nascimento: <div class="texto" id="modalNascimento">
+                                <div class="col1 modal1">Nascimento: <div class="texto" id="modalNascimento">
                                         <?php $nascimento = new DateTime($row['Usuario_Nascimento']);
                                         echo $nascimento->format('d/m/Y'); ?>
                                     </div>
                                 </div>
-                                <div class="col2 modal" for="idade">Idade:
+                                <div class="col2 modal1" for="idade">Idade:
                                     <div class="texto" id="modalIdade">
                                         <?php echo $row['Idade'] . " anos"; ?>
                                     </div>
@@ -179,17 +172,17 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                                 
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">CPF: <div class="texto" id="modalCpf">
+                                <div class="col1 modal1">CPF: <div class="texto" id="modalCpf">
                                         <?php echo $row['Usuario_Cpf']; ?>
                                     </div>
                                 </div>
-                                <div class="col2 modal">RG: <div class="texto" id="modalRg">
+                                <div class="col2 modal1">RG: <div class="texto" id="modalRg">
                                         <?php echo $row['Usuario_Rg']; ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Sexo: <div class="texto" id="modalSexo">
+                                <div class="col1 modal1">Sexo: <div class="texto" id="modalSexo">
                                         <?php if ($row['Usuario_Sexo'] === 'M') {
                                             echo 'Masculino';
                                         } else {
@@ -197,18 +190,18 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                                         } ?>
                                     </div>
                                 </div>
-                                <div class="col2 colc modal">Matrícula:
+                                <div class="col2 colc modal1">Matrícula:
                                     <div class="texto" id="modalUf">
                                         <?php echo $row['Usuario_Matricula']; ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="linha">
-                                <div class="col1 modal">Celular: <div class="texto" id="modalCelular">
+                                <div class="col1 modal1">Celular: <div class="texto" id="modalCelular">
                                         <?php echo $row['Usuario_Fone']; ?>
                                     </div>
                                 </div>
-                                <div class="col2 modal">E-mail: <div class="texto" id="modalEmail">
+                                <div class="col2 modal1">E-mail: <div class="texto" id="modalEmail">
                                         <?php echo $row['Usuario_Email']; ?>
                                     </div>
                                 </div>
@@ -224,35 +217,35 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                 <div class="endereco">
                     <p>Endereço</p>
                     <div class="linha">
-                        <div class="col1 cola modal">Logradouro: <div class="texto" id="modalLogradouro">
+                        <div class="col1 cola modal1">Logradouro: <div class="texto" id="modalLogradouro">
                                 <?php echo $row['Enderecos_Rua']; ?>
                             </div>
                         </div>
-                        <div class="col2 colb modal">Nº: <div class="texto" id="modalNumero">
+                        <div class="col2 colb modal1">Nº: <div class="texto" id="modalNumero">
                                 <?php echo $row['Enderecos_Numero']; ?>
                             </div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 cola modal">Complemento: <div class="texto" id="modalComplemento">
+                        <div class="col1 cola modal1">Complemento: <div class="texto" id="modalComplemento">
                                 <?php echo $row['Enderecos_Complemento']; ?>
                             </div>
                         </div>
-                        <div class="col2 colb modal">CEP: <div class="texto" id="modalCep">
+                        <div class="col2 colb modal1">CEP: <div class="texto" id="modalCep">
                                 <?php echo $row['Enderecos_Cep']; ?>
                             </div>
                         </div>
                     </div>
                     <div class="linha">
-                        <div class="col1 cola modal">Bairro: <div class="texto" id="modalBairro">
+                        <div class="col1 cola modal1">Bairro: <div class="texto" id="modalBairro">
                                 <?php echo $row['Enderecos_Bairro']; ?>
                             </div>
                         </div>
-                        <div class="col2 colb modal">Cidade: <div class="texto" id="modalCidade">
+                        <div class="col2 colb modal1">Cidade: <div class="texto" id="modalCidade">
                                 <?php echo $row['Enderecos_Cidade']; ?>
                             </div>
                         </div>
-                        <div class="col3 colc modal">UF: <div class="texto" id="modalUf">
+                        <div class="col3 colc modal1">UF: <div class="texto" id="modalUf">
                                 <?php echo $row['Enderecos_Uf']; ?>
                             </div>
                         </div>
@@ -270,7 +263,7 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                             $dataOcorrencia = new DateTime($rowOcorrencia['Ocorrencia_Registro']);
                             // Exibir os detalhes de cada ocorrência
                             echo "<div class='infofuncionario margin'>";
-                            echo "<div class='col1 cola modal ocorrencia'>Data: <div class='texto'>" . $dataOcorrencia->format('d/m/Y') . "</div></div>";
+                            echo "<div class='col1 cola modal1 ocorrencia'>Data: <div class='texto'>" . $dataOcorrencia->format('d/m/Y') . "</div></div>";
                             echo "<div class='cola ocorrencia'>" . $rowOcorrencia['Mensagem'] . "</div>";
                             echo "</div>";
                         }
@@ -296,32 +289,32 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                         $cursoId = $rowTurma["Curso_id"];
                         // Início do bloco HTML para as informações de cada turma
                         echo '<div class="infofuncionario clicavel" onclick="mostrarDetalhes(this)" data-turma-cod="' . htmlspecialchars($rowTurma['Turma_Cod'], ENT_QUOTES, 'UTF-8') . '">';
-                        echo '    <div class="cola modal ocorrencia">Curso:';
+                        echo '    <div class="cola modal1 ocorrencia">Curso:';
                         echo '        <div class="texto">';
                         echo $rowTurma['Curso_Nome'];
                         echo '        </div>';
                         echo '    </div>';
                         echo '    <div class="linha">';
-                        echo '        <div class="col1 cola modal">Turma:';
+                        echo '        <div class="col1 cola modal1">Turma:';
                         echo '            <div class="texto">';
                         echo $rowTurma['Turma_Cod'];
                         echo '            </div>';
                         echo '        </div>';
-                        echo '        <div class="col2 colb modal">Professor:';
+                        echo '        <div class="col2 colb modal1">Professor:';
                         echo '            <div class="texto" id="modalCidade">';
                         echo $rowTurma['Professor'];
                         echo '            </div>';
                         echo '        </div>';
                         echo '    </div>';
                         echo '    <div class="linha">';
-                        echo '        <div class="col1 cola modal">Horário:';
+                        echo '        <div class="col1 cola modal1">Horário:';
                         echo '            <div class="texto" id="modalCidade">';
                         $horarioInicio = date('H:i', strtotime($rowTurma['Turma_Horario']));
                         $horarioTermino = date('H:i', strtotime($rowTurma['Turma_Horario_Termino']));
                         echo $horarioInicio . ' - ' . $horarioTermino;
                         echo '            </div>';
                         echo '        </div>';
-                        echo '        <div class="col2 colb modal">Situação:';
+                        echo '        <div class="col2 colb modal1">Situação:';
                         echo '            <div class="select texto" id="situacaoSelect" >';
                         echo '              <label><input class="texto" type="radio" name="situacao" value="Ativo" ' . ($rowTurma['Aluno_Turma_Status'] === '1' ? 'checked' : '') . '> Ativo</label>';
                         echo '              <label><input class="texto" type="radio" name="situacao" value="Inativo" ' . ($rowTurma['Aluno_Turma_Status'] === '0' ? 'checked' : '') . '> Inativo</label>';
@@ -329,7 +322,7 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
                         echo '        </div>';
                         echo '    </div>';
                         echo '    <div class="linha">';
-                        echo '        <div class="col1 cola modal">Frequência:';
+                        echo '        <div class="col1 cola modal1">Frequência:';
                         echo '            <div class="texto">';
                         echo $rowTurma['Frequencia'] . '%'; // Aqui usamos o valor da frequência da consulta
                         echo '            </div>&nbsp;&nbsp;';
@@ -360,7 +353,7 @@ $resultOcorrencias = $stmtOcorrencias->get_result();
     <script>
 
         function salvarSituacao() {
-            // Obtém a nova situação a partir do botão de rádio selecionado no modal
+            // Obtém a nova situação a partir do botão de rádio selecionado no modal1
             var situacaoNova = document.querySelector('input[name="situacao"]:checked').value;
 
             var xhr = new XMLHttpRequest();

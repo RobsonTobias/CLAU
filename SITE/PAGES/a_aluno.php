@@ -4,7 +4,12 @@
     if (session_status() == PHP_SESSION_NONE) {
         // Se não houver sessão ativa, inicia a sessão
         session_start();
-    }
+    }if($_SESSION['Tipo_Tipo_cd'] != 3){
+    header("Location: ../logout.php");
+}
+if($_SESSION['Tipo_Tipo_cd'] != 3){
+    header("Location: ../logout.php");
+}
 
     $userId = $_SESSION['Usuario_id'];
 
@@ -34,6 +39,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <title>CLAU - Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="../PHP/sidebar/menu.css">
     <link rel="stylesheet" href="../STYLE/botao.css" />
