@@ -141,4 +141,8 @@ update usuario set usuario_status = 0 where usuario_apelido = "Evelyn";
 
 select * from usuario;
 
+use clau;
+
 update turma set turma_horario_termino = "10:00:00" where turma_dias = 34;
+
+update usuario set usuario_status = 1 where usuario_id = 3;
