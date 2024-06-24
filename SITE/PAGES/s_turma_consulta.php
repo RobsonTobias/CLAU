@@ -24,56 +24,11 @@ $titulo = 'RELATÓRIO DE TURMAS'; //Título da página, que fica sobre a data
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../STYLE/style_home.css">
     <link rel="icon" href="../ICON/C.svg" type="image/svg">
-    <style>
-        .turma path {
-            fill: #004765;
-        }
-
-        .turmas-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        margin-top: 20px;
-        font-family: Arial, sans-serif; /* Fonte mais moderna e legível */
-    }
-
-    .turmas-table th, .turmas-table td {
-        padding: 15px;
-        text-align: left;
-        border-bottom: 1px solid #e0e0e0; /* Bordas mais sutis */
-    }
-
-    .turmas-table th {
-        background-color: #0ae092; /* Cor de fundo neutra para os cabeçalhos */
-        color: #333; /* Cor de texto mais suave */
-        font-weight: normal;
-        text-transform: uppercase; /* Letras maiúsculas aumentam a legibilidade */
-    }
-
-    .turmas-table tbody tr:hover {
-        background-color: #f1f1f1; /* Hover com uma cor mais discreta */
-    }
-
-    /* Adicionando uma sombra sutil nas células do cabeçalho */
-    .turmas-table th {
-        box-shadow: inset 0 -1px 0 0 #e0e0e0;
-    }
-
-    /* Estilização do link como botão */
-    .button-link {
-        display: inline-block;
-        padding: 5px 10px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 14px;
-    }
-
-    .button-link:hover {
-        background-color: #45a049;
-    }
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    
 </head>
 
 <body>
@@ -103,8 +58,8 @@ $titulo = 'RELATÓRIO DE TURMAS'; //Título da página, que fica sobre a data
 
 
     <main>
-        <div class="tabela-turmas">
-            <table class="turmas-table">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Código da Turma</th>
@@ -133,7 +88,7 @@ $titulo = 'RELATÓRIO DE TURMAS'; //Título da página, que fica sobre a data
                             echo "<td>" . $row['Turma_Vagas'] . "</td>";
                             echo "<td>" . $row['Turma_Dias'] . "</td>";
                             echo "<td>" . date('d/m/Y', strtotime($row['Turma_Inicio'])) . "</td>"; // Data no formato brasileiro
-                            echo "<td><a href='s_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='button-link'>Detalhes</a></td>"; // Link para detalhes da turma
+                            echo "<td><a href='s_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='btn btn-primary btn-sm'>Detalhes</a></td>"; // Link para detalhes da turma
                             echo "</tr>";
                         }
                     } else {
