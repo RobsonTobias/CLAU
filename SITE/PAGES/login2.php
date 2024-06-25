@@ -1,14 +1,11 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
-    session_start();
-}
+require_once '../COMPONENTS/head.php';
+
 // Certifique-se de que a variável de sessão Permissoes existe e não está vazia
 if (isset($_SESSION['Permissoes']) && !empty($_SESSION['Permissoes'])) {
     $permissoes = $_SESSION['Permissoes'];
 
 } else {
-    // Se não houver permissões definidas, redirecione de volta para a página de login ou trate o erro
     header('Location: index.php');
     exit();
 }
@@ -16,39 +13,24 @@ if (isset($_SESSION['Permissoes']) && !empty($_SESSION['Permissoes'])) {
 $titulo = 'LOGIN'; //Título da página, que fica sobre a data
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+<style>
+    button {
+        background-color: #043140;
+        border: none;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../STYLE/botao.css" />
-    <link rel="stylesheet" href="../STYLE/data.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../STYLE/login.css">
-    <link rel="icon" href="../ICON/C.svg" type="image/svg">
-    <style>
-        button {
-            background-color: #043140;
-            border: none;
-        }
-        form.item:hover button {
-            background-color: #176204;
-        }
-    </style>
-</head>
+    form.item:hover button {
+        background-color: #176204;
+    }
+
+    main {
+        height: 100vh;
+        margin: 0;
+        align-items: center;
+    }
+</style>
 
 <body>
-
-    <?php include ('../PHP/data.php'); ?>
-    <?php include ('../PHP/redes.php'); ?>
-    <?php include ('../PHP/dropdown.php'); ?>
-
-    <?php require_once '../COMPONENTS/header.php' ?>
 
     <main>
         <?php if (in_array(1, $permissoes)): ?>
@@ -96,14 +78,6 @@ $titulo = 'LOGIN'; //Título da página, que fica sobre a data
             </form>
         <?php endif ?>
     </main>
-
-
-    <div class="buttons">
-        <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
-    </div>
-
-    <script src="../JS/dropdown.js"></script>
-    <script src="../JS/botao.js"></script>
 
 </body>
 

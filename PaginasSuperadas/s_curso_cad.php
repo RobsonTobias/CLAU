@@ -13,7 +13,7 @@ $titulo = 'CADASTRO DE CURSO'; //Título da página, que fica sobre a data
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
@@ -35,7 +35,7 @@ $titulo = 'CADASTRO DE CURSO'; //Título da página, que fica sobre a data
      <link rel="stylesheet" href="../STYLE/estilo.css" /> <!-- ESTILO JUNTO DO BOOTSTRAP -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../STYLE/cadastro.css">
-
+    
     <style>
         .curso path {
             fill: #043140;
@@ -68,7 +68,6 @@ $titulo = 'CADASTRO DE CURSO'; //Título da página, que fica sobre a data
             background-color: #4CAF50;
             border: none;
             color: #FFFFFF;
-            align-items: center;
         }
 
         .removerModulo {
@@ -82,9 +81,6 @@ $titulo = 'CADASTRO DE CURSO'; //Título da página, que fica sobre a data
             background-color: #F24E1E;
             border: none;
             color: #FFFFFF;
-        }
-        p{
-            margin-bottom: 0;
         }
     </style>
     <script>
@@ -196,7 +192,7 @@ $titulo = 'CADASTRO DE CURSO'; //Título da página, que fica sobre a data
                         if (response.includes("Cadastro realizado com sucesso!")) {
                             $('#form').trigger("reset"); // Limpa o formulário
                             alert("Cadastro realizado com sucesso!"); // Exibe um alerta de sucesso
-                            window.location.href = "s_curso.php"; // Redireciona para a nova página
+                            window.location.href = "s_curso_consulta.php"; // Redireciona para a nova página
                         } else {
                             alert(response); // Exibe outros alertas retornados pelo servidor
                         }

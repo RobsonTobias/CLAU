@@ -25,7 +25,7 @@ if (!isset($_SESSION['Tipo_Tipo_cd']) || $_SESSION['Tipo_Tipo_cd'] != 1) {
     exit();
 }
 $titulo = 'HOME'; //Título da página, que fica sobre a data
-include_once '../COMPONENTS/toats/toats.php';
+include_once '../COMPONENTS/toats.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

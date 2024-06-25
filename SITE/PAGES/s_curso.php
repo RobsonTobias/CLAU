@@ -11,20 +11,20 @@ $paginaDestino = 's_curso_cad.php';
 $elemento = 'Curso';
 ?>
 
-<style>
-    .curso path {
-        fill: #043140;
-    }
-    .campoModulo label {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 5px;
-        margin-bottom: 10px;
-    }
+    <style>
+        .curso path {
+            fill: #043140;
+        }
+        .campoModulo label {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
 
 
-</style>
+    </style>
 
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -89,6 +89,7 @@ $elemento = 'Curso';
                         input.type = 'text';
                         input.name = 'modulos[]';
                         input.className = 'rounded-pill';
+                        input.readOnly = "readonly"
                         input.value = modulo.Modulo_Nome || 'Não informado';
                         label.appendChild(input);
                         campoModulo.appendChild(label);

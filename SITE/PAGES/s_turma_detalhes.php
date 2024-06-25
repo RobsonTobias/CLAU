@@ -1,30 +1,13 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
-    session_start();
-}
+require_once '../COMPONENTS/head.php';
+require_once '../PHP/function.php';
+
 if($_SESSION['Tipo_Tipo_cd'] != 2){
     header("Location: ../logout.php");
 }
+$home = 's_turma.php';
 $titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
-    <link rel="stylesheet" href="../STYLE/botao.css" />
-    <link rel="stylesheet" href="../STYLE/data.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../STYLE/style_home.css">
-    <link rel="stylesheet" href="../STYLE/relatorio.css">
-    <link rel="icon" href="../ICON/C.svg" type="image/svg">
     <style>
         .turma path {
             fill: #043140;
@@ -53,15 +36,16 @@ $titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
         .infofuncionario {
             padding: 10px;
         }
+        .texto{
+            color: #212529;
+        }
+        p{
+            margin-bottom: 0;
+        }
     </style>
-</head>
 
 <body>
 
-    <?php include ('../PHP/data.php'); ?>
-    <?php include ('../PHP/sidebar/menu.php'); ?>
-    <?php include ('../PHP/redes.php'); ?>
-    <?php include ('../PHP/dropdown.php'); ?>
     <?php
     // Inclua aqui os arquivos PHP necessários
     // Aqui você pode incluir sua conexão com o banco de dados, por exemplo:
@@ -77,10 +61,11 @@ $titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
         $id_turma = $_GET['id'];
 
         // Consulta SQL para obter os detalhes da turma com o ID fornecido
-        $query = "SELECT Turma.*, curso.curso_nome AS Nome_Curso, Usuario.Usuario_Nome AS Nome_Professor
+        $query = "SELECT Turma.*, curso.curso_nome AS Nome_Curso, Usuario.Usuario_Nome AS Nome_Professor,  COUNT(Aluno_Turma.Usuario_Usuario_cd) AS matriculados
                   FROM Turma
                   INNER JOIN curso ON Turma.curso_cd = curso.curso_id
                   INNER JOIN Usuario ON Turma.Usuario_Usuario_cd = Usuario.Usuario_ID
+                  LEFT JOIN Aluno_Turma ON Turma.Turma_Cod = Aluno_Turma.Turma_Turma_Cod
                   WHERE Turma.Turma_Cod = '$id_turma'";
 
         // Executar a consulta
@@ -143,7 +128,7 @@ $titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
                 <?php
                 $sql = "SELECT Usuario_id, Usuario_Matricula, Usuario_Nome FROM Usuario
                     INNER JOIN Aluno_Turma ON Usuario.Usuario_id = Aluno_Turma.Usuario_Usuario_cd
-                    Where Aluno_Turma.Turma_Turma_Cod = '$id_turma'";
+                    Where Aluno_Turma.Turma_Turma_Cod = '$id_turma' AND Aluno_Turma_Status = 1";
 
                 $contador = 0;
                 $resultado = $conn->query($sql);
@@ -203,7 +188,7 @@ $titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
                     </div>
                     <div class="linha">
                         <div class="col1 modal1">Horário: <div class="texto">
-                                <?php echo $turma['Turma_Horario']; ?>h
+                                <?php echo date('H:i', strtotime($turma['Turma_Horario'])); ?>h
                             </div>
                         </div>
                         <div class="col2 modal1">Dias de aula: <div class="texto">
@@ -221,7 +206,7 @@ $titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
                 <div class="infofuncionario">
                     <div class="linha" style="margin-top: 0;">
                         <div class="col1 modal1">Alunos matriculados: <div class="texto">
-                                <?php echo $turma['Turma_Horario']; ?>h
+                                <?php echo $turma['matriculados']; ?>
                             </div>
                         </div>
                         <div class="col2 modal1">Máximo de alunos: <div class="texto">

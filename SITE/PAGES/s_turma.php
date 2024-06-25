@@ -1,54 +1,91 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    // Se não houver sessão ativa, inicia a sessão
-    session_start();
-}
-if($_SESSION['Tipo_Tipo_cd'] != 2){
+require_once '../COMPONENTS/head.php';
+require_once '../PHP/function.php';
+
+if ($_SESSION['Tipo_Tipo_cd'] != 2) {
     header("Location: ../logout.php");
 }
-$titulo = 'TURMAS'; //Título da página, que fica sobre a data
+$home = 's_home.php';
+$titulo = 'RELATÓRIO DE TURMAS';
+$paginaDestino = 's_turma_cad.php';
+$elemento = 'Turma';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAU - Sistema de Gestão Escolar</title>
-    <link rel="stylesheet" href="../PHP/sidebar/menu.css">
-    <link rel="stylesheet" href="../STYLE/botao.css" />
-    <link rel="stylesheet" href="../STYLE/data.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../STYLE/style_home.css">
-    <link rel="icon" href="../ICON/C.svg" type="image/svg">
-    <style>
-        .turma path{
-            fill: #043140;
-        }
-    </style>
-</head>
+
+<style>
+    .turma path {
+        fill: #043140;
+    }
+</style>
 
 <body>
 
+    <?php require_once '../COMPONENTS/header.php' ?>
 
 
-<?php require_once '../COMPONENTS/header.php' ?>
 
-   
-    
-    <main>
-        <a href="s_turma_cad.php" class="item"><img src="../ICON/cadastro_turma.svg" alt="Cadastro_Turmas">
-            <p>Cadastro de Turmas</p>
-        </a>
-        <a href="s_turma_consulta.php" class="item"><img src="../ICON/relatorio.svg" alt="Relatorio_Turmas">
-            <p>Relatório de Turmas</p>
-        </a>
-    </main>
+
+    <div class="container-fluid justify-content-center">
+        <div class="d-flex form-group justify-content-center mt-3" style="margin-left: 76px;">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="btn-group d-flex justify-content-between align-items-center">
+                            <div class="col-sm">
+                                <h5>Lista de Turmas</h5>
+                            </div>
+                            <div><?php require_once '../COMPONENTS/add2.php'; ?></div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Código da Turma</th>
+                                        <th class="text-center">Horário</th>
+                                        <th class="text-center">Vagas</th>
+                                        <th class="text-center">Dias</th>
+                                        <th class="text-center">Início</th>
+                                        <th class="text-center">Ações</th> <!-- Nova coluna para os botões -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // Consulta SQL para obter todas as turmas
+                                    $query = "SELECT * FROM Turma where turma_status = 1";
+
+                                    // Executar a consulta
+                                    $result = mysqli_query($conn, $query);
+
+                                    // Verificar se a consulta retornou algum resultado
+                                    if (mysqli_num_rows($result) > 0) {
+                                        // Loop através de todas as linhas da tabela
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr>";
+                                            echo "<td>" . $row['Turma_Cod'] . "</td>";
+                                            echo "<td class='text-center'>" . date('H:i', strtotime($row['Turma_Horario'])) . "</td>";
+                                            echo "<td class='text-center'>" . $row['Turma_Vagas'] . "</td>";
+                                            echo "<td class='text-center'>" . $row['Turma_Dias'] . "</td>";
+                                            echo "<td class='text-center'>" . date('d/m/Y', strtotime($row['Turma_Inicio'])) . "</td>"; // Data no formato brasileiro
+                                            echo "<td class='text-center'><a href='s_turma_detalhes.php?id=" . $row['Turma_Cod'] . "' class='btn btn-primary btn-sm'>Detalhes</a></td>"; // Link para detalhes da turma
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='6'>Nenhuma turma encontrada</td></tr>";
+                                    }
+
+                                    // Fechar a conexão com o banco de dados
+                                    mysqli_close($conn);
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="buttons">
-        <?php echo $redes;?><!--  Mostrar o botão de fale conosco -->
+        <?php echo $redes; ?><!--  Mostrar o botão de fale conosco -->
     </div>
 
     <script src="../JS/dropdown.js"></script>
