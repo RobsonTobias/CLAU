@@ -25,6 +25,8 @@ function enviarEmailCadastro($email, $nome, $login)
         $mail->Password = $_ENV['EMAIL_PASSWORD'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
+        
+        $mail->CharSet = 'UTF-8';
 
         $mail->setFrom('tcc.clau@gmail.com', 'Sistema CLAU');
         $mail->addAddress($email);

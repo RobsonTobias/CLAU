@@ -46,7 +46,6 @@ CREATE TABLE Usuario (
   Usuario_Status CHAR(1) DEFAULT 1,
   Usuario_Foto VARCHAR(255) NULL,
   Usuario_Matricula INT (6) NULL,
-  Mudar_Senha BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (Usuario_id),
   UNIQUE INDEX Aluno_Cpf_UNIQUE (Usuario_Cpf ASC),
   UNIQUE INDEX Aluno_Email_UNIQUE (Usuario_Email ASC),
@@ -167,8 +166,8 @@ CREATE TABLE aula (
     descricao VARCHAR(255),
     data_aula DATE,
     data_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (cod_turma) REFERENCES Turma(Turma_cod), 
-    FOREIGN KEY (id_modulo) REFERENCES Modulo(Modulo_id)
+    FOREIGN KEY (cod_turma) REFERENCES Turma(Turma_cod), -- Substitua Turma(id) pelo nome correto da sua tabela e coluna de turma
+    FOREIGN KEY (id_modulo) REFERENCES Modulo(Modulo_id) -- Substitua Modulo(id) pelo nome correto da sua tabela e coluna de módulo
 );
 
 CREATE TABLE notas (
@@ -190,7 +189,7 @@ CREATE TABLE Aulas (
 ) ENGINE=InnoDB;
 
 create table Ocorrencia(
-	Ocorrencia_id int not null AUTO_INCREMENT,
+	Ocorrencia_id int not null,
 	Aluno_Turma_cd INT NOT NULL,
 	Mensagem TEXT not null,
     Usuario_Usuario_cd int not null,
@@ -216,6 +215,7 @@ CREATE TABLE Login(
   PRIMARY KEY (Usuario_Usuario_cd, Login_Data),
   FOREIGN KEY (Usuario_Usuario_cd) REFERENCES Usuario (Usuario_id)
 ) ENGINE=InnoDB;
+
 
 CREATE TABLE notificacao (
 	id_notificacao INT AUTO_INCREMENT PRIMARY KEY,
@@ -251,164 +251,3 @@ VALUES (1,1);
 -- -------------------- --
 -- FIM MASTER / DIRETOR --
 -- -------------------- --
-
--- ---------- --
--- SECRETARIA --
--- ---------- --
--- Endereço do usuário na tabela Endereços
-INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
-VALUES ('12240-030','Rua dos Alecrins','538','Jardim das Indústrias','São José dos Campos','São Paulo');
-
--- Cadastro do usuário na tabela Usuario
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('Miguel Almeida Ferreira','Miguel','miguel.ferreira@email.com','M','904.276.838-07','11.111.111-1','1996-02-15','Solteiro','(11) 11111-1111','secretaria','secretaria',2,1,1,'../IMAGE/PROFILE/02.png');
-
--- Cadastro do usuário como tipo na tabela Registro_Usuario
-INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (2,2);
--- -------------- --
--- FIM SECRETARIA --
--- -------------- --
-
--- --------- --
--- PROFESSOR --
--- --------- --
--- Endereço do usuário na tabela Endereços
-INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
-VALUES ('12233-597','Rua Andrelândia','103','Bosque dos Eucaliptos','São José dos Campos','São Paulo');
-
--- Cadastro do usuário na tabela Usuario
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('Evelyn Azevedo Pinto','Evelyn','evelyn.pinto@email.com','F','439.979.782-71','22.222.222-2','1989-03-26','Casada','(22) 2222-2222','professor','professor',3,2,1,'../IMAGE/PROFILE/03.png');
-
--- Cadastro do usuário como tipo na tabela Registro_Usuario
-INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (3,4);
--- ------------- --
--- FIM PROFESSOR --
--- ------------- --
-
--- ----------------------- --
--- COORDENADOR / PROFESSOR --
--- ----------------------- --
--- Endereço do usuário na tabela Endereços
-INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
-VALUES ('12242-530','Rua João Bicudo','258','Jardim Esplanada','São José dos Campos','São Paulo');
-
--- Cadastro do usuário na tabela Usuario
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('Kiyumi Otsuka','Kiyumi','kiyumi.otsuka@email.com','F','658.285.418-62','33.333.333-3','1991-04-17','Solteira','(33) 33333-3333','coordenador','coordenador',4,2,1,'../IMAGE/PROFILE/01.png');
-
--- Cadastro do usuário como tipo na tabela Registro_Usuario
-INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (4,4),(4,5);
--- --------------------------- --
--- FIM COORDENADOR / PROFESSOR --
--- --------------------------- --
-
--- -------- --
--- ALUNO 01 --
--- -------- --
--- Endereço do usuário na tabela Endereços
-INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
-VALUES ('12236-420','Rua Joana Soares Ferreira','1063','Cidade Morumbi','São José dos Campos','São Paulo');
-
--- Cadastro do usuário na tabela Usuario
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto, Usuario_Matricula)
-VALUES ('Laura Cunha Dias','Laura','laura.dias@email.com','F','135.577.066-13','44.444.444-4','2003-06-18','Solteira','(44) 4444-4444','aluno','aluno',5,2,1,'../IMAGE/PROFILE/04.png','240001');
-
--- Cadastro do usuário como tipo na tabela Registro_Usuario
-INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (5,3);
--- ------------ --
--- FIM ALUNO 01 --
--- ------------ --
-
--- -------- --
--- ALUNO 02 --
--- -------- --
--- Endereço do usuário na tabela Endereços
-INSERT INTO Enderecos (Enderecos_Cep, Enderecos_Rua, Enderecos_Numero, Enderecos_Bairro, Enderecos_Cidade, Enderecos_Uf)
-VALUES ('12220-200','Rua Graúna','562','Vila Tatetuba','São José dos Campos','São Paulo');
-
--- Cadastro do usuário na tabela Usuario
-INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto, Usuario_Matricula)
-VALUES ('Vitória Pinto Carvalho','Vitória','vitoria.carvalho@email.com','F','142.763.597-83','44.333.555-8','2008-10-05','Solteira','(55) 55555-5555','aluno2','aluno2',6,2,1,'../IMAGE/PROFILE/05.png','240002');
-
--- Cadastro do usuário como tipo na tabela Registro_Usuario
-INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
-VALUES (6,3);
--- ------------ --
--- FIM ALUNO 02 --
--- ------------ --
-
-
--- ------ --
--- CURSOS --
--- ------ --
-INSERT INTO Curso (Curso_Nome, Curso_Sigla, Curso_Carga_horaria, Curso_Desc, Curso_Duracao, Curso_PreRequisito, Curso_Status)
-VALUES 
-('Informática', 'INF', 150, 'Curso de informática e pacote Office', 18, 'Nenhum pré-requisito', '1'),
-('Administração de Empresas', 'ADM', 200, 'Curso básico de Administração de Empresas', 24, 'Nenhum Pré-requisito', '1'),
-('Inglês', 'ING', 200, 'Curso de Inglês do básico ao avançado', 24, 'Nenhum Pré-requisito', '1'),
-('Web-Design', 'WEB', 200, 'Curso de Web-Design com programação de sites e edição', 24, 'Informática Básica', '1');
-
-
--- ************* --
--- ** MÓDULOS ** --
--- ************* --  
-
--- ----------- --
--- INFORMATICA --
--- ----------- --
-INSERT INTO Modulo (Modulo_Nome, Modulo_Desc, Modulo_Status)
-VALUES
-('Introdução à Informática', 'Conhecimento básico de informática', '1'),
-('Windows', 'Principais funcionalidades do Windows', '1'),
-('Word', 'Funcionalidades do Word', '1'),
-('Excel', 'Criação de planilhas com fórmulas', '1'),
-('Power Point', 'Criação de apresentações', '1'),
-('Internet', 'Principais funcionalidades da Internet', '1');
-
--- --------------------------- --
--- Associar módulos aos cursos --
--- --------------------------- --
-INSERT INTO Modulo_Curso (Modulo_Modulo_cd, Curso_Curso_cd)
-VALUES
-(1, 1), 
-(2, 1),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1);
-
-
-
-
--- Inserir módulos para o curso de Administração de Empresas
-INSERT INTO Modulo (Modulo_Nome, Modulo_Desc, Modulo_Status)
-VALUES
-('Fundamentos de Administração', 'Conceitos básicos e introdução à administração', '1'),
-('Gestão Financeira', 'Princípios básicos de finanças e contabilidade', '1'),
-('Marketing e Vendas', 'Conceitos fundamentais de marketing e técnicas de vendas', '1'),
-('Gestão de Recursos Humanos', 'Fundamentos sobre o gerenciamento de pessoal', '1'),
-('Empreendedorismo', 'Iniciação ao empreendedorismo e criação de novos negócios', '1'),
-('Ética e Responsabilidade Social', 'Práticas de ética empresarial e responsabilidade social', '1');
-
--- Associar os módulos recém inseridos ao curso de Administração
--- Supondo que os IDs dos módulos inseridos sejam de 7 a 12
-INSERT INTO Modulo_Curso (Modulo_Modulo_cd, Curso_Curso_cd)
-VALUES
-(7, 2),
-(8, 2),
-(9, 2),
-(10, 2),
-(11, 2),
-(12, 2);
-
-
-
--- *********************************************************** --
--- ************ INSERIR EDIÇÕES A PARTIR DAQUI *************** --
--- *********************************************************** --
-

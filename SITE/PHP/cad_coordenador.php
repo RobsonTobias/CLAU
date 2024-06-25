@@ -30,6 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
+    $cpf = validaCPF($cpf);
+    if(!$cpf){
+        echo "CPF Inválido";
+    }
+    else{
+        $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
+    }
     $senha = password_hash(substr($cpf, 0, 6), PASSWORD_DEFAULT);
     $queryCpf = "SELECT * FROM Usuario WHERE Usuario_Cpf = '$cpf'";
     $resultCpf = $conn->query($queryCpf);

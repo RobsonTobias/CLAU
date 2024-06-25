@@ -14,6 +14,5 @@ function validaCPF($cpf)
             return false;
         }
     }
-    return true;
+    return $cpf;
 }
-?>

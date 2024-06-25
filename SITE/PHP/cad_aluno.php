@@ -1,24 +1,9 @@
 <?php
 
 include '../conexao.php';
-
-function validaCPF($cpf)
-{
-    $cpf = preg_replace('/\D/', '', $cpf);
-    if (strlen($cpf) != 11 || preg_match('/(\d)\1{10}/', $cpf)) {
-        return false;
-    }
-    for ($t = 9; $t < 11; $t++) {
-        for ($d = 0, $c = 0; $c < $t; $c++) {
-            $d += $cpf[$c] * (($t + 1) - $c);
-        }
-        $d = ((10 * $d) % 11) % 10;
-        if ($cpf[$c] != $d) {
-            return false;
-        }
-    }
-    return true;
-}
+require_once 'enviarEmail.php';
+require_once 'gerarLogin.php';
+require_once 'validaCPF.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -30,6 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $apelido = $conn->real_escape_string($_POST['apelido']); // Substitua 'login' pelo nome do campo de login no seu formulário
 
+    $nomeCompleto = $conn->real_escape_string($_POST['nome']);
+    $partesNome = explode(' ', $nomeCompleto);
+    $primeiroNome = $partesNome[0];
+    $ultimoNome = end($partesNome);
+
+    // Gerar login único
+    $login = gerarLoginUnico($conn, $primeiroNome, $ultimoNome);
+
     // Verificar se o login já existe
     $queryLogin = "SELECT Usuario_id FROM Usuario WHERE Usuario_Login = '$apelido'";
     $resultLogin = $conn->query($queryLogin);
@@ -38,6 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
+    $cpf = validaCPF($cpf);
+    if (!$cpf) {
+        echo "CPF Inválido";
+    } else {
+        $cpf = preg_replace('/[^0-9]/', '', $_POST['cpf']);
+    }
+    $senha = password_hash(substr($cpf, 0, 6), PASSWORD_DEFAULT);
     $queryCpf = "SELECT * FROM Usuario WHERE Usuario_Cpf = '$cpf'";
     $resultCpf = $conn->query($queryCpf);
     if ($resultCpf && $resultCpf->num_rows > 0) {
@@ -179,12 +179,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $uploadResultado = move_uploaded_file($_FILES["imagem"]["tmp_name"], $caminhoCompleto);
             if (!$nomeArquivo || $uploadResultado) {
                 $usuariocd = $_SESSION['Usuario_id'];
-                $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Responsavel_Respon_cd, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto, Usuario_Matricula) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf', '$rg', '$nascimento', '$estadocivil', '$celular', '$telrecado', '$apelido', 'escola123', '$responCd', '$obs', '$enderecosCd', '$usuariocd', '$caminhoCompleto', '$matricula')";
+                $sql = "INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Fone_Recado, Usuario_Login, Usuario_Senha, Responsavel_Respon_cd, Usuario_Obs, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Foto, Usuario_Matricula) VALUES ('$nome', '$apelido', '$email', '$sexo', '$cpf', '$rg', '$nascimento', '$estadocivil', '$celular', '$telrecado', '$login', '$senha', '$responCd', '$obs', '$enderecosCd', '$usuariocd', '$caminhoCompleto', '$matricula')";
                 if ($conn->query($sql) === TRUE) {
                     $ultimoUsuario = $conn->insert_id;
                     $_SESSION['AlunoId'] = $ultimoUsuario;
                     $registro = "INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd) VALUES ('$ultimoUsuario', 3)";
                     if ($conn->query($registro) === TRUE) {
+                        enviarEmailCadastro($email, $nome, $login);
                         echo "Cadastro realizado com sucesso!";
                         $cadastroSucesso = true;
                     } else {
