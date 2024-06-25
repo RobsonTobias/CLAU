@@ -113,10 +113,6 @@ $titulo = 'DETALHES DA TURMA'; //Título da página, que fica sobre a data
 
 <?php require_once '../COMPONENTS/header.php' ?>
 
-    <div>
-        <?php echo $sidebarHTML; ?><!--  Mostrar o menu lateral -->
-    </div>
-
     <main class="ajuste">
         <div class="pesquisa">
             <p>Alunos</p>

@@ -243,7 +243,7 @@ VALUES ('12246-260','Avenida Salmão','570','Parque Residencial Aquarius','São 
 
 -- Cadastro do usuário MASTER na tabela Usuario
 INSERT INTO Usuario (Usuario_Nome, Usuario_Apelido, Usuario_Email, Usuario_Sexo, Usuario_Cpf, Usuario_Rg, Usuario_Nascimento, Usuario_EstadoCivil, Usuario_Fone, Usuario_Login, Usuario_Senha, Enderecos_Enderecos_cd, Usuario_Usuario_cd, Usuario_Status, Usuario_Foto)
-VALUES ('Master','Diretor','master@email.com','F','123.456.789-00','12.345.678-9','1987-01-01','Solteiro','(12) 3456-7899','master','master',1,1,1,'../IMAGE/PROFILE/master.jpg');
+VALUES ('Master','Diretor','master@email.com','F','123.456.789-00','12.345.678-9','1987-01-01','Solteiro','(12) 3456-7899','master','$2y$10$W5GQ7UF0RfpuY2Q2.8r3POocp0l2ApXHr5x3uIu0m7KSEWHvQeC0a',1,1,1,'../IMAGE/PROFILE/master.jpg');
 
 -- Cadastro do usuário como tipo MASTER na tabela Registro_Usuario
 INSERT INTO Registro_Usuario (Usuario_Usuario_cd, Tipo_Tipo_cd)
